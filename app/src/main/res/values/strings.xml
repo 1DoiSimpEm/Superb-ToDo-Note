@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SuperbToDo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="adding_task">Adding Task</string>
+    <string name="what_to_do">What to do?</string>
+    <string name="pick_dead_line">Pick dead line</string>
+    <string name="to_show_calendar">to show calendar</string>
+    <string name="date">Date</string>
+    <string name="add">Add</string>
+    <string name="time_here">Time here</string>
+    <string name="textview">TextView</string>
+    <string name="save">Save</string>
+</resources>
