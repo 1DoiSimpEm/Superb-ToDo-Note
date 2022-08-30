@@ -3,90 +3,112 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_bg"
+    android:padding="30dp"
     tools:context=".fragments.add.AddingFragment">
 
-    <EditText
-        android:id="@+id/Title_editTxt"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="250dp"
-        android:autofillHints="true"
-        android:background="#FFFFFFFF"
-        android:ems="10"
-        android:hint="@string/what_to_do"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_task"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/Title_editTxt"
+        android:layout_width="262dp"
+        android:layout_height="69dp"
+        android:autofillHints="true"
+        android:background="@drawable/layout_bg"
+        android:ems="10"
+        android:hint="@string/what_to_do"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
     <LinearLayout
         android:id="@+id/datePickerBtn"
-        android:layout_width="123dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="113dp"
+        android:layout_height="53dp"
+        android:layout_below="@+id/Title_editTxt"
+        android:layout_marginTop="32dp"
         android:background="@drawable/layout_bg"
         android:orientation="horizontal"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.194"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title_editTxt">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_gravity="center"
             android:contentDescription="@string/to_show_calendar"
+            android:foregroundGravity="center"
             android:src="@drawable/ic_calendar" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingTop="5dp"
-            android:text="@string/date"
-            android:textSize="15sp"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveBtn"
-        android:layout_width="119dp"
-        android:layout_height="59dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/layout_bg"
         android:clickable="true"
         android:contentDescription="@string/adding_task"
         android:focusable="true"
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancelBtn"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="350dp"
+        android:background="@drawable/layout_bg"
+        android:clickable="true"
+        android:contentDescription="@string/adding_task"
+        android:focusable="true"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dateTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_below="@+id/Title_editTxt"
+        android:layout_marginTop="20dp"
         android:text="@string/time_here"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.396"
-        app:layout_constraintStart_toEndOf="@+id/datePickerBtn"
-        app:layout_constraintTop_toBottomOf="@+id/Title_editTxt" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datePickerBtn" />
 
     <TextView
         android:id="@+id/specificTimeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="20dp"
         android:text="@string/time_here"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.396"
-        app:layout_constraintStart_toEndOf="@+id/datePickerBtn"
-        app:layout_constraintTop_toBottomOf="@+id/Title_editTxt" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateTxt" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

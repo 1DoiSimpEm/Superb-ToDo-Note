@@ -44,11 +44,21 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentUpdatetaskdialogBinding.bind(view)
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+        initData()
         pickDate()
-        binding.saveBtn.setOnClickListener{
+        binding.saveBtn.setOnClickListener {
             saveTask()
         }
+        binding.cancelBtn.setOnClickListener {
+            dismiss()
+        }
 
+    }
+
+    private fun initData() {
+        binding.TitleEditTxt.setText(args.currentTask.content)
+        binding.dateTxt.text = args.currentTask.date
+        binding.specificTimeTxt.text = args.currentTask.timeLeft
     }
 
     private fun saveTask() {
@@ -56,10 +66,13 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         if (mContent.isEmpty()) {
             Toast.makeText(context, "Task description must not be empty!", Toast.LENGTH_LONG).show()
         } else if (!this::date.isInitialized) {
-            Toast.makeText(context, "You did not pick the date and time!", Toast.LENGTH_LONG).show()
+            val task = Task(args.currentTask.id, args.currentTask.date, mContent, args.currentTask.timeLeft, args.currentTask.isDone)
+            mTaskViewModel.updateTask(task)
+            dismiss()
         } else {
+
             val mDate = date
-            val mTimeLeft = getTimeLeft().toString()
+            val mTimeLeft = getTimeLeft()
             val isDone = mTimeLeft.contains("-")
             val task = Task(args.currentTask.id, mDate, mContent, mTimeLeft, isDone)
             mTaskViewModel.updateTask(task)

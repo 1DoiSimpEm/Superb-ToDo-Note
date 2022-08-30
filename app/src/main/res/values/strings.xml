@@ -11,4 +11,8 @@
     <string name="time_here">Time here</string>
     <string name="textview">TextView</string>
     <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="update_task">Update Task</string>
+    <string name="title">Title</string>
+    <string name="time_left">Time Left</string>
 </resources>

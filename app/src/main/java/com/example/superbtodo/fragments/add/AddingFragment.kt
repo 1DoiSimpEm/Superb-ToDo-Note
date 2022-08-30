@@ -3,6 +3,7 @@ package com.example.superbtodo.fragments.add
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -43,11 +44,16 @@ class AddingFragment : Fragment(R.layout.fragment_adding),DatePickerDialog.OnDat
         super.onViewCreated(view, savedInstanceState)
         binding=FragmentAddingBinding.bind(view)
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+        hideDateStuff()
         pickDate()
-
         binding.addBtn.setOnClickListener{
             addNewTask()
         }
+    }
+
+    private fun hideDateStuff() {
+        binding.dateTxt.visibility=View.GONE
+        binding.specificTimeTxt.visibility=View.GONE
     }
 
     private fun addNewTask() {
@@ -75,7 +81,6 @@ class AddingFragment : Fragment(R.layout.fragment_adding),DatePickerDialog.OnDat
         val dobs = date
         val sdf= SimpleDateFormat("dd/MM/yyyy HH:mm")
         val dob = sdf.parse(dobs)
-
         val days = -(today.time- dob!!.time)/86400000
         val hours = -(today.time-dob.time)%86400000/3600000
         val minutes = -(today.time - dob.time)%86400000%3600000/60000
@@ -115,5 +120,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding),DatePickerDialog.OnDat
         date+=" $savedHour:$savedMinute"
         binding.dateTxt.text=date
         binding.specificTimeTxt.text=getTimeLeft()
+        binding.dateTxt.visibility=View.VISIBLE
+        binding.specificTimeTxt.visibility=View.VISIBLE
     }
 }
