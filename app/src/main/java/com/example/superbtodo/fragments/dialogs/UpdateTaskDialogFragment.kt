@@ -3,8 +3,12 @@ package com.example.superbtodo.fragments.dialogs
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
@@ -39,6 +43,15 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private lateinit var date: String
     //task variables
 
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -125,7 +138,10 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         savedHour = hourOfDay
         savedMinute = minute
         date += " $savedHour:$savedMinute"
-        binding.dateTxt.text = date
-        binding.specificTimeTxt.text = getTimeLeft()
+        binding.apply{
+            dateTxt.text = date
+            specificTimeTxt.text = getTimeLeft()
+        }
+
     }
 }

@@ -118,9 +118,12 @@ class AddingFragment : Fragment(R.layout.fragment_adding),DatePickerDialog.OnDat
         savedHour = hourOfDay
         savedMinute=minute
         date+=" $savedHour:$savedMinute"
-        binding.dateTxt.text=date
-        binding.specificTimeTxt.text=getTimeLeft()
-        binding.dateTxt.visibility=View.VISIBLE
-        binding.specificTimeTxt.visibility=View.VISIBLE
+        binding.apply {
+            dateTxt.text=date
+            specificTimeTxt.text=getTimeLeft()
+            dateTxt.visibility=View.VISIBLE
+            specificTimeTxt.visibility=View.VISIBLE
+        }
+
     }
 }

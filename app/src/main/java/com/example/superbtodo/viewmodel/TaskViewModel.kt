@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 // ViewModel is to provide data to the ui and survive configuration changes and it also acts as a communication center between the Repository and the UI
 class TaskViewModel(application: Application) : AndroidViewModel(application) {
-    val readAllData: LiveData<List<Task>>
+    val readAllData: LiveData<MutableList<Task>>
     private val repository: TaskRepository
 
     init {
@@ -38,4 +38,5 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
             repository.deleteTask(task)
         }
     }
+
 }

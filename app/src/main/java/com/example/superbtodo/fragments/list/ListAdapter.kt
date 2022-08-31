@@ -1,7 +1,6 @@
 package com.example.superbtodo.fragments.list
 
 
-
 import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.text.style.StrikethroughSpan
@@ -18,54 +17,56 @@ import com.example.superbtodo.data.Task
 import com.example.superbtodo.viewmodel.TaskViewModel
 
 class ListAdapter() : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
-    private var tasks = emptyList<Task>()
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    {
+    private var tasks = mutableListOf<Task>()
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val contentTextView = itemView.findViewById(R.id.contentTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
         val timeLeftTextView = itemView.findViewById(R.id.timeLeftTxt) as TextView
         val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as RadioButton
         val taskLayout = itemView.findViewById(R.id.taskLayout) as RelativeLayout
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.task_layout,parent,false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.task_layout, parent, false)
         return ViewHolder(itemView)
     }
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem =  tasks[position]
-        holder.contentTextView.text=currentItem.content
-        holder.timeTextView.text=currentItem.date
-        holder.timeLeftTextView.text=currentItem.timeLeft
-        holder.isDoneCheckBox.isChecked=currentItem.isDone
-
-        holder.taskLayout.setOnClickListener{
-            val action = ListFragmentDirections.actionListFragmentToUpdateTaskDialogFragment(currentItem)
+        val currentItem = tasks[position]
+        holder.contentTextView.text = currentItem.content
+        holder.timeTextView.text = currentItem.date
+        holder.timeLeftTextView.text = currentItem.timeLeft
+        holder.isDoneCheckBox.isChecked = currentItem.isDone
+        holder.taskLayout.setOnClickListener {
+            val action =
+                ListFragmentDirections.actionListFragmentToUpdateTaskDialogFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
         }
-        if (holder.isDoneCheckBox.isChecked){
+        if (holder.isDoneCheckBox.isChecked) {
             holder.timeLeftTextView.visibility = View.GONE
-            holder.contentTextView.apply{
+            holder.contentTextView.apply {
                 paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 setTextColor(R.color.gone)
             }
-            holder.timeTextView.apply{
+            holder.timeTextView.apply {
                 paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 setTextColor(R.color.gone)
             }
-        }
-        else{
+        } else {
             holder.timeLeftTextView.visibility = View.VISIBLE
-            holder.contentTextView.apply{
+            holder.contentTextView.apply {
                 paintFlags = 0
                 setTextColor(R.color.black)
             }
-            holder.timeTextView.apply{
+            holder.timeTextView.apply {
                 paintFlags = 0
                 setTextColor(R.color.black)
             }
         }
+
 
     }
 
@@ -73,13 +74,14 @@ class ListAdapter() : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         return tasks.size
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(task : List<Task>){
-        this.tasks=task
+    fun setData(task: List<Task>) {
+        this.tasks = task as MutableList<Task>
         notifyDataSetChanged()
     }
 
-    fun getTaskAt(position: Int):Task{
+    fun getTaskAt(position: Int): Task {
         return tasks[position]
     }
 

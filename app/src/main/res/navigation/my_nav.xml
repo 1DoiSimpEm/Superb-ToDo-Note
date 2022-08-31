@@ -19,8 +19,10 @@
         <action
             android:id="@+id/action_listFragment_to_updateTaskDialogFragment"
             app:destination="@id/updateTaskDialogFragment"
-            app:enterAnim="@android:anim/cycle_interpolator"
-            app:exitAnim="@android:anim/fade_out" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/addingFragment"

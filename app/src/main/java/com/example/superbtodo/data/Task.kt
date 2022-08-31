@@ -13,6 +13,6 @@ data class Task(
     val id: Int,
     val date: String,
     val content: String,
-    val timeLeft: String,
-    val isDone : Boolean
+    var timeLeft: String,
+    var isDone : Boolean
 ):Parcelable

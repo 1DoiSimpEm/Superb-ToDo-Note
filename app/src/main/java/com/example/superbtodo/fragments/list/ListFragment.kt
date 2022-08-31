@@ -29,16 +29,13 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
             adapter.setData(task)
         })
-
         binding.moveToAddBtn.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addingFragment)
         }
-
         swipeToDeleteItem()
     }
 
@@ -49,14 +46,17 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-
                 return false
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                deletedTask=adapter.getTaskAt(viewHolder.adapterPosition)
+                deletedTask = adapter.getTaskAt(viewHolder.adapterPosition)
                 mTaskViewModel.deleteTask(adapter.getTaskAt(viewHolder.adapterPosition))
-                Snackbar.make(recyclerView, "${deletedTask.content} has just been deleted!", Snackbar.LENGTH_LONG)
+                Snackbar.make(
+                    recyclerView,
+                    "${deletedTask.content} has just been deleted!",
+                    Snackbar.LENGTH_LONG
+                )
                     .setAction("Undo", View.OnClickListener {
                         mTaskViewModel.addTask(deletedTask)
                     }).show()
@@ -64,7 +64,4 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         }).attachToRecyclerView(recyclerView)
     }
 
-    private fun deleteTask() {
-
-    }
 }

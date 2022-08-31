@@ -5,23 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/layout_bg"
+    android:backgroundTint="@color/white_bg"
     android:padding="30dp"
     tools:context=".fragments.add.AddingFragment">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/update_task"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/Title_editTxt"
         android:layout_width="262dp"
         android:layout_height="69dp"
+        android:layout_marginTop="30dp"
         android:autofillHints="true"
         android:background="@drawable/layout_bg"
         android:ems="10"
@@ -31,7 +23,7 @@
         android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/datePickerBtn"
@@ -41,14 +33,16 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/layout_bg"
         android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title_editTxt">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+
             android:contentDescription="@string/to_show_calendar"
             android:foregroundGravity="center"
             android:src="@drawable/ic_calendar" />
@@ -65,9 +59,11 @@
         android:layout_marginEnd="5dp"
         android:background="@drawable/layout_bg"
         android:clickable="true"
+        android:backgroundTint="#49cb8f"
         android:contentDescription="@string/adding_task"
         android:focusable="true"
         android:text="@string/save"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -82,9 +78,11 @@
         android:layout_marginTop="350dp"
         android:background="@drawable/layout_bg"
         android:clickable="true"
+        android:textColor="@color/white"
         android:contentDescription="@string/adding_task"
         android:focusable="true"
         android:text="@string/cancel"
+        android:backgroundTint="#fe171d"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
