@@ -3,7 +3,6 @@ package com.example.superbtodo.fragments.list
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -30,9 +29,10 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
-        mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
+        mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
             adapter.setData(task)
-        })
+        }
+
         binding.moveToAddBtn.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addingFragment)
         }
@@ -57,9 +57,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                     "${deletedTask.content} has just been deleted!",
                     Snackbar.LENGTH_LONG
                 )
-                    .setAction("Undo", View.OnClickListener {
+                    .setAction("Undo") {
                         mTaskViewModel.addTask(deletedTask)
-                    }).show()
+                    }.show()
             }
         }).attachToRecyclerView(recyclerView)
     }

@@ -3,22 +3,23 @@ package com.example.superbtodo.fragments.list
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
-import android.text.style.StrikethroughSpan
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
-import com.example.superbtodo.viewmodel.TaskViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
-class ListAdapter() : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+
+class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     private var tasks = mutableListOf<Task>()
-
+    private var handler: Handler? = null
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val contentTextView = itemView.findViewById(R.id.contentTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
@@ -33,41 +34,27 @@ class ListAdapter() : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         return ViewHolder(itemView)
     }
 
-    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = tasks[position]
         holder.contentTextView.text = currentItem.content
         holder.timeTextView.text = currentItem.date
         holder.timeLeftTextView.text = currentItem.timeLeft
         holder.isDoneCheckBox.isChecked = currentItem.isDone
+        timerUpdate(holder)
+        holder.isDoneCheckBox.setOnClickListener {
+            strikeThroughText(holder)
+
+        }
         holder.taskLayout.setOnClickListener {
             val action =
                 ListFragmentDirections.actionListFragmentToUpdateTaskDialogFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
         }
         if (holder.isDoneCheckBox.isChecked) {
-            holder.timeLeftTextView.visibility = View.GONE
-            holder.contentTextView.apply {
-                paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                setTextColor(R.color.gone)
-            }
-            holder.timeTextView.apply {
-                paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                setTextColor(R.color.gone)
-            }
+            strikeThroughText(holder)
         } else {
-            holder.timeLeftTextView.visibility = View.VISIBLE
-            holder.contentTextView.apply {
-                paintFlags = 0
-                setTextColor(R.color.black)
-            }
-            holder.timeTextView.apply {
-                paintFlags = 0
-                setTextColor(R.color.black)
-            }
+            normalizeText(holder)
         }
-
-
     }
 
     override fun getItemCount(): Int {
@@ -76,14 +63,71 @@ class ListAdapter() : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(task: List<Task>) {
-        this.tasks = task as MutableList<Task>
+    fun setData(task: MutableList<Task>) {
+        this.tasks = task
         notifyDataSetChanged()
     }
+
 
     fun getTaskAt(position: Int): Task {
         return tasks[position]
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private fun timerUpdate(holder : ViewHolder) {
+        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        // in onBindViewHolder
+        handler = Handler(Looper.getMainLooper())
+        var periodicUpdate: Runnable? = null
+        periodicUpdate = Runnable {
+            try {
+                holder.timeLeftTextView.text = getTimeLeft(hourly.format(System.currentTimeMillis()),
+                    hourly.parse(holder.timeTextView.text.toString()) as Date
+                )
+                periodicUpdate?.let { handler?.postDelayed(it, 1000) }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        handler?.post(periodicUpdate)
+    }
 
+    @SuppressLint("SimpleDateFormat")
+    private fun getTimeLeft(timeNow : String,timeEnd : Date): String {
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val dob = sdf.parse(timeNow)
+        val days = (timeEnd.time - dob!!.time) / 86400000
+        val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
+        val minutes = (timeEnd.time - dob.time) % 86400000 % 3600000 / 60000
+        return "$days days $hours hours $minutes minutes left"
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun normalizeText(holder: ViewHolder) {
+        holder.timeLeftTextView.visibility = View.VISIBLE
+        holder.contentTextView.apply {
+            paintFlags = 0
+            setTextColor(R.color.black)
+        }
+        holder.timeTextView.apply {
+            paintFlags = 0
+            setTextColor(R.color.black)
+        }
+    }
+
+
+
+
+    @SuppressLint("ResourceAsColor")
+    private fun strikeThroughText(holder: ViewHolder) {
+        holder.timeLeftTextView.visibility = View.GONE
+        holder.contentTextView.apply {
+            paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            setTextColor(R.color.gone)
+        }
+        holder.timeTextView.apply {
+            paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            setTextColor(R.color.gone)
+        }
+    }
 }

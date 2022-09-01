@@ -13,7 +13,6 @@
         android:id="@+id/Title_editTxt"
         android:layout_width="262dp"
         android:layout_height="69dp"
-        android:layout_marginTop="30dp"
         android:autofillHints="true"
         android:background="@drawable/layout_bg"
         android:ems="10"
@@ -30,10 +29,10 @@
         android:layout_width="113dp"
         android:layout_height="53dp"
         android:layout_below="@+id/Title_editTxt"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/layout_bg"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title_editTxt">
@@ -55,16 +54,15 @@
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="250dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/layout_bg"
-        android:clickable="true"
         android:backgroundTint="#49cb8f"
+        android:clickable="true"
         android:contentDescription="@string/adding_task"
         android:focusable="true"
         android:text="@string/save"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,15 +73,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="250dp"
         android:background="@drawable/layout_bg"
+        android:backgroundTint="#fe171d"
         android:clickable="true"
-        android:textColor="@color/white"
         android:contentDescription="@string/adding_task"
         android:focusable="true"
         android:text="@string/cancel"
-        android:backgroundTint="#fe171d"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,7 +94,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/datePickerBtn" />
-
     <TextView
         android:id="@+id/specificTimeTxt"
         android:layout_width="wrap_content"
@@ -107,6 +103,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTxt" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

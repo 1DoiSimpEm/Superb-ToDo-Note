@@ -6,6 +6,8 @@ import android.app.TimePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +29,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private val args: UpdateTaskDialogFragmentArgs by navArgs()
     private lateinit var binding: FragmentUpdatetaskdialogBinding
     private lateinit var mTaskViewModel: TaskViewModel
+    private var handler: Handler? = null
 
     //date and time variables
     private var day = 0
@@ -41,7 +44,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private var savedHour = 0
     private var savedMinute = 0
     private lateinit var date: String
-    //task variables
+    private lateinit var dateLeft : String
 
 
     override fun onCreateView(
@@ -83,9 +86,8 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
             mTaskViewModel.updateTask(task)
             dismiss()
         } else {
-
             val mDate = date
-            val mTimeLeft = getTimeLeft()
+            val mTimeLeft = dateLeft
             val isDone = mTimeLeft.contains("-")
             val task = Task(args.currentTask.id, mDate, mContent, mTimeLeft, isDone)
             mTaskViewModel.updateTask(task)
@@ -95,20 +97,35 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun getTimeLeft(): String {
-        val today = Date()
-        val dobs = date
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        val dob = sdf.parse(dobs)
-
-        val days = -(today.time - dob!!.time) / 86400000
-        val hours = -(today.time - dob.time) % 86400000 / 3600000
-        val minutes = -(today.time - dob.time) % 86400000 % 3600000 / 60000
-        return "$days days $hours hours $minutes minutes left"
-
-
+    private fun timerUpdate() {
+        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        handler = Handler(Looper.getMainLooper())
+        var periodicUpdate: Runnable? = null
+        periodicUpdate = Runnable {
+            try {
+                dateLeft = getTimeLeft(
+                    hourly.format(System.currentTimeMillis()),
+                    hourly.parse(date) as Date
+                )
+                binding.specificTimeTxt.text=dateLeft
+                binding.specificTimeTxt.visibility = View.VISIBLE
+                periodicUpdate?.let { handler?.postDelayed(it, 1000) }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        handler?.post(periodicUpdate)
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val dob = sdf.parse(timeNow)
+        val days = (timeEnd.time - dob!!.time) / 86400000
+        val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
+        val minutes = (timeEnd.time - dob.time) % 86400000 % 3600000 / 60000
+        return "$days days $hours hours $minutes minutes left"
+    }
     private fun pickDate() {
         binding.datePickerBtn.setOnClickListener {
             getDateTimeCalendar()
@@ -130,7 +147,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
-        date = "$savedDay/${savedMonth + 1}/$savedYear"
+        date = "$savedDay.${savedMonth + 1}.$savedYear"
         TimePickerDialog(requireContext(), this, hour, minute, true).show()
     }
 
@@ -140,8 +157,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         date += " $savedHour:$savedMinute"
         binding.apply{
             dateTxt.text = date
-            specificTimeTxt.text = getTimeLeft()
         }
-
+        timerUpdate()
     }
 }

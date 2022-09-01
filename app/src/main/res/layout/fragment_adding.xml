@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/white_bg"
-    tools:context=".fragments.add.AddingFragment">
+    tools:context=".fragments.add.AddingFragment"
+    tools:ignore="ExtraText">
 
     <EditText
         android:id="@+id/Title_editTxt"
@@ -51,7 +52,8 @@
             android:paddingTop="5dp"
             android:text="@string/date"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -80,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toEndOf="@+id/datePickerBtn"
         app:layout_constraintTop_toBottomOf="@+id/Title_editTxt" />
-
+    />
     <TextView
         android:id="@+id/specificTimeTxt"
         android:layout_width="wrap_content"
