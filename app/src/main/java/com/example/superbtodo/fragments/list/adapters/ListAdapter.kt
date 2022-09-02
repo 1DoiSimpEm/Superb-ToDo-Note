@@ -23,6 +23,7 @@ class ListAdapter(
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     private var tasks = mutableListOf<Task>()
     private var handler: Handler? = null
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val contentTextView = itemView.findViewById(R.id.contentTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
@@ -90,7 +91,7 @@ class ListAdapter(
         var periodicUpdate: Runnable? = null
         periodicUpdate = Runnable {
             try {
-                    holder.timeLeftTextView.text = getTimeLeft(
+                holder.timeLeftTextView.text = getTimeLeft(
                     hourly.format(System.currentTimeMillis()),
                     hourly.parse(holder.timeTextView.text.toString()) as Date
                 )

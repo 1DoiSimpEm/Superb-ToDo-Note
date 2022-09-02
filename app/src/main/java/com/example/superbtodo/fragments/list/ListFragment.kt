@@ -69,7 +69,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Snackbar.make(
                     binding.recyclerView,
-                    "${deletedTask.content} has just been deleted!",
+                    "${deletedTask.id} has just been deleted!",
                     Snackbar.LENGTH_LONG
                 )
                     .setAction("Undo") {

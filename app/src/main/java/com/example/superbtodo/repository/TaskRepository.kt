@@ -8,20 +8,18 @@ import com.example.superbtodo.data.TaskDatabase
 import kotlinx.coroutines.flow.Flow
 
 // a repository class abstracts access to multiple data sources
-class TaskRepository (private val taskDao : TaskDao){
-    val readAllData : LiveData<MutableList<Task>> = taskDao.readAllData()
+class TaskRepository(private val taskDao: TaskDao) {
+    val readAllData: LiveData<MutableList<Task>> = taskDao.readAllData()
 
-    suspend fun addTask(task : Task){
+    suspend fun addTask(task: Task) {
         taskDao.addTask(task)
     }
 
-    suspend fun deleteTask(task : Task)
-    {
+    suspend fun deleteTask(task: Task) {
         taskDao.deleteTask(task)
     }
 
-    suspend fun updateTask(task:Task)
-    {
+    suspend fun updateTask(task: Task) {
         taskDao.updateTask(task)
     }
 

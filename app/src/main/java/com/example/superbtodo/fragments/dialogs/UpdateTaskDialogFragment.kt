@@ -43,7 +43,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private var savedHour = 0
     private var savedMinute = 0
     private lateinit var date: String
-    private lateinit var dateLeft : String
+    private lateinit var dateLeft: String
 
 
     override fun onCreateView(
@@ -81,7 +81,13 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         if (mContent.isEmpty()) {
             Toast.makeText(context, "Task description must not be empty!", Toast.LENGTH_LONG).show()
         } else if (!this::date.isInitialized) {
-            val task = Task(args.currentTask.id, args.currentTask.date, mContent, args.currentTask.timeLeft, args.currentTask.isDone)
+            val task = Task(
+                args.currentTask.id,
+                args.currentTask.date,
+                mContent,
+                args.currentTask.timeLeft,
+                args.currentTask.isDone
+            )
             mTaskViewModel.updateTask(task)
             dismiss()
         } else {
@@ -96,7 +102,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     }
 
     private fun timerUpdate() {
-        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault())
+        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         handler = Handler(Looper.getMainLooper())
         var periodicUpdate: Runnable? = null
         periodicUpdate = Runnable {
@@ -105,7 +111,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
                     hourly.format(System.currentTimeMillis()),
                     hourly.parse(date) as Date
                 )
-                binding.specificTimeTxt.text=dateLeft
+                binding.specificTimeTxt.text = dateLeft
                 binding.specificTimeTxt.visibility = View.VISIBLE
                 periodicUpdate?.let { handler?.postDelayed(it, 1000) }
             } catch (e: Exception) {
@@ -116,13 +122,14 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     }
 
     private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault())
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         val dob = sdf.parse(timeNow)
         val days = (timeEnd.time - dob!!.time) / 86400000
         val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
         val minutes = (timeEnd.time - dob.time) % 86400000 % 3600000 / 60000
         return "$days days $hours hours $minutes minutes left"
     }
+
     private fun pickDate() {
         binding.datePickerBtn.setOnClickListener {
             getDateTimeCalendar()
@@ -152,7 +159,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         savedHour = hourOfDay
         savedMinute = minute
         date += " $savedHour:$savedMinute"
-        binding.apply{
+        binding.apply {
             dateTxt.text = date
         }
         timerUpdate()

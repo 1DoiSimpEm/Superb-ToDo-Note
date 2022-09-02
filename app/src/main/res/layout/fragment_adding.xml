@@ -17,10 +17,10 @@
         android:layout_marginBottom="250dp"
         android:autofillHints="true"
         android:background="@color/white_bg"
-        android:textAlignment="center"
         android:ems="10"
         android:hint="@string/what_to_do"
         android:inputType="textPersonName"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,11 +63,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/layout_bg"
+        android:backgroundTint="#49cb8f"
         android:clickable="true"
         android:contentDescription="@string/adding_task"
         android:focusable="true"
         android:text="@string/add"
-        android:backgroundTint="#49cb8f"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -83,6 +83,7 @@
         app:layout_constraintStart_toEndOf="@+id/datePickerBtn"
         app:layout_constraintTop_toBottomOf="@+id/Title_editTxt" />
     />
+
     <TextView
         android:id="@+id/specificTimeTxt"
         android:layout_width="wrap_content"

@@ -9,19 +9,19 @@ import androidx.sqlite.db.SupportSQLiteQuery
 interface TaskDao {
     // means it will be just ignore if there is a new exactly same task then we're gonna just ignore it
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addTask(task :Task)
+    suspend fun addTask(task: Task)
 
     @Delete
-    suspend fun deleteTask(task : Task)
+    suspend fun deleteTask(task: Task)
 
     @Update
-    suspend fun  updateTask(task : Task)
+    suspend fun updateTask(task: Task)
 
     @Query("SELECT * FROM task_table order by timeLeft ASC")
     fun readAllData(): LiveData<MutableList<Task>>
 
     @Query("SELECT COUNT(id) FROM task_table")
-    fun getCount() : Int
+    fun getCount(): Int
 
 
 }
