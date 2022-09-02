@@ -18,7 +18,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(
+    val callBack: (Task) -> Unit
+) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     private var tasks = mutableListOf<Task>()
     private var handler: Handler? = null
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,24 +41,32 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         val currentItem = tasks[position]
         holder.contentTextView.text = currentItem.content
         holder.timeTextView.text = currentItem.date
-        holder.timeLeftTextView.text = currentItem.timeLeft
         holder.isDoneCheckBox.isChecked = currentItem.isDone
-        timerUpdate(holder)
-        holder.isDoneCheckBox.setOnClickListener {
-            strikeThroughText(holder)
-
-        }
+        timerUpdate(holder, position)
         holder.taskLayout.setOnClickListener {
             val action =
                 ListFragmentDirections.actionListFragmentToUpdateTaskDialogFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
+        }
+        holder.isDoneCheckBox.setOnClickListener {
+            currentItem.isDone = true
+            sendData(
+                currentItem.id,
+                currentItem.date,
+                currentItem.content,
+                currentItem.timeLeft,
+                currentItem.isDone,
+            )
+            notifyItemChanged(position)
         }
         if (holder.isDoneCheckBox.isChecked) {
             strikeThroughText(holder)
         } else {
             normalizeText(holder)
         }
+
     }
+
 
     override fun getItemCount(): Int {
         return tasks.size
@@ -74,16 +84,17 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         return tasks[position]
     }
 
-    private fun timerUpdate(holder : ViewHolder) {
+    private fun timerUpdate(holder: ViewHolder, position: Int) {
         val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-        // in onBindViewHolder
         handler = Handler(Looper.getMainLooper())
         var periodicUpdate: Runnable? = null
         periodicUpdate = Runnable {
             try {
-                holder.timeLeftTextView.text = getTimeLeft(hourly.format(System.currentTimeMillis()),
+                    holder.timeLeftTextView.text = getTimeLeft(
+                    hourly.format(System.currentTimeMillis()),
                     hourly.parse(holder.timeTextView.text.toString()) as Date
                 )
+                tasks[position].timeLeft = holder.timeLeftTextView.text.toString()
                 periodicUpdate?.let { handler?.postDelayed(it, 1000) }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -92,9 +103,8 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         handler?.post(periodicUpdate)
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun getTimeLeft(timeNow : String,timeEnd : Date): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm")
+    private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         val dob = sdf.parse(timeNow)
         val days = (timeEnd.time - dob!!.time) / 86400000
         val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
@@ -116,8 +126,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     }
 
 
-
-
     @SuppressLint("ResourceAsColor")
     private fun strikeThroughText(holder: ViewHolder) {
         holder.timeLeftTextView.visibility = View.GONE
@@ -129,5 +137,15 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
             paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             setTextColor(R.color.gone)
         }
+    }
+
+    private fun sendData(
+        id: Int,
+        date: String,
+        content: String,
+        timeLeft: String,
+        isDone: Boolean,
+    ) {
+        callBack(Task(id, date, content, timeLeft, isDone))
     }
 }

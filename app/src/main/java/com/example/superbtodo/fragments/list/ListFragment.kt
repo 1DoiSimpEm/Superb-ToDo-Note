@@ -3,7 +3,6 @@ package com.example.superbtodo.fragments.list
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,16 +19,16 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     private lateinit var binding: FragmentListBinding
     private lateinit var mTaskViewModel: TaskViewModel
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentListBinding.bind(view)
-        adapter = ListAdapter()
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        adapter = ListAdapter{ task ->
+            handlerTaskData(task)
+        }
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
             adapter.setData(task)
@@ -42,12 +41,14 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         swipeToDeleteItem()
     }
 
+    private fun handlerTaskData(task: Task) {
+        mTaskViewModel.updateTask(Task(task.id,task.date,task.content,task.timeLeft,task.isDone))
+    }
+
     private fun isItemEmpty() {
-        if(adapter.itemCount==0)
-        {
-            binding.emptyLogo.visibility=View.VISIBLE
-        }
-        else{
+        if (adapter.itemCount == 0) {
+            binding.emptyLogo.visibility = View.VISIBLE
+        } else {
             binding.emptyLogo.visibility = View.GONE
         }
     }
@@ -65,8 +66,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 deletedTask = adapter.getTaskAt(viewHolder.adapterPosition)
                 mTaskViewModel.deleteTask(adapter.getTaskAt(viewHolder.adapterPosition))
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Snackbar.make(
-                    recyclerView,
+                    binding.recyclerView,
                     "${deletedTask.content} has just been deleted!",
                     Snackbar.LENGTH_LONG
                 )
@@ -74,7 +76,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                         mTaskViewModel.addTask(deletedTask)
                     }.show()
             }
-        }).attachToRecyclerView(recyclerView)
+        }).attachToRecyclerView(binding.recyclerView)
     }
 
 }

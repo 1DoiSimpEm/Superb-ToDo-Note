@@ -16,4 +16,5 @@
     <string name="title">Title</string>
     <string name="time_left">Time Left</string>
     <string name="superb_note">Superb Note</string>
+    <string name="id">ID</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.superbtodo.fragments.dialogs
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.graphics.Color
@@ -116,9 +115,8 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         handler?.post(periodicUpdate)
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault())
         val dob = sdf.parse(timeNow)
         val days = (timeEnd.time - dob!!.time) / 86400000
         val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
