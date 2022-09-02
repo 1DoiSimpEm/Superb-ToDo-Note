@@ -61,9 +61,8 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
     }
 
 
-    @SuppressLint("SimpleDateFormat")
     private fun timerUpdate() {
-        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault())
         handler = Handler(Looper.getMainLooper())
         var periodicUpdate: Runnable? = null
         periodicUpdate = Runnable {
@@ -82,9 +81,8 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
         handler?.post(periodicUpdate)
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault())
         val dob = sdf.parse(timeNow)
         val days = (timeEnd.time - dob!!.time) / 86400000
         val hours = (timeEnd.time - dob.time) % 86400000 / 3600000

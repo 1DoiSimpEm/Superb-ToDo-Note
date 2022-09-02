@@ -1,4 +1,4 @@
-package com.example.superbtodo.fragments.list
+package com.example.superbtodo.fragments.list.adapters
 
 
 import android.annotation.SuppressLint
@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
+import com.example.superbtodo.fragments.list.ListFragmentDirections
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -73,9 +74,8 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         return tasks[position]
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun timerUpdate(holder : ViewHolder) {
-        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         // in onBindViewHolder
         handler = Handler(Looper.getMainLooper())
         var periodicUpdate: Runnable? = null

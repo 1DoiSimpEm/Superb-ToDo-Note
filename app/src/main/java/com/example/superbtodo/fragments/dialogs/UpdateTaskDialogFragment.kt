@@ -96,9 +96,8 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
 
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun timerUpdate() {
-        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault())
         handler = Handler(Looper.getMainLooper())
         var periodicUpdate: Runnable? = null
         periodicUpdate = Runnable {

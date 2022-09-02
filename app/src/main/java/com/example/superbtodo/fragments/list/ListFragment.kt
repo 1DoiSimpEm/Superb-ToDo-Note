@@ -3,6 +3,7 @@ package com.example.superbtodo.fragments.list
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -12,6 +13,7 @@ import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.example.superbtodo.databinding.FragmentListBinding
+import com.example.superbtodo.fragments.list.adapters.ListAdapter
 import com.google.android.material.snackbar.Snackbar
 
 class ListFragment : Fragment(R.layout.fragment_list) {
@@ -33,10 +35,21 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             adapter.setData(task)
         }
 
+//        isItemEmpty()
         binding.moveToAddBtn.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addingFragment)
         }
         swipeToDeleteItem()
+    }
+
+    private fun isItemEmpty() {
+        if(adapter.itemCount==0)
+        {
+            binding.emptyLogo.visibility=View.VISIBLE
+        }
+        else{
+            binding.emptyLogo.visibility = View.GONE
+        }
     }
 
     private fun swipeToDeleteItem() {

@@ -3,6 +3,7 @@ package com.example.superbtodo.data
 // TaskDao ( data access object ) is a interface cuz it provides methods that the rest of the app uses to interact with data in the table
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface TaskDao {
@@ -18,6 +19,9 @@ interface TaskDao {
 
     @Query("SELECT * FROM task_table order by timeLeft ASC")
     fun readAllData(): LiveData<MutableList<Task>>
+
+    @Query("SELECT COUNT(id) FROM task_table")
+    fun getCount() : Int
 
 
 }
