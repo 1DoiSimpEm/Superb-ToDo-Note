@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_search"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        android:iconTint="@color/black"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        tools:targetApi="o" />
+    <item
+        android:id="@+id/menu_delete"
+        android:title="@string/delete_all"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:iconTint="@color/black"
+        app:showAsAction="ifRoom"
+        tools:targetApi="o"
+        />
+</menu>

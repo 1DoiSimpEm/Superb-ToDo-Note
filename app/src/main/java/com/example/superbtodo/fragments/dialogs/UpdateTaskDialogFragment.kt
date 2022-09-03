@@ -61,13 +61,17 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         initData()
         pickDate()
+        handleDialogEvent()
+
+    }
+
+    private fun handleDialogEvent() {
         binding.saveBtn.setOnClickListener {
             saveTask()
         }
         binding.cancelBtn.setOnClickListener {
             dismiss()
         }
-
     }
 
     private fun initData() {

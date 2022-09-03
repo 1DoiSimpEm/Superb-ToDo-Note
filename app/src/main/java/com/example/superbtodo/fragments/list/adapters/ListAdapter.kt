@@ -51,13 +51,7 @@ class ListAdapter(
         }
         holder.isDoneCheckBox.setOnClickListener {
             currentItem.isDone = true
-            sendData(
-                currentItem.id,
-                currentItem.date,
-                currentItem.content,
-                currentItem.timeLeft,
-                currentItem.isDone,
-            )
+            sendData(currentItem)
             notifyItemChanged(position)
         }
         if (holder.isDoneCheckBox.isChecked) {
@@ -140,13 +134,7 @@ class ListAdapter(
         }
     }
 
-    private fun sendData(
-        id: Int,
-        date: String,
-        content: String,
-        timeLeft: String,
-        isDone: Boolean,
-    ) {
-        callBack(Task(id, date, content, timeLeft, isDone))
+    private fun sendData(task: Task) {
+        callBack(task)
     }
 }

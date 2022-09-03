@@ -23,5 +23,6 @@ interface TaskDao {
     @Query("SELECT COUNT(id) FROM task_table")
     fun getCount(): Int
 
-
+    @Query("DELETE FROM task_table")
+    fun deleteAllTasks()
 }

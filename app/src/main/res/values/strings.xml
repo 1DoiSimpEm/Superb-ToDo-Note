@@ -17,4 +17,7 @@
     <string name="time_left">Time Left</string>
     <string name="superb_note">Superb Note</string>
     <string name="id">ID</string>
+    <string name="congrats">You have already done this task! Congrats!</string>
+    <string name="search">Search</string>
+    <string name="delete_all">Delete all</string>
 </resources>

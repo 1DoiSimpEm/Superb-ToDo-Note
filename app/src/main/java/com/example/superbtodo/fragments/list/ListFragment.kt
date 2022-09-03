@@ -3,6 +3,7 @@ package com.example.superbtodo.fragments.list
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -21,40 +22,49 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     private lateinit var mTaskViewModel: TaskViewModel
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
+    private lateinit var selectedTask: Task
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentListBinding.bind(view)
-        adapter = ListAdapter{ task ->
-            handlerTaskData(task)
+
+        initAdapter()
+        initViewModel()
+        navigate()
+        swipeToHandleEvent()
+    }
+
+    private fun navigate() {
+        binding.moveToAddBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_addingFragment)
         }
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun initViewModel() {
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
             adapter.setData(task)
         }
+    }
 
-//        isItemEmpty()
-        binding.moveToAddBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_addingFragment)
+    private fun initAdapter() {
+        adapter = ListAdapter { task ->
+            handlerTaskData(task)
         }
-        swipeToDeleteItem()
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
     }
 
     private fun handlerTaskData(task: Task) {
-        mTaskViewModel.updateTask(Task(task.id,task.date,task.content,task.timeLeft,task.isDone))
+        mTaskViewModel.updateTask(task)
     }
 
-    private fun isItemEmpty() {
-        if (adapter.itemCount == 0) {
-            binding.emptyLogo.visibility = View.VISIBLE
-        } else {
-            binding.emptyLogo.visibility = View.GONE
-        }
-    }
 
-    private fun swipeToDeleteItem() {
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+    private fun swipeToHandleEvent() {
+        ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -64,19 +74,53 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                deletedTask = adapter.getTaskAt(viewHolder.adapterPosition)
-                mTaskViewModel.deleteTask(adapter.getTaskAt(viewHolder.adapterPosition))
-                adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                Snackbar.make(
-                    binding.recyclerView,
-                    "${deletedTask.id} has just been deleted!",
-                    Snackbar.LENGTH_LONG
-                )
-                    .setAction("Undo") {
-                        mTaskViewModel.addTask(deletedTask)
-                    }.show()
+                when (direction) {
+                    ItemTouchHelper.LEFT -> {
+                        deletedTask = adapter.getTaskAt(viewHolder.adapterPosition)
+                        mTaskViewModel.deleteTask(deletedTask)
+                        adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                        Snackbar.make(
+                            binding.recyclerView,
+                            "${deletedTask.content} has just been deleted!",
+                            Snackbar.LENGTH_LONG
+                        )
+                            .setAction("Undo") {
+                                mTaskViewModel.addTask(deletedTask)
+                            }.show()
+                    }
+                    ItemTouchHelper.RIGHT -> {
+                        selectedTask = adapter.getTaskAt(viewHolder.adapterPosition)
+                        if (!selectedTask.isDone) {
+                            selectedTask.isDone = true
+                            mTaskViewModel.updateTask(selectedTask)
+                            adapter.notifyItemChanged(viewHolder.adapterPosition)
+                            Snackbar.make(
+                                binding.recyclerView,
+                                "You have just done ${selectedTask.content} task!",
+                                Snackbar.LENGTH_LONG
+                            )
+                                .setAction("Undo") {
+                                    selectedTask.isDone = false
+                                    mTaskViewModel.updateTask(selectedTask)
+                                    adapter.notifyItemChanged(viewHolder.adapterPosition)
+                                }.show()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "You have already done this task!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            mTaskViewModel.updateTask(selectedTask)
+                            adapter.notifyItemChanged(viewHolder.adapterPosition)
+                        }
+
+                    }
+
+                }
+
             }
         }).attachToRecyclerView(binding.recyclerView)
     }
+
 
 }
