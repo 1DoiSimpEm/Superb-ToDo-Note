@@ -48,7 +48,9 @@ class ListAdapter(
         holder.taskLayout.setOnClickListener {
             if (currentItem.isDone) {
                 val action =
-                    TrashBinFragmentDirections.actionDoneFragmentToUpdateTaskDialogFragment(currentItem)
+                    TrashBinFragmentDirections.actionDoneFragmentToUpdateTaskDialogFragment(
+                        currentItem
+                    )
                 holder.itemView.findNavController().navigate(action)
             } else {
                 val action =
@@ -98,6 +100,7 @@ class ListAdapter(
                     hourly.parse(holder.timeTextView.text.toString()) as Date
                 )
                 tasks[position].timeLeft = holder.timeLeftTextView.text.toString()
+
                 periodicUpdate?.let { handler?.postDelayed(it, 1000) }
             } catch (e: Exception) {
                 e.printStackTrace()

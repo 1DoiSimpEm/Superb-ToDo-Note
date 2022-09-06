@@ -47,13 +47,12 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
             adapter.setData(task)
-            if(task.size==0)
-            {
-                binding.emptyLogo.visibility= View.VISIBLE
-            }
-            else{
+            if (task.size == 0) {
+                binding.emptyLogo.visibility = View.VISIBLE
+            } else {
                 binding.emptyLogo.visibility = View.GONE
             }
+
         }
     }
 
@@ -128,12 +127,11 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
             }
 
 
-
         }).attachToRecyclerView(binding.recyclerView)
     }
 
     private fun menuSelection() {
-        binding.toolbar.setOnMenuItemClickListener { menu->
+        binding.toolbar.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
                 R.id.menu_search -> {
                     Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
@@ -143,20 +141,19 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                     true
                 }
                 R.id.menu_delete -> {
-                    Toast.makeText(context, "DELETED ALL TASKS", Toast.LENGTH_LONG).show()
                     mTaskViewModel.deleteAllNotDoneTask()
                     true
                 }
                 R.id.menu_sortByDate -> {
                     mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy{it.date}
+                        task.sortBy { it.date }
                         adapter.setData(task)
                     }
                     true
                 }
                 R.id.menu_sortByTitle -> {
                     mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy{it.title}
+                        task.sortBy { it.title }
                         adapter.setData(task)
                     }
                     true

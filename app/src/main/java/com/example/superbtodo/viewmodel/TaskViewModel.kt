@@ -59,6 +59,6 @@ class TaskViewModel(
 
     fun readDoneData(): LiveData<MutableList<Task>> = repository.readDoneData()
 
-
+    fun searchIsDoneDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> = repository.searchIsDoneDbByTitle(searchQuery)
 
 }

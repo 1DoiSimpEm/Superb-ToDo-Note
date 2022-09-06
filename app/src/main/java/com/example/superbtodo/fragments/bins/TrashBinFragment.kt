@@ -35,8 +35,6 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
         swipeToHandleEvent()
     }
 
-
-
     private fun initViewModel() {
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readDoneData().observe(viewLifecycleOwner) { task ->
@@ -137,7 +135,6 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
                     true
                 }
                 R.id.menu_delete -> {
-                    Toast.makeText(context, "DELETED ALL TASKS", Toast.LENGTH_LONG).show()
                     mTaskViewModel.deleteAllDoneTask()
                     true
                 }
@@ -177,7 +174,7 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
     private fun searchDB(query: String) {
         val searchQuery = "%$query%"
 
-        mTaskViewModel.searchDbByTitle(searchQuery).observe(this) { list ->
+        mTaskViewModel.searchIsDoneDbByTitle(searchQuery).observe(this) { list ->
             list.let {
                 adapter.setData(it)
             }
