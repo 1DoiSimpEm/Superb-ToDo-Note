@@ -1,5 +1,6 @@
 package com.example.superbtodo.fragments.list
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -32,13 +33,9 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         initAdapter()
         initViewModel()
         menuSelection()
-        navigate()
         swipeToHandleEvent()
-
+        navigate()
     }
-
-
-
 
     private fun navigate() {
         binding.moveToAddBtn.setOnClickListener {
@@ -48,7 +45,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
 
     private fun initViewModel() {
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
-        mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
+        mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
             adapter.setData(task)
             if(task.size==0)
             {
@@ -129,6 +126,9 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 }
 
             }
+
+
+
         }).attachToRecyclerView(binding.recyclerView)
     }
 
@@ -144,22 +144,20 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 }
                 R.id.menu_delete -> {
                     Toast.makeText(context, "DELETED ALL TASKS", Toast.LENGTH_LONG).show()
-                    mTaskViewModel.deleteAllTask()
+                    mTaskViewModel.deleteAllNotDoneTask()
                     true
                 }
                 R.id.menu_sortByDate -> {
-                    mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
+                    mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
                         task.sortBy{it.date}
                         adapter.setData(task)
-
                     }
                     true
                 }
                 R.id.menu_sortByTitle -> {
-                    mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
+                    mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
                         task.sortBy{it.title}
                         adapter.setData(task)
-
                     }
                     true
                 }

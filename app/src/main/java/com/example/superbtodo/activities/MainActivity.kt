@@ -3,7 +3,6 @@ package com.example.superbtodo.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
 import androidx.appcompat.app.ActionBar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment

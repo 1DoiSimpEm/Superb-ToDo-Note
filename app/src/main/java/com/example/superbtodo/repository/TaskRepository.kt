@@ -1,6 +1,7 @@
 package com.example.superbtodo.repository
 
 import androidx.lifecycle.LiveData
+import androidx.room.Query
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.data.TaskDao
 
@@ -21,9 +22,14 @@ class TaskRepository(private val taskDao: TaskDao) {
         taskDao.updateTask(task)
     }
 
-    fun deleteAllTasks() {
-        taskDao.deleteAllTasks()
-    }
+    fun deleteAllNotDoneTasks() = taskDao.deleteAllNotDoneTasks()
+
+    fun deleteAllDoneTasks()=taskDao.deleteAllDoneTasks()
+
+    fun readNotDoneData(): LiveData<MutableList<Task>> = taskDao.readNotDoneData()
+
+    fun readDoneData(): LiveData<MutableList<Task>> = taskDao.readDoneData()
+
 
     fun searchDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> = taskDao.searchDbByTitle(searchQuery)
 

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class TaskViewModel(
     application: Application,
 ) : AndroidViewModel(application) {
-    val readAllData: LiveData<MutableList<Task>>
+    private val readAllData: LiveData<MutableList<Task>>
     private val repository: TaskRepository
 
     init {
@@ -41,14 +41,23 @@ class TaskViewModel(
         }
     }
 
-    fun deleteAllTask() {
+    fun deleteAllNotDoneTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllTasks()
+            repository.deleteAllNotDoneTasks()
+        }
+    }
+
+    fun deleteAllDoneTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllDoneTasks()
         }
     }
 
     fun searchDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> =  repository.searchDbByTitle(searchQuery)
 
+    fun readNotDoneData(): LiveData<MutableList<Task>> = repository.readNotDoneData()
+
+    fun readDoneData(): LiveData<MutableList<Task>> = repository.readDoneData()
 
 
 

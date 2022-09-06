@@ -19,9 +19,17 @@ interface TaskDao {
     @Query("SELECT * FROM task_table")
     fun readAllData(): LiveData<MutableList<Task>>
 
+    @Query("SELECT * FROM task_table WHERE isDone=0" )
+    fun readNotDoneData(): LiveData<MutableList<Task>>
 
-    @Query("DELETE FROM task_table")
-    fun deleteAllTasks()
+    @Query("SELECT * FROM task_table WHERE isDone=1" )
+    fun readDoneData(): LiveData<MutableList<Task>>
+
+    @Query("DELETE FROM task_table WHERE isDone =0")
+    fun deleteAllNotDoneTasks()
+
+    @Query("DELETE FROM task_table WHERE isDone =1")
+    fun deleteAllDoneTasks()
 
     @Query("SELECT * FROM task_table WHERE title LIKE :searchQuery ")
     fun searchDbByTitle(searchQuery: String) : LiveData<MutableList<Task>>
