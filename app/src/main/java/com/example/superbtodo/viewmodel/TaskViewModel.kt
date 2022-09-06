@@ -49,7 +49,6 @@ class TaskViewModel(
 
     fun searchDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> =  repository.searchDbByTitle(searchQuery)
 
-    fun sortAllData(choice : Int):LiveData<MutableList<Task>> = repository.sortAllData(choice)
 
 
 

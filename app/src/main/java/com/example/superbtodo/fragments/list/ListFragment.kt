@@ -133,11 +133,11 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     }
 
     private fun menuSelection() {
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
+        binding.toolbar.setOnMenuItemClickListener { menu->
+            when (menu.itemId) {
                 R.id.menu_search -> {
                     Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
-                    val searchView = it.actionView as? SearchView
+                    val searchView = menu.actionView as? SearchView
                     searchView?.isSubmitButtonEnabled = true
                     searchView?.setOnQueryTextListener(this)
                     true
@@ -148,18 +148,18 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                     true
                 }
                 R.id.menu_sortByDate -> {
-                    mTaskViewModel.sortAllData(1).observe(viewLifecycleOwner) { list ->
-                        list.let { task ->
-                            adapter.setData(task)
-                        }
+                    mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
+                        task.sortBy{it.date}
+                        adapter.setData(task)
+
                     }
                     true
                 }
                 R.id.menu_sortByTitle -> {
-                    mTaskViewModel.sortAllData(2).observe(viewLifecycleOwner) { list ->
-                        list.let { task ->
-                            adapter.setData(task)
-                        }
+                    mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
+                        task.sortBy{it.title}
+                        adapter.setData(task)
+
                     }
                     true
                 }

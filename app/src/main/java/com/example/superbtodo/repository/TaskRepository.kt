@@ -27,5 +27,4 @@ class TaskRepository(private val taskDao: TaskDao) {
 
     fun searchDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> = taskDao.searchDbByTitle(searchQuery)
 
-    fun sortAllData(choice : Int):LiveData<MutableList<Task>> = taskDao.sortAllData(choice)
 }

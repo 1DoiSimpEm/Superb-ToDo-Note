@@ -26,4 +26,5 @@
     <string name="sortByTitle">Sort By Title</string>
     <string name="home">Home</string>
     <string name="done">Done</string>
+    <string name="task_list">Task List</string>
 </resources>

@@ -16,7 +16,7 @@ interface TaskDao {
     @Update
     suspend fun updateTask(task: Task)
 
-    @Query("SELECT * FROM task_table ORDER BY title ASC")
+    @Query("SELECT * FROM task_table")
     fun readAllData(): LiveData<MutableList<Task>>
 
 
@@ -26,9 +26,5 @@ interface TaskDao {
     @Query("SELECT * FROM task_table WHERE title LIKE :searchQuery ")
     fun searchDbByTitle(searchQuery: String) : LiveData<MutableList<Task>>
 
-    @Query("SELECT * FROM task_table ORDER BY " +
-            "CASE WHEN:choice=1 THEN date END ASC," +
-            "CASE WHEN:choice=2 THEN title END ASC")
-    fun sortAllData(choice : Int ):LiveData<MutableList<Task>>
 
 }

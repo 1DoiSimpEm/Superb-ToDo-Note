@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/home" />
+        android:icon="@drawable/ic_baseline_view_list_24"
+        android:title="@string/task_list" />
     <item
         android:id="@+id/doneFragment"
         android:icon="@drawable/ic_baseline_done_outline_24"

@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideStuff() {
-        window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_FULLSCREEN
         actionBar = supportActionBar!!
         actionBar.hide()
     }
