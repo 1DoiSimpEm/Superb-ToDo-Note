@@ -20,4 +20,10 @@
     <string name="congrats">You have already done this task! Congrats!</string>
     <string name="search">Search</string>
     <string name="delete_all">Delete all</string>
+    <string name="your_task_title">Your task title</string>
+    <string name="sort">Sort</string>
+    <string name="sortByDate">Sort By Date</string>
+    <string name="sortByTitle">Sort By Title</string>
+    <string name="home">Home</string>
+    <string name="done">Done</string>
 </resources>

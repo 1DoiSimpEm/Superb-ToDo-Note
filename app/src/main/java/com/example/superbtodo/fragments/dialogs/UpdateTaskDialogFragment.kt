@@ -75,20 +75,28 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     }
 
     private fun initData() {
-        binding.TitleEditTxt.setText(args.currentTask.content)
+        binding.titleTxt.setText(args.currentTask.title)
+        binding.descriptionTxt.setText(args.currentTask.description)
         binding.dateTxt.text = args.currentTask.date
         binding.specificTimeTxt.text = args.currentTask.timeLeft
     }
 
     private fun saveTask() {
-        val mContent = binding.TitleEditTxt.text.toString()
-        if (mContent.isEmpty()) {
+        val mTitle = binding.titleTxt.text.toString()
+        val mDescription = binding.descriptionTxt.text.toString()
+        if (mTitle.isEmpty()) {
+            Toast.makeText(context, "Task title must not be empty!", Toast.LENGTH_LONG).show()
+        }
+        else if(mDescription.isEmpty())
+        {
             Toast.makeText(context, "Task description must not be empty!", Toast.LENGTH_LONG).show()
-        } else if (!this::date.isInitialized) {
+        }
+        else if (!this::date.isInitialized) {
             val task = Task(
                 args.currentTask.id,
                 args.currentTask.date,
-                mContent,
+                mTitle,
+                mDescription,
                 args.currentTask.timeLeft,
                 args.currentTask.isDone
             )
@@ -98,7 +106,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
             val mDate = date
             val mTimeLeft = dateLeft
             val isDone = mTimeLeft.contains("-")
-            val task = Task(args.currentTask.id, mDate, mContent, mTimeLeft, isDone)
+            val task = Task(args.currentTask.id, mDate, mTitle, mDescription,mTimeLeft, isDone)
             mTaskViewModel.updateTask(task)
             dismiss()
         }
@@ -155,14 +163,14 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
-        date = "$savedDay.${savedMonth + 1}.$savedYear"
+        date=String.format("%02d.%02d.%04d",savedDay,savedMonth+1,savedYear)
         TimePickerDialog(requireContext(), this, hour, minute, true).show()
     }
 
     override fun onTimeSet(viewe: TimePicker?, hourOfDay: Int, minute: Int) {
         savedHour = hourOfDay
         savedMinute = minute
-        date += " $savedHour:$savedMinute"
+        date += String.format(" %02d:%02d",savedHour,savedMinute)
         binding.apply {
             dateTxt.text = date
         }

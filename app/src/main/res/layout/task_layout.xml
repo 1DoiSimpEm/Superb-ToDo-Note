@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:id="@+id/contentTxt"
+        android:id="@+id/titleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -21,12 +21,19 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
+    <RadioButton
+        android:id="@+id/checkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/ic_baseline_done_24"
+        android:gravity="bottom|center_horizontal" />
+
     <TextView
         android:id="@+id/timeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_toEndOf="@+id/contentTxt"
+        android:layout_marginTop="18dp"
+        android:layout_toEndOf="@+id/checkBtn"
         android:text="@string/date"
         android:textColor="@color/black"
         android:textSize="15sp"
@@ -35,18 +42,13 @@
     <TextView
         android:id="@+id/timeLeftTxt"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/timeTxt"
-        android:layout_toEndOf="@+id/checkBtn"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
         android:text="@string/time_left"
         android:textColor="@color/black" />
 
 
-    <RadioButton
-        android:id="@+id/checkBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@drawable/ic_baseline_done_24"
-        android:gravity="bottom|center_horizontal" />
+
 
 </RelativeLayout>

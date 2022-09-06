@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/listFragment"
+        android:id="@+id/homeFragment"
         android:name="com.example.superbtodo.fragments.list.ListFragment"
         android:label="Tasks"
         tools:layout="@layout/fragment_list" >
@@ -17,6 +17,11 @@
         <action
             android:id="@+id/action_listFragment_to_updateTaskDialogFragment"
             app:destination="@id/updateTaskDialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_doneFragment"
+            app:destination="@id/doneFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/addingFragment"
@@ -25,7 +30,7 @@
         tools:layout="@layout/fragment_adding" >
         <action
             android:id="@+id/action_addingFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            app:destination="@id/homeFragment" />
     </fragment>
     <dialog
         android:id="@+id/updateTaskDialogFragment"
@@ -33,9 +38,14 @@
         android:label="UpdateTaskDialogFragment" >
         <action
             android:id="@+id/action_updateTaskDialogFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            app:destination="@id/homeFragment" />
         <argument
             android:name="currentTask"
             app:argType="com.example.superbtodo.data.Task" />
     </dialog>
+    <fragment
+        android:id="@+id/doneFragment"
+        android:name="com.example.superbtodo.fragments.bins.TrashBinFragment"
+        android:label="fragment_trash_bin"
+        tools:layout="@layout/fragment_trash_bin" />
 </navigation>

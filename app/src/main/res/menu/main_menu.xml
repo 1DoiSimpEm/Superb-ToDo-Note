@@ -6,16 +6,39 @@
         android:id="@+id/menu_search"
         android:title="@string/search"
         android:icon="@drawable/ic_search"
-        android:iconTint="@color/black"
-        app:showAsAction="ifRoom"
+        android:iconTint="@color/white"
+        app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         tools:targetApi="o" />
     <item
         android:id="@+id/menu_delete"
         android:title="@string/delete_all"
         android:icon="@drawable/ic_baseline_delete_24"
-        android:iconTint="@color/black"
+        android:iconTint="@color/white"
         app:showAsAction="ifRoom"
-        tools:targetApi="o"
-        />
+        tools:targetApi="o"/>
+
+    <item
+        android:id="@+id/menu_sort"
+        android:title="@string/sort"
+        android:icon="@drawable/ic_baseline_sort_24"
+        android:iconTint="@color/white"
+        app:showAsAction="ifRoom"
+        tools:targetApi="o">
+        <menu>
+            <item
+                android:id="@+id/menu_sortByDate"
+                android:title="@string/sortByDate"
+                tools:targetApi="o" />
+            <item
+                android:id="@+id/menu_sortByTitle"
+                android:title="@string/sortByTitle"
+                tools:targetApi="o" />
+        </menu>
+
+    </item>
+
+
+
+
 </menu>

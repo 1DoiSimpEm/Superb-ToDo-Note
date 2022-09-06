@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -16,7 +17,7 @@ import com.example.superbtodo.databinding.FragmentListBinding
 import com.example.superbtodo.fragments.list.adapters.ListAdapter
 import com.google.android.material.snackbar.Snackbar
 
-class ListFragment : Fragment(R.layout.fragment_list) {
+class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentListBinding
     private lateinit var mTaskViewModel: TaskViewModel
@@ -24,16 +25,20 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentListBinding.bind(view)
-
+        binding.toolbar.inflateMenu(R.menu.main_menu)
         initAdapter()
         initViewModel()
+        menuSelection()
         navigate()
         swipeToHandleEvent()
+
     }
+
+
+
 
     private fun navigate() {
         binding.moveToAddBtn.setOnClickListener {
@@ -45,6 +50,13 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readAllData.observe(viewLifecycleOwner) { task ->
             adapter.setData(task)
+            if(task.size==0)
+            {
+                binding.emptyLogo.visibility= View.VISIBLE
+            }
+            else{
+                binding.emptyLogo.visibility = View.GONE
+            }
         }
     }
 
@@ -81,7 +93,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                         adapter.notifyItemRemoved(viewHolder.adapterPosition)
                         Snackbar.make(
                             binding.recyclerView,
-                            "${deletedTask.content} has just been deleted!",
+                            "${deletedTask.title} has just been deleted!",
                             Snackbar.LENGTH_LONG
                         )
                             .setAction("Undo") {
@@ -96,7 +108,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                             adapter.notifyItemChanged(viewHolder.adapterPosition)
                             Snackbar.make(
                                 binding.recyclerView,
-                                "You have just done ${selectedTask.content} task!",
+                                "You have just done ${selectedTask.title} task!",
                                 Snackbar.LENGTH_LONG
                             )
                                 .setAction("Undo") {
@@ -113,14 +125,75 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                             mTaskViewModel.updateTask(selectedTask)
                             adapter.notifyItemChanged(viewHolder.adapterPosition)
                         }
-
                     }
-
                 }
 
             }
         }).attachToRecyclerView(binding.recyclerView)
     }
 
+    private fun menuSelection() {
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_search -> {
+                    Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
+                    val searchView = it.actionView as? SearchView
+                    searchView?.isSubmitButtonEnabled = true
+                    searchView?.setOnQueryTextListener(this)
+                    true
+                }
+                R.id.menu_delete -> {
+                    Toast.makeText(context, "DELETED ALL TASKS", Toast.LENGTH_LONG).show()
+                    mTaskViewModel.deleteAllTask()
+                    true
+                }
+                R.id.menu_sortByDate -> {
+                    mTaskViewModel.sortAllData(1).observe(viewLifecycleOwner) { list ->
+                        list.let { task ->
+                            adapter.setData(task)
+                        }
+                    }
+                    true
+                }
+                R.id.menu_sortByTitle -> {
+                    mTaskViewModel.sortAllData(2).observe(viewLifecycleOwner) { list ->
+                        list.let { task ->
+                            adapter.setData(task)
+                        }
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            searchDB(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null) {
+            searchDB(query)
+        }
+        return true
+    }
+
+    private fun searchDB(query: String) {
+        val searchQuery = "%$query%"
+
+        mTaskViewModel.searchDbByTitle(searchQuery).observe(this) { list ->
+            list.let {
+                adapter.setData(it)
+            }
+        }
+    }
 
 }
+
+
+
+

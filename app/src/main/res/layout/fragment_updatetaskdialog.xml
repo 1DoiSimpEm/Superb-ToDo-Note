@@ -10,11 +10,12 @@
     tools:context=".fragments.add.AddingFragment">
 
     <EditText
-        android:id="@+id/Title_editTxt"
+        android:id="@+id/descriptionTxt"
         android:layout_width="262dp"
         android:layout_height="69dp"
         android:autofillHints="true"
-        android:background="@drawable/layout_bg"
+        android:layout_marginTop="100dp"
+        android:background="@color/white_bg"
         android:ems="10"
         android:hint="@string/what_to_do"
         android:inputType="textPersonName"
@@ -28,14 +29,14 @@
         android:id="@+id/datePickerBtn"
         android:layout_width="113dp"
         android:layout_height="53dp"
-        android:layout_below="@+id/Title_editTxt"
+        android:layout_below="@+id/descriptionTxt"
         android:layout_marginTop="20dp"
         android:background="@drawable/layout_bg"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Title_editTxt">
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -54,7 +55,7 @@
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="350dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/layout_bg"
         android:backgroundTint="#49cb8f"
@@ -73,7 +74,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="350dp"
         android:background="@drawable/layout_bg"
         android:backgroundTint="#fe171d"
         android:clickable="true"
@@ -88,7 +89,7 @@
         android:id="@+id/dateTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Title_editTxt"
+        android:layout_below="@+id/descriptionTxt"
         android:layout_marginTop="20dp"
         android:text="@string/time_here"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,6 +105,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTxt" />
+
+    <EditText
+        android:id="@+id/titleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/your_task_title"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="Your task title"
+        android:inputType="text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

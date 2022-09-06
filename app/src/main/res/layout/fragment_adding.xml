@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/white_bg"
     tools:context=".fragments.add.AddingFragment"
     tools:ignore="ExtraText">
 
+
     <EditText
-        android:id="@+id/Title_editTxt"
+        android:id="@+id/descriptionTxt"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.194"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Title_editTxt">
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toEndOf="@+id/datePickerBtn"
-        app:layout_constraintTop_toBottomOf="@+id/Title_editTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt" />
     />
 
     <TextView
@@ -93,7 +93,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toEndOf="@+id/datePickerBtn"
-        app:layout_constraintTop_toBottomOf="@+id/Title_editTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt" />
+
+    <EditText
+        android:id="@+id/titleEdTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:background="@color/white_bg"
+        android:ems="10"
+        android:hint="@string/your_task_title"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="Your task title" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

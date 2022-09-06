@@ -1,11 +1,9 @@
 package com.example.superbtodo.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.data.TaskDao
-import com.example.superbtodo.data.TaskDatabase
-import kotlinx.coroutines.flow.Flow
+
 
 // a repository class abstracts access to multiple data sources
 class TaskRepository(private val taskDao: TaskDao) {
@@ -23,9 +21,11 @@ class TaskRepository(private val taskDao: TaskDao) {
         taskDao.updateTask(task)
     }
 
-    suspend fun deleteAllTasks() {
+    fun deleteAllTasks() {
         taskDao.deleteAllTasks()
     }
 
+    fun searchDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> = taskDao.searchDbByTitle(searchQuery)
 
+    fun sortAllData(choice : Int):LiveData<MutableList<Task>> = taskDao.sortAllData(choice)
 }

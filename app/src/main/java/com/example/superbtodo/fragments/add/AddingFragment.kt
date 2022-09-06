@@ -1,6 +1,5 @@
 package com.example.superbtodo.fragments.add
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -62,7 +61,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
 
 
     private fun timerUpdate() {
-        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault())
+        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         handler = Handler(Looper.getMainLooper())
         var periodicUpdate: Runnable? = null
         periodicUpdate = Runnable {
@@ -71,7 +70,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
                     hourly.format(System.currentTimeMillis()),
                     hourly.parse(date) as Date
                 )
-                binding.specificTimeTxt.text=dateLeft
+                binding.specificTimeTxt.text = dateLeft
                 binding.specificTimeTxt.visibility = View.VISIBLE
                 periodicUpdate?.let { handler?.postDelayed(it, 1000) }
             } catch (e: Exception) {
@@ -82,7 +81,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
     }
 
     private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm",Locale.getDefault())
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         val dob = sdf.parse(timeNow)
         val days = (timeEnd.time - dob!!.time) / 86400000
         val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
@@ -111,14 +110,14 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
         savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
-        date = "$savedDay.${savedMonth + 1}.$savedYear"
+        date = String.format("%02d.%02d.%04d", savedDay, savedMonth + 1, savedYear)
         TimePickerDialog(requireContext(), this, hour, minute, true).show()
     }
 
     override fun onTimeSet(viewe: TimePicker?, hourOfDay: Int, minute: Int) {
         savedHour = hourOfDay
         savedMinute = minute
-        date += " $savedHour:$savedMinute"
+        date += String.format(" %02d:%02d", savedHour, savedMinute)
         binding.apply {
             dateTxt.text = date
             dateTxt.visibility = View.VISIBLE
@@ -128,8 +127,11 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
     }
 
     private fun addNewTask() {
-        val mContent = binding.TitleEditTxt.text.toString()
-        if (mContent.isEmpty()) {
+        val mTitle = binding.titleEdTxt.text.toString()
+        val mDescription = binding.descriptionTxt.text.toString()
+        if (mTitle.isEmpty()) {
+            Toast.makeText(context, "Task title must not be empty!", Toast.LENGTH_LONG).show()
+        } else if (mDescription.isEmpty()) {
             Toast.makeText(context, "Task description must not be empty!", Toast.LENGTH_LONG).show()
         } else if (!this::date.isInitialized) {
             Toast.makeText(context, "You did not pick the date and time!", Toast.LENGTH_LONG).show()
@@ -137,7 +139,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
             val mDate = date
             val mTimeLeft = dateLeft
             val isDone = mTimeLeft.contains("-")
-            val task = Task(0, mDate, mContent, mTimeLeft, isDone)
+            val task = Task(0, mDate, mTitle, mDescription, mTimeLeft, isDone)
             mTaskViewModel.addTask(task)
             findNavController().navigate(R.id.action_addingFragment_to_listFragment)
         }

@@ -25,7 +25,7 @@ class ListAdapter(
     private var handler: Handler? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val contentTextView = itemView.findViewById(R.id.contentTxt) as TextView
+        val titleTextView = itemView.findViewById(R.id.titleTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
         val timeLeftTextView = itemView.findViewById(R.id.timeLeftTxt) as TextView
         val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as RadioButton
@@ -40,11 +40,12 @@ class ListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = tasks[position]
-        holder.contentTextView.text = currentItem.content
+        holder.titleTextView.text = currentItem.title
         holder.timeTextView.text = currentItem.date
         holder.isDoneCheckBox.isChecked = currentItem.isDone
         timerUpdate(holder, position)
         holder.taskLayout.setOnClickListener {
+            Toast.makeText(holder.itemView.context,currentItem.id.toString(),Toast.LENGTH_LONG).show()
             val action =
                 ListFragmentDirections.actionListFragmentToUpdateTaskDialogFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
@@ -107,30 +108,24 @@ class ListAdapter(
         return "$days days $hours hours $minutes minutes left"
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun normalizeText(holder: ViewHolder) {
         holder.timeLeftTextView.visibility = View.VISIBLE
-        holder.contentTextView.apply {
+        holder.titleTextView.apply {
             paintFlags = 0
-            setTextColor(R.color.black)
         }
         holder.timeTextView.apply {
             paintFlags = 0
-            setTextColor(R.color.black)
         }
     }
 
 
-    @SuppressLint("ResourceAsColor")
     private fun strikeThroughText(holder: ViewHolder) {
         holder.timeLeftTextView.visibility = View.GONE
-        holder.contentTextView.apply {
-            paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            setTextColor(R.color.gone)
+        holder.titleTextView.apply {
+            paintFlags =  Paint.STRIKE_THRU_TEXT_FLAG
         }
         holder.timeTextView.apply {
-            paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            setTextColor(R.color.gone)
+            paintFlags =  Paint.STRIKE_THRU_TEXT_FLAG
         }
     }
 

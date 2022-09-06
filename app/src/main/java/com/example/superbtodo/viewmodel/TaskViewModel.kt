@@ -11,7 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 // ViewModel is to provide data to the ui and survive configuration changes and it also acts as a communication center between the Repository and the UI
-class TaskViewModel(application: Application) : AndroidViewModel(application) {
+class TaskViewModel(
+    application: Application,
+) : AndroidViewModel(application) {
     val readAllData: LiveData<MutableList<Task>>
     private val repository: TaskRepository
 
@@ -39,10 +41,16 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deleteAllTask()
-    {
-        viewModelScope.launch(Dispatchers.IO){
+    fun deleteAllTask() {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllTasks()
         }
     }
+
+    fun searchDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> =  repository.searchDbByTitle(searchQuery)
+
+    fun sortAllData(choice : Int):LiveData<MutableList<Task>> = repository.sortAllData(choice)
+
+
+
 }

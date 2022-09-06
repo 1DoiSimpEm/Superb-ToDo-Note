@@ -9,15 +9,18 @@
         <entry key="..\:/SuperbToDo/app/src/main/res/drawable/ic_calendar.xml" value="0.212" />
         <entry key="..\:/SuperbToDo/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1605" />
         <entry key="..\:/SuperbToDo/app/src/main/res/drawable/layout_bg.xml" value="0.127" />
-        <entry key="..\:/SuperbToDo/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/SuperbToDo/app/src/main/res/layout-land/fragment_list.xml" value="0.21957671957671956" />
+        <entry key="..\:/SuperbToDo/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/SuperbToDo/app/src/main/res/layout/activity_splash_screen.xml" value="0.22826086956521738" />
         <entry key="..\:/SuperbToDo/app/src/main/res/layout/custom_task.xml" value="0.22826086956521738" />
         <entry key="..\:/SuperbToDo/app/src/main/res/layout/fragment_adding.xml" value="0.25" />
         <entry key="..\:/SuperbToDo/app/src/main/res/layout/fragment_list.xml" value="0.21285140562248997" />
-        <entry key="..\:/SuperbToDo/app/src/main/res/layout/fragment_updatetaskdialog.xml" value="0.22826086956521738" />
+        <entry key="..\:/SuperbToDo/app/src/main/res/layout/fragment_trash_bin.xml" value="0.23641304347826086" />
+        <entry key="..\:/SuperbToDo/app/src/main/res/layout/fragment_updatetaskdialog.xml" value="0.2" />
         <entry key="..\:/SuperbToDo/app/src/main/res/layout/task_layout.xml" value="0.264" />
         <entry key="..\:/SuperbToDo/app/src/main/res/menu-v26/main_menu.xml" value="0.128125" />
-        <entry key="..\:/SuperbToDo/app/src/main/res/menu/main_menu.xml" value="0.128125" />
+        <entry key="..\:/SuperbToDo/app/src/main/res/menu/bottom_menu.xml" value="0.259375" />
+        <entry key="..\:/SuperbToDo/app/src/main/res/menu/main_menu.xml" value="0.4" />
         <entry key="..\:/SuperbToDo/app/src/main/res/xml/anim.xml" value="0.11614583333333334" />
       </map>
     </option>
