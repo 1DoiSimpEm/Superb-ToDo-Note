@@ -47,5 +47,9 @@
         android:id="@+id/doneFragment"
         android:name="com.example.superbtodo.fragments.bins.TrashBinFragment"
         android:label="fragment_trash_bin"
-        tools:layout="@layout/fragment_trash_bin" />
+        tools:layout="@layout/fragment_trash_bin" >
+        <action
+            android:id="@+id/action_doneFragment_to_updateTaskDialogFragment"
+            app:destination="@id/updateTaskDialogFragment" />
+    </fragment>
 </navigation>

@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
+import com.example.superbtodo.fragments.bins.TrashBinFragmentDirections
 import com.example.superbtodo.fragments.list.ListFragmentDirections
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,10 +46,16 @@ class ListAdapter(
         holder.isDoneCheckBox.isChecked = currentItem.isDone
         timerUpdate(holder, position)
         holder.taskLayout.setOnClickListener {
-            Toast.makeText(holder.itemView.context,currentItem.id.toString(),Toast.LENGTH_LONG).show()
-            val action =
-                ListFragmentDirections.actionListFragmentToUpdateTaskDialogFragment(currentItem)
-            holder.itemView.findNavController().navigate(action)
+            if (currentItem.isDone) {
+                val action =
+                    TrashBinFragmentDirections.actionDoneFragmentToUpdateTaskDialogFragment(currentItem)
+                holder.itemView.findNavController().navigate(action)
+            } else {
+                val action =
+                    ListFragmentDirections.actionListFragmentToUpdateTaskDialogFragment(currentItem)
+                holder.itemView.findNavController().navigate(action)
+            }
+
         }
         holder.isDoneCheckBox.setOnClickListener {
             currentItem.isDone = true
@@ -122,10 +129,10 @@ class ListAdapter(
     private fun strikeThroughText(holder: ViewHolder) {
         holder.timeLeftTextView.visibility = View.GONE
         holder.titleTextView.apply {
-            paintFlags =  Paint.STRIKE_THRU_TEXT_FLAG
+            paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
         holder.timeTextView.apply {
-            paintFlags =  Paint.STRIKE_THRU_TEXT_FLAG
+            paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
     }
 
