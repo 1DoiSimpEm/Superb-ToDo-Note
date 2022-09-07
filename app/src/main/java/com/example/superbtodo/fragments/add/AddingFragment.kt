@@ -145,4 +145,6 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
         }
 
     }
+
+
 }

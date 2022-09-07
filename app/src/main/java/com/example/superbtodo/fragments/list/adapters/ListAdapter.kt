@@ -15,6 +15,7 @@ import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.fragments.bins.TrashBinFragmentDirections
 import com.example.superbtodo.fragments.list.ListFragmentDirections
+import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,7 +31,7 @@ class ListAdapter(
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
         val timeLeftTextView = itemView.findViewById(R.id.timeLeftTxt) as TextView
         val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as RadioButton
-        val taskLayout = itemView.findViewById(R.id.taskLayout) as RelativeLayout
+        val taskLayout = itemView.findViewById(R.id.taskLayout) as MaterialCardView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -69,7 +70,6 @@ class ListAdapter(
         } else {
             normalizeText(holder)
         }
-
     }
 
 
@@ -100,7 +100,11 @@ class ListAdapter(
                     hourly.parse(holder.timeTextView.text.toString()) as Date
                 )
                 tasks[position].timeLeft = holder.timeLeftTextView.text.toString()
-
+                if (tasks[position].date ==  hourly.format(System.currentTimeMillis())){
+                    tasks[position].isDone = true
+                    sendData(tasks[position])
+                    notifyItemChanged(position)
+                }
                 periodicUpdate?.let { handler?.postDelayed(it, 1000) }
             } catch (e: Exception) {
                 e.printStackTrace()

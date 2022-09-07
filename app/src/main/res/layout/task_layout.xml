@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/taskLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,48 +9,60 @@
     android:layout_marginBottom="5dp"
     android:background="@drawable/layout_bg"
     android:backgroundTint="@color/white"
-    android:padding="20dp">
+    android:outlineAmbientShadowColor="@color/black"
+    android:outlineSpotShadowColor="@color/black"
+    android:padding="20dp"
+    app:cardCornerRadius="15dp"
+    tools:targetApi="p">
 
 
-    <TextView
-        android:id="@+id/titleTxt"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="top|center_horizontal"
-        android:text="@string/title"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="20dp">
 
-    <RadioButton
-        android:id="@+id/checkBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@drawable/ic_baseline_done_24"
-        android:gravity="bottom|center_horizontal" />
+        <TextView
+            android:id="@+id/titleTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="top|center_horizontal"
+            android:text="@string/title"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/timeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_toEndOf="@+id/checkBtn"
-        android:text="@string/date"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="italic" />
+        <RadioButton
+            android:id="@+id/checkBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_baseline_done_24"
+            android:gravity="bottom|center_horizontal" />
 
-    <TextView
-        android:id="@+id/timeLeftTxt"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/timeTxt"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="@string/time_left"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/timeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@+id/checkBtn"
+            android:text="@string/date"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/timeLeftTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timeTxt"
+            android:layout_marginStart="48dp"
+            android:text="@string/time_left"
+            android:textColor="@color/black" />
 
 
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

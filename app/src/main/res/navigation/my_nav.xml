@@ -21,7 +21,9 @@
             android:id="@+id/action_homeFragment_to_doneFragment"
             app:destination="@id/doneFragment"
             app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left" />
+            app:exitAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/addingFragment"
@@ -51,5 +53,12 @@
         <action
             android:id="@+id/action_doneFragment_to_updateTaskDialogFragment"
             app:destination="@id/updateTaskDialogFragment" />
+        <action
+            android:id="@+id/action_doneFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 </navigation>

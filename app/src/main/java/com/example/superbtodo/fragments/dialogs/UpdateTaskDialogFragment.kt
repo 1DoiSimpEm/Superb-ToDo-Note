@@ -79,6 +79,13 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         binding.descriptionTxt.setText(args.currentTask.description)
         binding.dateTxt.text = args.currentTask.date
         binding.specificTimeTxt.text = args.currentTask.timeLeft
+        if(args.currentTask.isDone)
+        {
+            binding.specificTimeTxt.visibility=View.GONE
+        }
+        else{
+            binding.specificTimeTxt.visibility=View.VISIBLE
+        }
     }
 
     private fun saveTask() {

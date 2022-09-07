@@ -1,7 +1,6 @@
 package com.example.superbtodo.repository
 
 import androidx.lifecycle.LiveData
-import androidx.room.Query
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.data.TaskDao
 
