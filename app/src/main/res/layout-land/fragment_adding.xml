@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.add.AddingFragment"
+    tools:ignore="ExtraText">
+
+
+    <EditText
+        android:id="@+id/descriptionTxt"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="136dp"
+        android:autofillHints="true"
+        android:background="@color/white_bg"
+        android:ems="10"
+        android:hint="@string/what_to_do"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/datePickerBtn"
+        android:layout_width="123dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/layout_bg"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.194"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/to_show_calendar"
+            android:src="@drawable/ic_calendar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:text="@string/date"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addBtn"
+        android:layout_width="119dp"
+        android:layout_height="59dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/layout_bg"
+        android:backgroundTint="#49cb8f"
+        android:clickable="true"
+        android:contentDescription="@string/adding_task"
+        android:focusable="true"
+        android:text="@string/add"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/dateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@string/time_here"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toEndOf="@+id/datePickerBtn"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt" />
+    />
+
+    <TextView
+        android:id="@+id/specificTimeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="@string/time_here"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toEndOf="@+id/datePickerBtn"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt" />
+
+    <EditText
+        android:id="@+id/titleEdTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:background="@color/white_bg"
+        android:ems="10"
+        android:hint="@string/your_task_title"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="Your task title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
