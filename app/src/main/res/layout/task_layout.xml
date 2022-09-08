@@ -46,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
+            android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/checkBtn"
             android:text="@string/date"
             android:textColor="@color/black"
@@ -57,8 +58,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/timeTxt"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="68dp"
             android:text="@string/time_left"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/lastUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timeLeftTxt"
+            android:layout_marginStart="68dp"
+            android:text="@string/last_updated"
             android:textColor="@color/black" />
 
 

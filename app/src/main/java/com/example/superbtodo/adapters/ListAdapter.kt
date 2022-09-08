@@ -1,4 +1,4 @@
-package com.example.superbtodo.fragments.list.adapters
+package com.example.superbtodo.adapters
 
 
 import android.annotation.SuppressLint
@@ -10,19 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.fragments.bins.TrashBinFragmentDirections
 import com.example.superbtodo.fragments.list.ListFragmentDirections
-import com.example.superbtodo.utils.TaskDiffUtil
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 
 class ListAdapter(
@@ -40,6 +36,7 @@ class ListAdapter(
         val timeLeftTextView = itemView.findViewById(R.id.timeLeftTxt) as TextView
         val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as RadioButton
         val taskLayout = itemView.findViewById(R.id.taskLayout) as MaterialCardView
+        val lastUpdateTextView = itemView.findViewById(R.id.lastUpdate) as TextView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,6 +50,7 @@ class ListAdapter(
         holder.titleTextView.text = currentItem.title
         holder.timeTextView.text = currentItem.date
         holder.isDoneCheckBox.isChecked = currentItem.isDone
+        holder.lastUpdateTextView.text = currentItem.lastUpdate
         timerUpdate(holder, position)
         holder.taskLayout.setOnClickListener {
             if (currentItem.isDone) {
@@ -86,11 +84,13 @@ class ListAdapter(
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(newTasks: MutableList<Task>) {
         val diffUtil = TaskDiffUtil(tasks, newTasks)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.tasks = newTasks
-        diffResult.dispatchUpdatesTo(this)
+//        diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
 

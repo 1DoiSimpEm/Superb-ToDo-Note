@@ -39,6 +39,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
     private var savedMinute = 0
     private lateinit var date: String
     private lateinit var dateLeft: String
+    private lateinit var lastUpdate  :String
     //task variables
 
 
@@ -71,7 +72,6 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
                     hourly.parse(date) as Date
                 )
                 binding.specificTimeTxt.text = dateLeft
-                binding.specificTimeTxt.visibility = View.VISIBLE
                 periodicUpdate?.let { handler?.postDelayed(it, 1000) }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -122,6 +122,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
             dateTxt.text = date
             dateTxt.visibility = View.VISIBLE
         }
+        binding.specificTimeTxt.visibility = View.VISIBLE
         timerUpdate()
 
     }
@@ -136,15 +137,18 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
         } else if (!this::date.isInitialized) {
             Toast.makeText(context, "You did not pick the date and time!", Toast.LENGTH_LONG).show()
         } else {
-            val mDate = date
-            val mTimeLeft = dateLeft
-            val isDone = mTimeLeft.contains("-")
-            val task = Task(0, mDate, mTitle, mDescription, mTimeLeft, isDone)
-            mTaskViewModel.addTask(task)
-            findNavController().navigate(R.id.action_addingFragment_to_listFragment)
+            try {
+                val hourly = SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
+                lastUpdate="Last Update: "+hourly.format(System.currentTimeMillis())
+                val mDate = date
+                val mTimeLeft = dateLeft
+                val isDone = mTimeLeft.contains("-")
+                val task = Task(0, mDate, mTitle, mDescription, mTimeLeft,lastUpdate, isDone)
+                mTaskViewModel.addTask(task)
+                findNavController().navigate(R.id.action_addingFragment_to_listFragment)
+            } catch (e: Exception) {
+                Toast.makeText(context, "You didn't choose the time!", Toast.LENGTH_LONG).show()
+            }
         }
-
     }
-
-
 }

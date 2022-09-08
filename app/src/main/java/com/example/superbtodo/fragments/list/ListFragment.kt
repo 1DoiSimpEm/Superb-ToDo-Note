@@ -15,7 +15,7 @@ import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.example.superbtodo.databinding.FragmentListBinding
-import com.example.superbtodo.fragments.list.adapters.ListAdapter
+import com.example.superbtodo.adapters.ListAdapter
 import com.google.android.material.snackbar.Snackbar
 
 class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextListener {
@@ -131,7 +131,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         binding.toolbar.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
                 R.id.menu_search -> {
-                    Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
                     val searchView = menu.actionView as? SearchView
                     searchView?.isSubmitButtonEnabled = true
                     searchView?.setOnQueryTextListener(this)

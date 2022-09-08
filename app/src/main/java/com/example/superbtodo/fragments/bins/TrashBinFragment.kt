@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentTrashBinBinding
-import com.example.superbtodo.fragments.list.adapters.ListAdapter
+import com.example.superbtodo.adapters.ListAdapter
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -116,9 +116,6 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
                 }
 
             }
-
-
-
         }).attachToRecyclerView(binding.recyclerView)
     }
 
@@ -126,7 +123,6 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
         binding.toolbar.setOnMenuItemClickListener { menu->
             when (menu.itemId) {
                 R.id.menu_search -> {
-                    Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
                     val searchView = menu.actionView as? SearchView
                     searchView?.isSubmitButtonEnabled = true
                     searchView?.setOnQueryTextListener(this)

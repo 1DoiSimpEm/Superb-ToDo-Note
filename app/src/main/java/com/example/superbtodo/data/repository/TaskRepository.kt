@@ -1,4 +1,4 @@
-package com.example.superbtodo.repository
+package com.example.superbtodo.data.repository
 
 import androidx.lifecycle.LiveData
 import com.example.superbtodo.data.Task

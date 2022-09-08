@@ -44,7 +44,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private var savedMinute = 0
     private lateinit var date: String
     private lateinit var dateLeft: String
-
+    private lateinit var lastUpdate:String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,43 +79,48 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         binding.descriptionTxt.setText(args.currentTask.description)
         binding.dateTxt.text = args.currentTask.date
         binding.specificTimeTxt.text = args.currentTask.timeLeft
-        if(args.currentTask.isDone)
-        {
-            binding.specificTimeTxt.visibility=View.GONE
-        }
-        else{
-            binding.specificTimeTxt.visibility=View.VISIBLE
+        binding.lastUpdateTxt.text=args.currentTask.lastUpdate
+        if (args.currentTask.isDone) {
+            binding.specificTimeTxt.visibility = View.GONE
+        } else {
+            binding.specificTimeTxt.visibility = View.VISIBLE
         }
     }
 
     private fun saveTask() {
         val mTitle = binding.titleTxt.text.toString()
         val mDescription = binding.descriptionTxt.text.toString()
+        val hourly = SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
+        lastUpdate="Last Update: "+hourly.format(System.currentTimeMillis())
         if (mTitle.isEmpty()) {
             Toast.makeText(context, "Task title must not be empty!", Toast.LENGTH_LONG).show()
-        }
-        else if(mDescription.isEmpty())
-        {
+        } else if (mDescription.isEmpty()) {
             Toast.makeText(context, "Task description must not be empty!", Toast.LENGTH_LONG).show()
-        }
-        else if (!this::date.isInitialized) {
+        } else if (!this::date.isInitialized) {
             val task = Task(
                 args.currentTask.id,
                 args.currentTask.date,
                 mTitle,
                 mDescription,
                 args.currentTask.timeLeft,
+                lastUpdate,
                 args.currentTask.isDone
             )
             mTaskViewModel.updateTask(task)
             dismiss()
         } else {
-            val mDate = date
-            val mTimeLeft = dateLeft
-            val isDone = mTimeLeft.contains("-")
-            val task = Task(args.currentTask.id, mDate, mTitle, mDescription,mTimeLeft, isDone)
-            mTaskViewModel.updateTask(task)
-            dismiss()
+            try {
+                val mDate = date
+                val mTimeLeft = dateLeft
+                val isDone = mTimeLeft.contains("-")
+                val task = Task(args.currentTask.id, mDate, mTitle, mDescription, mTimeLeft,lastUpdate, isDone)
+                mTaskViewModel.updateTask(task)
+                dismiss()
+            }
+            catch( e: Exception)
+            {
+                Toast.makeText(context,"YOU DIDN'T PICK THE TIME!",Toast.LENGTH_LONG).show()
+            }
         }
 
     }
@@ -170,14 +175,14 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
-        date=String.format("%02d.%02d.%04d",savedDay,savedMonth+1,savedYear)
+        date = String.format("%02d.%02d.%04d", savedDay, savedMonth + 1, savedYear)
         TimePickerDialog(requireContext(), this, hour, minute, true).show()
     }
 
     override fun onTimeSet(viewe: TimePicker?, hourOfDay: Int, minute: Int) {
         savedHour = hourOfDay
         savedMinute = minute
-        date += String.format(" %02d:%02d",savedHour,savedMinute)
+        date += String.format(" %02d:%02d", savedHour, savedMinute)
         binding.apply {
             dateTxt.text = date
         }

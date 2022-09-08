@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+import android.view.WindowManager
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.superbtodo.R
@@ -19,6 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_FULLSCREEN
         actionBar = supportActionBar!!
         actionBar.hide()
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         setUpAnimation()
     }
 

@@ -1,11 +1,11 @@
-package com.example.superbtodo.utils
+package com.example.superbtodo.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.superbtodo.data.Task
 
 class TaskDiffUtil(
-     val oldList: MutableList<Task>,
-     val newList: MutableList<Task>
+    private val oldList: MutableList<Task>,
+    private val newList: MutableList<Task>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 

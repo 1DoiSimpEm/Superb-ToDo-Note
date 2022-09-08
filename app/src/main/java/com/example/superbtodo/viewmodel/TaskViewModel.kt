@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.data.TaskDatabase
-import com.example.superbtodo.repository.TaskRepository
+import com.example.superbtodo.data.repository.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

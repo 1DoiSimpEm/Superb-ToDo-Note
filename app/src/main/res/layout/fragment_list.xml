@@ -20,6 +20,7 @@
         tools:ignore="ContentDescription" />
 
 
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/moveToAddBtn"
         android:layout_width="wrap_content"
@@ -35,20 +36,22 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:src="@drawable/ic_add"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/moveToAddBtn"
+        android:layout_height="match_parent"
+        android:layoutAnimation="@anim/layout_animator"
+        android:animationCache="true"
+        android:paddingTop="?attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.appcompat.widget.Toolbar
         app:title="Tasks"
