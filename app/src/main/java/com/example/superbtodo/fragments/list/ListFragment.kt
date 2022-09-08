@@ -86,7 +86,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                     ItemTouchHelper.LEFT -> {
                         deletedTask = adapter.getTaskAt(viewHolder.adapterPosition)
                         mTaskViewModel.deleteTask(deletedTask)
-                        adapter.notifyItemRemoved(viewHolder.adapterPosition)
                         Snackbar.make(
                             binding.recyclerView,
                             "${deletedTask.title} has just been deleted!",
@@ -110,7 +109,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                                 .setAction("Undo") {
                                     selectedTask.isDone = false
                                     mTaskViewModel.updateTask(selectedTask)
-                                    adapter.notifyItemChanged(viewHolder.adapterPosition)
                                 }.show()
                         } else {
                             Toast.makeText(
@@ -119,7 +117,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                                 Toast.LENGTH_LONG
                             ).show()
                             mTaskViewModel.updateTask(selectedTask)
-                            adapter.notifyItemChanged(viewHolder.adapterPosition)
                         }
                     }
                 }

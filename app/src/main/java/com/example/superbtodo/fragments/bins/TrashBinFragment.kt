@@ -94,7 +94,6 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
                         if (!selectedTask.isDone) {
                             selectedTask.isDone = true
                             mTaskViewModel.updateTask(selectedTask)
-                            adapter.notifyItemChanged(viewHolder.adapterPosition)
                             Snackbar.make(
                                 binding.recyclerView,
                                 "You have just done ${selectedTask.title} task!",
@@ -103,7 +102,6 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
                                 .setAction("Undo") {
                                     selectedTask.isDone = false
                                     mTaskViewModel.updateTask(selectedTask)
-                                    adapter.notifyItemChanged(viewHolder.adapterPosition)
                                 }.show()
                         } else {
                             Toast.makeText(

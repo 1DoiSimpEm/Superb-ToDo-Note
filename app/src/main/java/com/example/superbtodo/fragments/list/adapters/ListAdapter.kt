@@ -10,19 +10,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.AsyncDifferConfig
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.fragments.bins.TrashBinFragmentDirections
 import com.example.superbtodo.fragments.list.ListFragmentDirections
+import com.example.superbtodo.utils.TaskDiffUtil
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 
 class ListAdapter(
     val callBack: (Task) -> Unit
-) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ListAdapter.ViewHolder>(
+
+) {
+
     private var tasks = mutableListOf<Task>()
     private var handler: Handler? = null
 
@@ -63,7 +71,7 @@ class ListAdapter(
         holder.isDoneCheckBox.setOnClickListener {
             currentItem.isDone = true
             sendData(currentItem)
-            notifyItemChanged(position)
+//            notifyItemChanged(position)
         }
         if (holder.isDoneCheckBox.isChecked) {
             strikeThroughText(holder)
@@ -78,10 +86,11 @@ class ListAdapter(
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(task: MutableList<Task>) {
-        this.tasks = task
-        notifyDataSetChanged()
+    fun setData(newTasks: MutableList<Task>) {
+        val diffUtil = TaskDiffUtil(tasks, newTasks)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        this.tasks = newTasks
+        diffResult.dispatchUpdatesTo(this)
     }
 
 
@@ -100,10 +109,9 @@ class ListAdapter(
                     hourly.parse(holder.timeTextView.text.toString()) as Date
                 )
                 tasks[position].timeLeft = holder.timeLeftTextView.text.toString()
-                if (tasks[position].date ==  hourly.format(System.currentTimeMillis())){
+                if (tasks[position].date == hourly.format(System.currentTimeMillis()) && !tasks[position].isDone) {
                     tasks[position].isDone = true
                     sendData(tasks[position])
-                    notifyItemChanged(position)
                 }
                 periodicUpdate?.let { handler?.postDelayed(it, 1000) }
             } catch (e: Exception) {
