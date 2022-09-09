@@ -143,6 +143,9 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
                 val mDate = date
                 val mTimeLeft = dateLeft
                 val isDone = mTimeLeft.contains("-")
+                if(isDone){
+                    binding.specificTimeTxt.text="You can't go back to that time xD."
+                }
                 val task = Task(0, mDate, mTitle, mDescription, mTimeLeft,lastUpdate, isDone)
                 mTaskViewModel.addTask(task)
                 findNavController().navigate(R.id.action_addingFragment_to_listFragment)

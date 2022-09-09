@@ -1,6 +1,13 @@
 package com.example.superbtodo.fragments.list
 
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -17,7 +24,10 @@ import com.example.superbtodo.data.Task
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.example.superbtodo.databinding.FragmentListBinding
 import com.example.superbtodo.adapters.ListAdapter
+import com.example.superbtodo.services.*
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextListener {
 
@@ -26,6 +36,12 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        createNotificationChannel()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,12 +72,15 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
 
     private fun initViewModel() {
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
-        mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
-            adapter.setData(task)
-            if (task.size == 0) {
+        mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { tasks ->
+            adapter.setData(tasks)
+            if (tasks.size == 0) {
                 binding.emptyLogo.visibility = View.VISIBLE
             } else {
                 binding.emptyLogo.visibility = View.GONE
+            }
+            for (task in tasks){
+                scheduleNotification(task.title,task.description,task.date)
             }
 
         }
@@ -193,6 +212,44 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
             }
         }
     }
+
+
+
+    private fun createNotificationChannel()
+    {
+        val name = "Notification Channel"
+        val desc = "A Description of the Channel"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID, name, importance)
+        channel.description = desc
+        val notificationManager = activity?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun scheduleNotification(title: String,message:String,time: String)
+    {
+        val intent = Intent(context, Notification::class.java)
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, "$message\n in $time")
+        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+        val setTime = hourly.parse(time)?.time
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        setTime?.let {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                it,
+                pendingIntent
+            )
+        }
+    }
+
 
 }
 

@@ -8,7 +8,6 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.navigation.findNavController
@@ -119,6 +118,11 @@ class ListAdapter(
                     tasks[position].isDone = true
                     sendData(tasks[position])
                 }
+                if(tasks[position].timeLeft.contains("-")&& !tasks[position].isDone)
+                {
+                    tasks[position].isDone = true
+                    sendData(tasks[position])
+                }
                 periodicUpdate?.let { handler?.postDelayed(it, 1000) }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -165,4 +169,7 @@ class ListAdapter(
     private fun sendData(task: Task) {
         callBack(task)
     }
+
+
+
 }
