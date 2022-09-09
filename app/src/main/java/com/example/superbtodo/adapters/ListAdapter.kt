@@ -8,9 +8,10 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
@@ -37,6 +38,7 @@ class ListAdapter(
         val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as RadioButton
         val taskLayout = itemView.findViewById(R.id.taskLayout) as MaterialCardView
         val lastUpdateTextView = itemView.findViewById(R.id.lastUpdate) as TextView
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,6 +49,10 @@ class ListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = tasks[position]
+
+        holder.taskLayout.startAnimation(
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fall_down)
+        )
         holder.titleTextView.text = currentItem.title
         holder.timeTextView.text = currentItem.date
         holder.isDoneCheckBox.isChecked = currentItem.isDone
@@ -86,8 +92,8 @@ class ListAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(newTasks: MutableList<Task>) {
-        val diffUtil = TaskDiffUtil(tasks, newTasks)
-        val diffResult = DiffUtil.calculateDiff(diffUtil)
+//        val diffUtil = TaskDiffUtil(tasks, newTasks)
+//        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.tasks = newTasks
 //        diffResult.dispatchUpdatesTo(this)
         notifyDataSetChanged()
@@ -119,6 +125,11 @@ class ListAdapter(
             }
         }
         handler?.post(periodicUpdate)
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.taskLayout.clearAnimation()
     }
 
     private fun getTimeLeft(timeNow: String, timeEnd: Date): String {

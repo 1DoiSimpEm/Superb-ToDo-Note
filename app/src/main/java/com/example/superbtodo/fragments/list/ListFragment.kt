@@ -4,6 +4,7 @@ package com.example.superbtodo.fragments.list
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
@@ -30,11 +31,21 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentListBinding.bind(view)
         binding.toolbar.inflateMenu(R.menu.main_menu)
+        initAnim()
         initAdapter()
         initViewModel()
         menuSelection()
         swipeToHandleEvent()
         navigate()
+    }
+
+    private fun initAnim() {
+        binding.moveToAddBtn.startAnimation(
+            AnimationUtils.loadAnimation(
+                binding.moveToAddBtn.context,
+                R.anim.fall_down
+            )
+        )
     }
 
     private fun navigate() {

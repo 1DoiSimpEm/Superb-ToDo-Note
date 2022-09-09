@@ -11,19 +11,17 @@
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_addingFragment"
-            app:destination="@id/addingFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:destination="@id/addingFragment" />
         <action
             android:id="@+id/action_listFragment_to_updateTaskDialogFragment"
             app:destination="@id/updateTaskDialogFragment" />
         <action
             android:id="@+id/action_homeFragment_to_doneFragment"
             app:destination="@id/doneFragment"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left"
-            app:popEnterAnim="@android:anim/slide_out_right"
-            app:popExitAnim="@android:anim/slide_in_left" />
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/from_left" />
     </fragment>
     <fragment
         android:id="@+id/addingFragment"
