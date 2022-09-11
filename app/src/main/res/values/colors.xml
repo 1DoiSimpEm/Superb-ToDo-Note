@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_bg">#f6f6f6</color>
     <color name="gone">#9e9e9e</color>
+    <color name="done_layout_bg">#bcaefd</color>
+    <color name="red"> #f51000</color>
 </resources>

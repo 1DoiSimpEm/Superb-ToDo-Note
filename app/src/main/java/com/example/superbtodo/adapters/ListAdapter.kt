@@ -3,6 +3,7 @@ package com.example.superbtodo.adapters
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
+import android.media.Image
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
@@ -34,10 +36,10 @@ class ListAdapter(
         val titleTextView = itemView.findViewById(R.id.titleTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
         val timeLeftTextView = itemView.findViewById(R.id.timeLeftTxt) as TextView
-        val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as RadioButton
+        val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as CheckBox
         val taskLayout = itemView.findViewById(R.id.taskLayout) as MaterialCardView
         val lastUpdateTextView = itemView.findViewById(R.id.lastUpdate) as TextView
-
+        val alarmImageView   = itemView.findViewById(R.id.imgAlarm) as ImageView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -48,7 +50,6 @@ class ListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = tasks[position]
-
         holder.taskLayout.startAnimation(
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fall_down)
         )
@@ -153,6 +154,7 @@ class ListAdapter(
         holder.timeTextView.apply {
             paintFlags = 0
         }
+        holder.alarmImageView.isVisible=true
     }
 
 
@@ -164,6 +166,7 @@ class ListAdapter(
         holder.timeTextView.apply {
             paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
+        holder.alarmImageView.isVisible=false
     }
 
     private fun sendData(task: Task) {

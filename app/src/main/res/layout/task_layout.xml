@@ -5,22 +5,16 @@
     android:id="@+id/taskLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/layout_bg"
-    android:backgroundTint="@color/white"
-    android:outlineAmbientShadowColor="@color/black"
-    android:outlineSpotShadowColor="@color/black"
-    android:padding="20dp"
-    app:cardCornerRadius="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     tools:targetApi="p">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:background="@color/done_layout_bg"
         android:padding="20dp">
 
         <TextView
@@ -30,28 +24,30 @@
             android:layout_marginBottom="20dp"
             android:gravity="top|center_horizontal"
             android:text="@string/title"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold" />
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/checkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/ic_baseline_done_24"
+            android:layout_marginTop="20dp"
+            android:buttonTint="@color/white"
             android:gravity="bottom|center_horizontal" />
 
         <TextView
             android:id="@+id/timeTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="18dp"
             android:layout_toEndOf="@+id/checkBtn"
             android:text="@string/date"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="italic" />
+
 
         <TextView
             android:id="@+id/timeLeftTxt"
@@ -60,7 +56,7 @@
             android:layout_below="@+id/timeTxt"
             android:layout_marginStart="68dp"
             android:text="@string/time_left"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/lastUpdate"
@@ -69,8 +65,17 @@
             android:layout_below="@+id/timeLeftTxt"
             android:layout_marginStart="68dp"
             android:text="@string/last_updated"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
+        <ImageView
+            android:id="@+id/imgAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_baseline_access_alarm_24"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
 
     </RelativeLayout>
 

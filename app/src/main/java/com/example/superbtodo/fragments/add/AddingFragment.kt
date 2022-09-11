@@ -112,6 +112,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
         savedYear = year
         date = String.format("%02d.%02d.%04d", savedDay, savedMonth + 1, savedYear)
         TimePickerDialog(requireContext(), this, hour, minute, true).show()
+
     }
 
     override fun onTimeSet(viewe: TimePicker?, hourOfDay: Int, minute: Int) {

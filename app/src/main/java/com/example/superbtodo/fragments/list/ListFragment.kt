@@ -8,26 +8,30 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
-import com.example.superbtodo.data.Task
-import com.example.superbtodo.viewmodel.TaskViewModel
-import com.example.superbtodo.databinding.FragmentListBinding
 import com.example.superbtodo.adapters.ListAdapter
+import com.example.superbtodo.data.Task
+import com.example.superbtodo.databinding.FragmentListBinding
 import com.example.superbtodo.services.*
+import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextListener {
 
@@ -36,7 +40,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,13 +77,8 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { tasks ->
             adapter.setData(tasks)
-            if (tasks.size == 0) {
-                binding.emptyLogo.visibility = View.VISIBLE
-            } else {
-                binding.emptyLogo.visibility = View.GONE
-            }
-            for (task in tasks){
-                scheduleNotification(task.title,task.description,task.date)
+            for (task in tasks) {
+                scheduleNotification(task.title, task.description, task.date)
             }
 
         }
@@ -111,10 +109,25 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 return false
             }
 
+            override fun onMoved(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                fromPos: Int,
+                target: RecyclerView.ViewHolder,
+                toPos: Int,
+                x: Int,
+                y: Int
+            ) {
+                super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
+                val fromPosition = viewHolder.layoutPosition
+                val toPosition = target.layoutPosition
+                adapter.notifyItemMoved(fromPosition, toPosition)
+            }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        deletedTask = adapter.getTaskAt(viewHolder.adapterPosition)
+                        deletedTask = adapter.getTaskAt(viewHolder.layoutPosition)
                         mTaskViewModel.deleteTask(deletedTask)
                         Snackbar.make(
                             binding.recyclerView,
@@ -126,11 +139,11 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                             }.show()
                     }
                     ItemTouchHelper.RIGHT -> {
-                        selectedTask = adapter.getTaskAt(viewHolder.adapterPosition)
+                        selectedTask = adapter.getTaskAt(viewHolder.layoutPosition)
                         if (!selectedTask.isDone) {
                             selectedTask.isDone = true
                             mTaskViewModel.updateTask(selectedTask)
-                            adapter.notifyItemChanged(viewHolder.adapterPosition)
+                            adapter.notifyItemChanged(viewHolder.layoutPosition)
                             Snackbar.make(
                                 binding.recyclerView,
                                 "You have just done ${selectedTask.title} task!",
@@ -153,6 +166,42 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
 
             }
 
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(context!!, R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(context!!, R.color.teal_200))
+                    .addSwipeRightActionIcon(R.drawable.ic_baseline_done_24)
+                    .create()
+                    .decorate()
+
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
 
         }).attachToRecyclerView(binding.recyclerView)
     }
@@ -214,20 +263,18 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     }
 
 
-
-    private fun createNotificationChannel()
-    {
+    private fun createNotificationChannel() {
         val name = "Notification Channel"
         val desc = "A Description of the Channel"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(channelID, name, importance)
         channel.description = desc
-        val notificationManager = activity?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            activity?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun scheduleNotification(title: String,message:String,time: String)
-    {
+    private fun scheduleNotification(title: String, message: String, time: String) {
         val intent = Intent(context, Notification::class.java)
         intent.putExtra(titleExtra, title)
         intent.putExtra(messageExtra, "$message\n in $time")

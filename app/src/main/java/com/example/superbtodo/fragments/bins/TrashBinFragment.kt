@@ -1,10 +1,12 @@
 package com.example.superbtodo.fragments.bins
 
+import android.graphics.Canvas
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import com.example.superbtodo.databinding.FragmentTrashBinBinding
 import com.example.superbtodo.adapters.ListAdapter
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
 class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQueryTextListener {
@@ -77,9 +80,9 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        deletedTask = adapter.getTaskAt(viewHolder.adapterPosition)
+                        deletedTask = adapter.getTaskAt(viewHolder.layoutPosition)
                         mTaskViewModel.deleteTask(deletedTask)
-                        adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                        adapter.notifyItemRemoved(viewHolder.layoutPosition)
                         Snackbar.make(
                             binding.recyclerView,
                             "${deletedTask.title} has just been deleted!",
@@ -90,31 +93,51 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
                             }.show()
                     }
                     ItemTouchHelper.RIGHT -> {
-                        selectedTask = adapter.getTaskAt(viewHolder.adapterPosition)
-                        if (!selectedTask.isDone) {
-                            selectedTask.isDone = true
-                            mTaskViewModel.updateTask(selectedTask)
-                            Snackbar.make(
-                                binding.recyclerView,
-                                "You have just done ${selectedTask.title} task!",
-                                Snackbar.LENGTH_LONG
-                            )
-                                .setAction("Undo") {
-                                    selectedTask.isDone = false
-                                    mTaskViewModel.updateTask(selectedTask)
-                                }.show()
-                        } else {
+                        selectedTask = adapter.getTaskAt(viewHolder.layoutPosition)
                             Toast.makeText(
                                 context,
                                 "You have already done this task!",
                                 Toast.LENGTH_LONG
                             ).show()
                             mTaskViewModel.updateTask(selectedTask)
-                            adapter.notifyItemChanged(viewHolder.adapterPosition)
+                            adapter.notifyItemChanged(viewHolder.layoutPosition)
                         }
                     }
                 }
 
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(context!!, R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                    .create()
+                    .decorate()
+
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
             }
         }).attachToRecyclerView(binding.recyclerView)
     }
