@@ -20,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
-class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQueryTextListener {
+class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentTrashBinBinding
     private lateinit var mTaskViewModel: TaskViewModel
@@ -42,11 +42,9 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readDoneData().observe(viewLifecycleOwner) { task ->
             adapter.setData(task)
-            if(task.size==0)
-            {
-                binding.emptyLogo.visibility= View.VISIBLE
-            }
-            else{
+            if (task.size == 0) {
+                binding.emptyLogo.visibility = View.VISIBLE
+            } else {
                 binding.emptyLogo.visibility = View.GONE
             }
         }
@@ -94,16 +92,16 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
                     }
                     ItemTouchHelper.RIGHT -> {
                         selectedTask = adapter.getTaskAt(viewHolder.layoutPosition)
-                            Toast.makeText(
-                                context,
-                                "You have already done this task!",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            mTaskViewModel.updateTask(selectedTask)
-                            adapter.notifyItemChanged(viewHolder.layoutPosition)
-                        }
+                        Toast.makeText(
+                            context,
+                            "You have already done this task!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        mTaskViewModel.updateTask(selectedTask)
+                        adapter.notifyItemChanged(viewHolder.layoutPosition)
                     }
                 }
+            }
 
             override fun onChildDraw(
                 c: Canvas,
@@ -143,7 +141,7 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
     }
 
     private fun menuSelection() {
-        binding.toolbar.setOnMenuItemClickListener { menu->
+        binding.toolbar.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
                 R.id.menu_search -> {
                     val searchView = menu.actionView as? SearchView
@@ -157,14 +155,14 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
                 }
                 R.id.menu_sortByDate -> {
                     mTaskViewModel.readDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy{it.date}
+                        task.sortBy { it.date }
                         adapter.setData(task)
                     }
                     true
                 }
                 R.id.menu_sortByTitle -> {
                     mTaskViewModel.readDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy{it.title}
+                        task.sortBy { it.title }
                         adapter.setData(task)
                     }
                     true
@@ -190,7 +188,6 @@ class TrashBinFragment :  Fragment(R.layout.fragment_trash_bin), SearchView.OnQu
 
     private fun searchDB(query: String) {
         val searchQuery = "%$query%"
-
         mTaskViewModel.searchIsDoneDbByTitle(searchQuery).observe(this) { list ->
             list.let {
                 adapter.setData(it)

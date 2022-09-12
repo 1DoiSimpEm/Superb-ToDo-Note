@@ -8,8 +8,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -40,7 +42,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
@@ -59,12 +60,20 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     }
 
     private fun initAnim() {
-        binding.moveToAddBtn.startAnimation(
-            AnimationUtils.loadAnimation(
-                binding.moveToAddBtn.context,
-                R.anim.fall_down
+        binding.moveToAddBtn.apply{
+            startAnimation(
+                AnimationUtils.loadAnimation(
+                    binding.moveToAddBtn.context,
+                    R.anim.fall_down
+                )
             )
-        )
+            if( resources.configuration.orientation==Configuration.ORIENTATION_LANDSCAPE)
+            {
+                extend()
+
+            }
+            else shrink()
+        }
     }
 
     private fun navigate() {
@@ -207,6 +216,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     }
 
     private fun menuSelection() {
+        Log.i("HomeFragment", "menuSelection: ")
         binding.toolbar.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
                 R.id.menu_search -> {
@@ -296,8 +306,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
             )
         }
     }
-
-
 }
 
 

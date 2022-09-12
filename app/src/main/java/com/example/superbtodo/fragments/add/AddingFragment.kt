@@ -39,7 +39,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
     private var savedMinute = 0
     private lateinit var date: String
     private lateinit var dateLeft: String
-    private lateinit var lastUpdate  :String
+    private lateinit var lastUpdate: String
     //task variables
 
 
@@ -140,14 +140,14 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
         } else {
             try {
                 val hourly = SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
-                lastUpdate="Last Update: "+hourly.format(System.currentTimeMillis())
+                lastUpdate = "Last Update: " + hourly.format(System.currentTimeMillis())
                 val mDate = date
                 val mTimeLeft = dateLeft
                 val isDone = mTimeLeft.contains("-")
-                if(isDone){
-                    binding.specificTimeTxt.text="You can't go back to that time xD."
+                if (isDone) {
+                    binding.specificTimeTxt.text = "You can't go back to that time xD."
                 }
-                val task = Task(0, mDate, mTitle, mDescription, mTimeLeft,lastUpdate, isDone)
+                val task = Task(0, mDate, mTitle, mDescription, mTimeLeft, lastUpdate, isDone)
                 mTaskViewModel.addTask(task)
                 findNavController().navigate(R.id.action_addingFragment_to_listFragment)
             } catch (e: Exception) {

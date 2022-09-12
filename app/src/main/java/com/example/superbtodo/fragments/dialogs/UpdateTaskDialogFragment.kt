@@ -44,7 +44,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private var savedMinute = 0
     private lateinit var date: String
     private lateinit var dateLeft: String
-    private lateinit var lastUpdate:String
+    private lateinit var lastUpdate: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +79,6 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         binding.descriptionTxt.setText(args.currentTask.description)
         binding.dateTxt.text = args.currentTask.date
         binding.specificTimeTxt.text = args.currentTask.timeLeft
-        binding.lastUpdateTxt.text=args.currentTask.lastUpdate
         if (args.currentTask.isDone) {
             binding.specificTimeTxt.visibility = View.GONE
         } else {
@@ -91,7 +90,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         val mTitle = binding.titleTxt.text.toString()
         val mDescription = binding.descriptionTxt.text.toString()
         val hourly = SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
-        lastUpdate="Last Update: "+hourly.format(System.currentTimeMillis())
+        lastUpdate = "Last Update: " + hourly.format(System.currentTimeMillis())
         if (mTitle.isEmpty()) {
             Toast.makeText(context, "Task title must not be empty!", Toast.LENGTH_LONG).show()
         } else if (mDescription.isEmpty()) {
@@ -113,13 +112,19 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
                 val mDate = date
                 val mTimeLeft = dateLeft
                 val isDone = mTimeLeft.contains("-")
-                val task = Task(args.currentTask.id, mDate, mTitle, mDescription, mTimeLeft,lastUpdate, isDone)
+                val task = Task(
+                    args.currentTask.id,
+                    mDate,
+                    mTitle,
+                    mDescription,
+                    mTimeLeft,
+                    lastUpdate,
+                    isDone
+                )
                 mTaskViewModel.updateTask(task)
                 dismiss()
-            }
-            catch( e: Exception)
-            {
-                Toast.makeText(context,"YOU DIDN'T PICK THE TIME!",Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(context, "YOU DIDN'T PICK THE TIME!", Toast.LENGTH_LONG).show()
             }
         }
 
