@@ -1,5 +1,6 @@
 package com.example.superbtodo.fragments.bins
 
+import android.app.Activity
 import android.graphics.Canvas
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,6 +18,8 @@ import com.example.superbtodo.databinding.FragmentTrashBinBinding
 import com.example.superbtodo.adapters.ListAdapter
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.nordan.dialog.Animation
+import com.nordan.dialog.NordanAlertDialog
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
@@ -150,7 +153,19 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
                     true
                 }
                 R.id.menu_delete -> {
-                    mTaskViewModel.deleteAllDoneTask()
+                    NordanAlertDialog.Builder(context as Activity?)
+                        .setAnimation(Animation.POP)
+                        .isCancellable(true)
+                        .setTitle("WARNING YOU ARE ABOUT TO DELETE ALL TASKS!")
+                        .setMessage("You won't be able to recover these tasks!")
+                        .setIcon(R.drawable.warning, false)
+                        .setPositiveBtnText("Sure!")
+                        .setHeaderColor(R.color.red)
+                        .setNegativeBtnText("Nah!")
+                        .onPositiveClicked{
+                            mTaskViewModel.deleteAllDoneTask()
+                        }
+                        .build().show()
                     true
                 }
                 R.id.menu_sortByDate -> {

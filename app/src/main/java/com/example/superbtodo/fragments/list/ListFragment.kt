@@ -1,10 +1,7 @@
 package com.example.superbtodo.fragments.list
 
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
@@ -26,8 +23,12 @@ import com.example.superbtodo.adapters.ListAdapter
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentListBinding
 import com.example.superbtodo.services.*
+import com.example.superbtodo.services.Notification
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.nordan.dialog.Animation
+import com.nordan.dialog.DialogType
+import com.nordan.dialog.NordanAlertDialog
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
 import java.util.*
@@ -212,7 +213,18 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                     true
                 }
                 R.id.menu_delete -> {
-                    mTaskViewModel.deleteAllNotDoneTask()
+                    NordanAlertDialog.Builder(context as Activity?)
+                        .setAnimation(Animation.POP)
+                        .isCancellable(true)
+                        .setTitle("WARNING YOU ARE ABOUT TO DELETE ALL TASKS!")
+                        .setMessage("You won't be able to recover these tasks!")
+                        .setIcon(R.drawable.warning,false )
+                        .setPositiveBtnText("Sure!")
+                        .setNegativeBtnText("Nah!")
+                        .onPositiveClicked{
+                            mTaskViewModel.deleteAllNotDoneTask()
+                        }
+                        .build().show()
                     true
                 }
                 R.id.menu_sortByDate -> {

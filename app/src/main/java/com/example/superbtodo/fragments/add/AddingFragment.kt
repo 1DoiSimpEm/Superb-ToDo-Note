@@ -1,23 +1,28 @@
 package com.example.superbtodo.fragments.add
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
-import com.example.superbtodo.viewmodel.TaskViewModel
 import com.example.superbtodo.databinding.FragmentAddingBinding
+import com.example.superbtodo.viewmodel.TaskViewModel
+import com.nordan.dialog.Animation
+import com.nordan.dialog.DialogType
+import com.nordan.dialog.NordanAlertDialog
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener {
@@ -148,8 +153,19 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
                     binding.specificTimeTxt.text = "You can't go back to that time xD."
                 }
                 val task = Task(0, mDate, mTitle, mDescription, mTimeLeft, lastUpdate, isDone)
-                mTaskViewModel.addTask(task)
-                findNavController().navigate(R.id.action_addingFragment_to_listFragment)
+                NordanAlertDialog.Builder(context as Activity?)
+                    .setAnimation(Animation.SIDE)
+                    .isCancellable(false)
+                    .setTitle("A task has just been added!")
+                    .setMessage("You have just added aa Task!")
+                    .setIcon(R.drawable.done_2, true)
+                    .setPositiveBtnText("Great!")
+                    .onPositiveClicked{
+                        mTaskViewModel.addTask(task)
+                        findNavController().navigate(R.id.action_addingFragment_to_listFragment)
+                    }
+                    .build().show()
+
             } catch (e: Exception) {
                 Toast.makeText(context, "You didn't choose the time!", Toast.LENGTH_LONG).show()
             }
