@@ -8,12 +8,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -51,7 +49,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentListBinding.bind(view)
         binding.toolbar.inflateMenu(R.menu.main_menu)
-        initAnim()
         initAdapter()
         initViewModel()
         menuSelection()
@@ -59,22 +56,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         navigate()
     }
 
-    private fun initAnim() {
-        binding.moveToAddBtn.apply{
-            startAnimation(
-                AnimationUtils.loadAnimation(
-                    binding.moveToAddBtn.context,
-                    R.anim.fall_down
-                )
-            )
-            if( resources.configuration.orientation==Configuration.ORIENTATION_LANDSCAPE)
-            {
-                extend()
-
-            }
-            else shrink()
-        }
-    }
 
     private fun navigate() {
         binding.moveToAddBtn.setOnClickListener {
@@ -195,7 +176,12 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 )
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(context!!, R.color.red))
                     .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
-                    .addSwipeRightBackgroundColor(ContextCompat.getColor(context!!, R.color.teal_200))
+                    .addSwipeRightBackgroundColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.teal_200
+                        )
+                    )
                     .addSwipeRightActionIcon(R.drawable.ic_baseline_done_24)
                     .create()
                     .decorate()

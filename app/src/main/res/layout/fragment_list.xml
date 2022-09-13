@@ -19,24 +19,19 @@
         tools:ignore="ContentDescription" />
 
 
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/moveToAddBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="25dp"
-        android:clickable="true"
         android:contentDescription="@string/adding_task"
-        android:focusable="true"
-        app:icon="@drawable/ic_add"
-        app:iconTint="@color/white"
-        android:text="@string/add_a_task"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:src="@drawable/ic_add"
+        android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/adding_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
