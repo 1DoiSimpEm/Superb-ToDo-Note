@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
@@ -92,11 +93,11 @@ class ListAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(newTasks: MutableList<Task>) {
-//        val diffUtil = TaskDiffUtil(tasks, newTasks)
-//        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        val diffUtil = TaskDiffUtil(tasks, newTasks)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.tasks = newTasks
-//        diffResult.dispatchUpdatesTo(this)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
+//        notifyDataSetChanged()
     }
 
 
