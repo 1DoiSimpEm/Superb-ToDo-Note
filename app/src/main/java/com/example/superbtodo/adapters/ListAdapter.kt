@@ -91,7 +91,7 @@ class ListAdapter(
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
+//    @SuppressLint("NotifyDataSetChanged")
     fun setData(newTasks: MutableList<Task>) {
         val diffUtil = TaskDiffUtil(tasks, newTasks)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
