@@ -9,6 +9,8 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
+
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -27,7 +29,6 @@ import com.example.superbtodo.services.Notification
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.nordan.dialog.Animation
-import com.nordan.dialog.DialogType
 import com.nordan.dialog.NordanAlertDialog
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
@@ -81,6 +82,27 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val scrollListener = object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    binding.moveToAddBtn.startAnimation(
+                        AnimationUtils.loadAnimation( binding.moveToAddBtn.context, com.google.android.material.R.anim.abc_fade_in)
+                    )
+                    binding.moveToAddBtn.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && binding.moveToAddBtn.visibility == View.VISIBLE) {
+                    binding.moveToAddBtn.visibility = View.GONE
+                }
+            }
+        }
+        binding.recyclerView.addOnScrollListener(scrollListener)
+
 
     }
 
@@ -218,11 +240,16 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                         .isCancellable(true)
                         .setTitle("WARNING YOU ARE ABOUT TO DELETE ALL TASKS!")
                         .setMessage("You won't be able to recover these tasks!")
-                        .setIcon(R.drawable.warning,false )
+                        .setIcon(R.drawable.warning, false)
                         .setPositiveBtnText("Sure!")
                         .setNegativeBtnText("Nah!")
-                        .onPositiveClicked{
+                        .onPositiveClicked {
                             mTaskViewModel.deleteAllNotDoneTask()
+                            Toast.makeText(
+                                context,
+                                "Deleted all task successfully!",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                         .build().show()
                     true

@@ -164,6 +164,7 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
                         .setNegativeBtnText("Nah!")
                         .onPositiveClicked{
                             mTaskViewModel.deleteAllDoneTask()
+                            Toast.makeText(context,"Deleted all task successfully!",Toast.LENGTH_LONG).show()
                         }
                         .build().show()
                     true

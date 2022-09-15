@@ -1,9 +1,7 @@
 package com.example.superbtodo.adapters
 
 
-import android.annotation.SuppressLint
 import android.graphics.Paint
-import android.media.Image
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater

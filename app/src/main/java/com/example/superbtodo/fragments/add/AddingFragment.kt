@@ -18,7 +18,6 @@ import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentAddingBinding
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.nordan.dialog.Animation
-import com.nordan.dialog.DialogType
 import com.nordan.dialog.NordanAlertDialog
 import java.text.SimpleDateFormat
 import java.util.*
