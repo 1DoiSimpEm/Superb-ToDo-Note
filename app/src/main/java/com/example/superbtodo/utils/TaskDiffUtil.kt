@@ -1,4 +1,4 @@
-package com.example.superbtodo.adapters
+package com.example.superbtodo.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.superbtodo.data.Task

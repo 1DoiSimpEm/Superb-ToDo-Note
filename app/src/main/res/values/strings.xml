@@ -30,4 +30,16 @@
     <string name="add_a_task">Add a task</string>
     <string name="last_updated">last updated</string>
     <string name="alarm">alarm</string>
+    <string name="calendar">Calendar</string>
+    <string name="weekly">Weekly</string>
+    <string name="back">Back</string>
+    <string name="next">Foward</string>
+    <string name="feb_2022">Feb 2022</string>
+    <string name="sun">SUN</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thur">THUR</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
 </resources>

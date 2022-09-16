@@ -22,6 +22,9 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/from_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_calendarFragment2"
+            app:destination="@id/calendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/addingFragment"
@@ -58,5 +61,20 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_doneFragment_to_calendarFragment2"
+            app:destination="@id/calendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.superbtodo.fragments.calendar.CalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_calendarFragment2_to_doneFragment"
+            app:destination="@id/doneFragment" />
     </fragment>
 </navigation>

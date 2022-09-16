@@ -9,4 +9,8 @@
         android:id="@+id/doneFragment"
         android:icon="@drawable/ic_baseline_done_outline_24"
         android:title="@string/done"/>
+    <item
+        android:id="@+id/calendarFragment"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/calendar"/>
 </menu>
