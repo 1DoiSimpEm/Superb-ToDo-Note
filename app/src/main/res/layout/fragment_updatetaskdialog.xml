@@ -1,130 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/layout_bg"
-    android:backgroundTint="@color/white_bg"
-    android:padding="30dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingTop="30dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="50dp"
     tools:context=".fragments.add.AddingFragment">
 
-    <EditText
-        android:id="@+id/descriptionTxt"
-        android:layout_width="262dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="250dp"
-        android:maxLines="10"
-        android:lines="8"
-        android:scrollbars="vertical"
-        android:autofillHints="true"
-        android:background="@color/white_bg"
-        android:ems="10"
-        android:hint="@string/what_to_do"
-        android:inputType="textMultiLine"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/datePickerBtn"
-        android:layout_width="113dp"
-        android:layout_height="53dp"
-        android:layout_below="@+id/descriptionTxt"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/layout_bg"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt">
 
-        <ImageView
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/update_your_task"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            tools:ignore="MissingPrefix" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:alpha="0.8"
+            android:text="@string/fill_the_details_below_to_update_a_task_into_your_todo"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            tools:ignore="MissingPrefix" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/task_title"
+            tools:ignore="MissingPrefix" />
+
+        <EditText
+            android:id="@+id/addTaskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_border"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:hint="@string/your_task_title"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/task_description"
+            tools:ignore="MissingPrefix" />
+
+        <EditText
+            android:id="@+id/addTaskDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_border"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:hint="@string/your_task_description"
+            tools:ignore="MissingPrefix"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/task_date"
+            tools:ignore="MissingPrefix" />
+
+        <EditText
+            android:id="@+id/taskDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_border"
+            android:hint="@string/your_task_date"
+            android:inputType="date"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textSize="14sp"
+            tools:ignore="LabelFor,MissingPrefix"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/task_time"
+            tools:ignore="MissingPrefix" />
+
+        <EditText
+            android:id="@+id/taskTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_border"
+            android:hint="@string/your_task_time"
+            android:inputType="time"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textSize="14sp"
+            tools:ignore="LabelFor,MissingPrefix"
+            android:importantForAutofill="no" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/addBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:contentDescription="@string/adding_task"
+            android:focusable="true"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/save_btn" />
 
-            android:contentDescription="@string/to_show_calendar"
-            android:foregroundGravity="center"
-            android:src="@drawable/ic_calendar" />
-
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveBtn"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="450dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/layout_bg"
-        android:backgroundTint="#49cb8f"
-        android:clickable="true"
-        android:contentDescription="@string/adding_task"
-        android:focusable="true"
-        android:text="@string/save"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/cancelBtn"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="450dp"
-        android:background="@drawable/layout_bg"
-        android:backgroundTint="#fe171d"
-        android:clickable="true"
-        android:contentDescription="@string/adding_task"
-        android:focusable="true"
-        android:text="@string/cancel"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/dateTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/descriptionTxt"
-        android:layout_marginTop="20dp"
-        android:text="@string/time_here"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datePickerBtn" />
-
-    <TextView
-        android:id="@+id/specificTimeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/time_here"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTxt" />
-
-    <EditText
-        android:id="@+id/titleTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/your_task_title"
-        android:textColor="@color/black"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="Your task title"
-        android:inputType="text" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

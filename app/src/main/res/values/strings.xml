@@ -44,4 +44,15 @@
     <string name="sat">SAT</string>
     <string name="checkbox">CheckBox</string>
     <string name="_18">18</string>
+    <string name="add_task">Add task</string>
+    <string name="task_time">Task time</string>
+    <string name="fill_the_details_below_to_add_a_task_into_your_todo">Fill the details below to add a task into your TODO</string>
+    <string name="task_title">Task title</string>
+    <string name="task_description">Task description</string>
+    <string name="task_date">Task date</string>
+    <string name="your_task_time">Your task time</string>
+    <string name="your_task_description">Your task description</string>
+    <string name="your_task_date">Your task date</string>
+    <string name="update_your_task">Update your task</string>
+    <string name="fill_the_details_below_to_update_a_task_into_your_todo">Fill the details below to update a task into your TODO</string>
 </resources>

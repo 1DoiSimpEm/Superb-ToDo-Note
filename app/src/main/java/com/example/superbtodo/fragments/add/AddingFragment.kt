@@ -1,87 +1,107 @@
 package com.example.superbtodo.fragments.add
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentAddingBinding
 import com.example.superbtodo.viewmodel.TaskViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nordan.dialog.Animation
 import com.nordan.dialog.NordanAlertDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDateSetListener,
-    TimePickerDialog.OnTimeSetListener {
+class AddingFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentAddingBinding
     private lateinit var mTaskViewModel: TaskViewModel
-    private var handler: Handler? = null
-
-    //date and time variables
-    private var day = 0
-    private var month = 0
+    private lateinit var timePickerDialog: TimePickerDialog
+    private lateinit var datePickerDialog: DatePickerDialog
     private var year = 0
+    private var month = 0
+    private var day = 0
     private var hour = 0
     private var minute = 0
-
-    private var savedDay = 0
-    private var savedMonth = 0
-    private var savedYear = 0
-    private var savedHour = 0
-    private var savedMinute = 0
     private lateinit var date: String
-    private lateinit var dateLeft: String
+    private lateinit var time: String
     private lateinit var lastUpdate: String
-    //task variables
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_adding, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddingBinding.bind(view)
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
-        hideDateStuff()
-        pickDate()
         binding.addBtn.setOnClickListener {
             addNewTask()
         }
-
+        getDate()
+        getTime()
     }
 
-    private fun hideDateStuff() {
-        binding.dateTxt.visibility = View.GONE
-        binding.specificTimeTxt.visibility = View.GONE
-    }
+    @SuppressLint("ClickableViewAccessibility")
+    private fun getTime() {
+        binding.taskTime.setOnTouchListener { _: View?, motionEvent: MotionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                val calendar = Calendar.getInstance()
+                hour = calendar.get(Calendar.HOUR)
+                minute = calendar.get(Calendar.MINUTE)
 
 
-    private fun timerUpdate() {
-        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-        handler = Handler(Looper.getMainLooper())
-        var periodicUpdate: Runnable? = null
-        periodicUpdate = Runnable {
-            try {
-                dateLeft = getTimeLeft(
-                    hourly.format(System.currentTimeMillis()),
-                    hourly.parse(date) as Date
+                // Launch Time Picker Dialog
+                timePickerDialog = TimePickerDialog(
+                    activity,
+                    { _: TimePicker?, hourOfDay: Int, minute: Int ->
+                        time = String.format("%02d:%02d", hourOfDay, minute)
+                        binding.taskTime.setText(time)
+                        timePickerDialog.dismiss()
+                    }, hour, minute, false
                 )
-                binding.specificTimeTxt.text = dateLeft
-                periodicUpdate?.let { handler?.postDelayed(it, 1000) }
-            } catch (e: Exception) {
-                e.printStackTrace()
+                timePickerDialog.show()
             }
+            true
         }
-        handler?.post(periodicUpdate)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun getDate() {
+        binding.taskDate.setOnTouchListener { _: View?, motionEvent: MotionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                val calendar = Calendar.getInstance()
+                year = calendar.get(Calendar.YEAR)
+                month = calendar.get(Calendar.MONTH)
+                day = calendar.get(Calendar.DAY_OF_MONTH)
+                datePickerDialog = DatePickerDialog(
+                    requireActivity(),
+                    { _: DatePicker?, year1: Int, monthOfYear: Int, dayOfMonth: Int ->
+                        date = String.format("%02d.%02d.%04d", dayOfMonth, monthOfYear + 1, year1)
+                        binding.taskDate.setText(date)
+                        datePickerDialog.dismiss()
+                    }, year, month, day
+                )
+                datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+                datePickerDialog.show()
+            }
+            true
+        }
     }
 
     private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
@@ -93,81 +113,55 @@ class AddingFragment : Fragment(R.layout.fragment_adding), DatePickerDialog.OnDa
         return "$days days $hours hours $minutes minutes left"
     }
 
-    private fun pickDate() {
-        binding.datePickerBtn.setOnClickListener {
-            getDateTimeCalendar()
-            DatePickerDialog(requireContext(), this, year, month, day).show()
-        }
-    }
-
-    private fun getDateTimeCalendar() {
-        val cal = Calendar.getInstance()
-        day = cal.get(Calendar.DAY_OF_MONTH)
-        month = cal.get(Calendar.MONTH)
-        year = cal.get(Calendar.YEAR)
-        hour = cal.get(Calendar.HOUR)
-        minute = cal.get(Calendar.MINUTE)
-    }
-
-
-    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        savedDay = dayOfMonth
-        savedMonth = month
-        savedYear = year
-        date = String.format("%02d.%02d.%04d", savedDay, savedMonth + 1, savedYear)
-        TimePickerDialog(requireContext(), this, hour, minute, true).show()
-
-    }
-
-    override fun onTimeSet(viewe: TimePicker?, hourOfDay: Int, minute: Int) {
-        savedHour = hourOfDay
-        savedMinute = minute
-        date += String.format(" %02d:%02d", savedHour, savedMinute)
-        binding.apply {
-            dateTxt.text = date
-            dateTxt.visibility = View.VISIBLE
-        }
-        binding.specificTimeTxt.visibility = View.VISIBLE
-        timerUpdate()
-
-    }
-
     private fun addNewTask() {
-        val mTitle = binding.titleEdTxt.text.toString()
-        val mDescription = binding.descriptionTxt.text.toString()
-        if (mTitle.isEmpty()) {
-            Toast.makeText(context, "Task title must not be empty!", Toast.LENGTH_LONG).show()
-        } else if (mDescription.isEmpty()) {
-            Toast.makeText(context, "Task description must not be empty!", Toast.LENGTH_LONG).show()
-        } else if (!this::date.isInitialized) {
-            Toast.makeText(context, "You did not pick the date and time!", Toast.LENGTH_LONG).show()
-        } else {
-            try {
-                val hourly = SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
-                lastUpdate = "Last Update: " + hourly.format(System.currentTimeMillis())
-                val mDate = date
-                val mTimeLeft = dateLeft
-                val isDone = mTimeLeft.contains("-")
-                if (isDone) {
-                    binding.specificTimeTxt.text = "You can't go back to that time xD."
+        if (validateFields()) {
+            val mTitle = binding.addTaskTitle.text.toString()
+            val mDescription = binding.addTaskDescription.text.toString()
+            val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+            val hourlyForLastUpdate =
+                SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
+            lastUpdate =
+                "Last Update: " + hourlyForLastUpdate.format(System.currentTimeMillis())
+            val mDate = "$date $time"
+            val mTimeLeft = getTimeLeft(
+                hourly.format(System.currentTimeMillis()),
+                hourly.parse(mDate) as Date
+            )
+            val isDone = mTimeLeft.contains("-")
+            val task = Task(0, mDate, mTitle, mDescription, mTimeLeft, lastUpdate, isDone)
+            NordanAlertDialog.Builder(context as Activity?)
+                .setAnimation(Animation.SIDE)
+                .isCancellable(false)
+                .setTitle("A task has just been added!")
+                .setMessage("You have just added aa Task!")
+                .setIcon(R.drawable.done_2, true)
+                .setPositiveBtnText("Great!")
+                .onPositiveClicked {
+                    mTaskViewModel.addTask(task)
+                    findNavController().navigate(R.id.action_addingFragment_to_listFragment)
                 }
-                val task = Task(0, mDate, mTitle, mDescription, mTimeLeft, lastUpdate, isDone)
-                NordanAlertDialog.Builder(context as Activity?)
-                    .setAnimation(Animation.SIDE)
-                    .isCancellable(false)
-                    .setTitle("A task has just been added!")
-                    .setMessage("You have just added aa Task!")
-                    .setIcon(R.drawable.done_2, true)
-                    .setPositiveBtnText("Great!")
-                    .onPositiveClicked{
-                        mTaskViewModel.addTask(task)
-                        findNavController().navigate(R.id.action_addingFragment_to_listFragment)
-                    }
-                    .build().show()
-
-            } catch (e: Exception) {
-                Toast.makeText(context, "You didn't choose the time!", Toast.LENGTH_LONG).show()
-            }
+                .build().show()
         }
+
     }
+
+
+    private fun validateFields(): Boolean {
+        if (binding.addTaskTitle.text.isEmpty()) {
+            Toast.makeText(context, "Please enter a valid title", Toast.LENGTH_SHORT).show()
+            return false
+        } else if (binding.addTaskDescription.text.isEmpty()) {
+            Toast.makeText(context, "Please enter a valid description", Toast.LENGTH_SHORT).show()
+            return false
+        } else if (binding.taskDate.text.isEmpty()) {
+            Toast.makeText(context, "Please pick the date", Toast.LENGTH_SHORT).show()
+            return false
+        } else if (binding.taskTime.text.isEmpty()) {
+            Toast.makeText(context, "Please pick the time", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+
 }

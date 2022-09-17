@@ -26,7 +26,7 @@
             android:id="@+id/action_homeFragment_to_calendarFragment2"
             app:destination="@id/calendarFragment" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/addingFragment"
         android:name="com.example.superbtodo.fragments.add.AddingFragment"
         android:label="Adding task"
@@ -34,7 +34,7 @@
         <action
             android:id="@+id/action_addingFragment_to_listFragment"
             app:destination="@id/homeFragment" />
-    </fragment>
+    </dialog>
     <dialog
         android:id="@+id/updateTaskDialogFragment"
         android:name="com.example.superbtodo.fragments.dialogs.UpdateTaskDialogFragment"
