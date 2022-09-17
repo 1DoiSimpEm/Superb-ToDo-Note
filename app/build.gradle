@@ -81,7 +81,6 @@ dependencies {
     implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4'
     implementation 'com.airbnb.android:lottie:5.2.0'
     implementation 'com.github.Dan629pl:nordan-material-dialog-android:1.0.7'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
-    implementation 'com.github.kizitonwose:CalendarView:1.1.0'
+
 
 }

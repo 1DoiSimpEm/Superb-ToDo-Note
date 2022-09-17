@@ -21,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.nordan.dialog.Animation
 import com.nordan.dialog.NordanAlertDialog
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQueryTextListener {
@@ -30,6 +32,7 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
+    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -171,7 +174,7 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
                 }
                 R.id.menu_sortByDate -> {
                     mTaskViewModel.readDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy { it.date }
+                        task.sortBy { hourly.parse(it.date) }
                         adapter.setData(task)
                     }
                     true

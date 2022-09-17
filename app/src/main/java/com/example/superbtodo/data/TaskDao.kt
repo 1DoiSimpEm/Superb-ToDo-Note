@@ -17,7 +17,7 @@ interface TaskDao {
     suspend fun updateTask(task: Task)
 
 
-    @Query("SELECT * FROM task_table ORDER BY id DESC")
+    @Query("SELECT * FROM task_table ORDER BY timeLeft ASC")
     fun readAllData(): LiveData<MutableList<Task>>
 
     @Query("SELECT * FROM task_table WHERE isDone=0" )

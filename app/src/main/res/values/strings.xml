@@ -42,4 +42,6 @@
     <string name="thur">THUR</string>
     <string name="fri">FRI</string>
     <string name="sat">SAT</string>
+    <string name="checkbox">CheckBox</string>
+    <string name="_18">18</string>
 </resources>

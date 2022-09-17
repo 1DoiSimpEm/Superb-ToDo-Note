@@ -1,17 +1,19 @@
 package com.example.superbtodo.fragments.list
 
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.graphics.Canvas
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -33,8 +35,7 @@ import com.nordan.dialog.NordanAlertDialog
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
 import java.util.*
-
-
+@RequiresApi(Build.VERSION_CODES.O)
 class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentListBinding
@@ -42,6 +43,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
+    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
@@ -225,7 +227,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     }
 
     private fun menuSelection() {
-        Log.i("HomeFragment", "menuSelection: ")
         binding.toolbar.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
                 R.id.menu_search -> {
@@ -256,7 +257,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 }
                 R.id.menu_sortByDate -> {
                     mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy { it.date }
+                        task.sortBy { hourly.parse(it.date) }
                         adapter.setData(task)
                     }
                     true
@@ -297,7 +298,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         }
     }
 
-
     private fun createNotificationChannel() {
         val name = "Notification Channel"
         val desc = "A Description of the Channel"
@@ -309,6 +309,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         notificationManager.createNotificationChannel(channel)
     }
 
+    @SuppressLint("MissingPermission")
     private fun scheduleNotification(title: String, message: String, time: String) {
         val intent = Intent(context, Notification::class.java)
         intent.putExtra(titleExtra, title)
