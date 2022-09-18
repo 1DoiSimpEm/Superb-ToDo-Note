@@ -41,6 +41,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.setCanceledOnTouchOutside(true)
         binding = FragmentUpdatetaskdialogBinding.bind(view)
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         initGadgets()

@@ -46,7 +46,12 @@ android {
         }
     }
 
-
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+            mavenCentral()
+        }
+    }
 }
 
 dependencies {
@@ -82,5 +87,6 @@ dependencies {
     implementation 'com.airbnb.android:lottie:5.2.0'
     implementation 'com.github.Dan629pl:nordan-material-dialog-android:1.0.7'
 
+    implementation 'com.applandeo:material-calendar-view:1.7.0'
 
 }

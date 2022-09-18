@@ -111,11 +111,10 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_border"
             android:hint="@string/your_task_date"
-            android:inputType="date"
             android:padding="10dp"
             android:singleLine="true"
             android:textSize="14sp"
-            tools:ignore="LabelFor,MissingPrefix"
+            tools:ignore="LabelFor,MissingPrefix,TextFields"
             android:importantForAutofill="no" />
 
         <TextView
@@ -137,7 +136,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textSize="14sp"
-            tools:ignore="LabelFor,MissingPrefix"
+            tools:ignore="LabelFor,MissingPrefix,TextFields"
             android:importantForAutofill="no" />
 
         <com.airbnb.lottie.LottieAnimationView

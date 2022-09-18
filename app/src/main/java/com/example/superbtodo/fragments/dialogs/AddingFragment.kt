@@ -38,6 +38,7 @@ class AddingFragment : BottomSheetDialogFragment() {
     private lateinit var date: String
     private lateinit var time: String
     private lateinit var lastUpdate: String
+    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +49,7 @@ class AddingFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.setCanceledOnTouchOutside(true)
         binding = FragmentAddingBinding.bind(view)
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         binding.addBtn.setOnClickListener {
@@ -105,8 +107,7 @@ class AddingFragment : BottomSheetDialogFragment() {
     }
 
     private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-        val dob = sdf.parse(timeNow)
+        val dob = hourly.parse(timeNow)
         val days = (timeEnd.time - dob!!.time) / 86400000
         val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
         val minutes = (timeEnd.time - dob.time) % 86400000 % 3600000 / 60000
@@ -117,7 +118,6 @@ class AddingFragment : BottomSheetDialogFragment() {
         if (validateFields()) {
             val mTitle = binding.addTaskTitle.text.toString()
             val mDescription = binding.addTaskDescription.text.toString()
-            val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
             val hourlyForLastUpdate =
                 SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
             lastUpdate =

@@ -98,7 +98,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textSize="14sp"
-            tools:ignore="LabelFor,MissingPrefix"
+            tools:ignore="LabelFor,MissingPrefix,TextFields"
             android:importantForAutofill="no" />
 
         <TextView
@@ -120,7 +120,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textSize="14sp"
-            tools:ignore="LabelFor,MissingPrefix"
+            tools:ignore="LabelFor,MissingPrefix,TextFields"
             android:importantForAutofill="no" />
 
         <com.airbnb.lottie.LottieAnimationView
