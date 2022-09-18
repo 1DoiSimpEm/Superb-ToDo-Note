@@ -27,9 +27,7 @@ import java.util.*
 
 class ListAdapter(
     val callBack: (Task) -> Unit
-) : RecyclerView.Adapter<ListAdapter.ViewHolder>(
-
-) {
+) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private var tasks = mutableListOf<Task>()
     private var handler: Handler? = null

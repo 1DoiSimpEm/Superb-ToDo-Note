@@ -33,4 +33,6 @@ class TaskRepository(private val taskDao: TaskDao) {
 
     fun searchIsDoneDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> = taskDao.searchIsDoneDbByTitle(searchQuery)
 
+    fun calendarSearch(searchQuery: String) : LiveData<MutableList<Task>> = taskDao.calendarSearch(searchQuery)
+
 }

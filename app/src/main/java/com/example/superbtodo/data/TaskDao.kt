@@ -38,4 +38,7 @@ interface TaskDao {
     @Query("SELECT * FROM task_table WHERE title LIKE :searchQuery AND isDone=1")
     fun searchIsDoneDbByTitle(searchQuery: String) : LiveData<MutableList<Task>>
 
+    @Query("SELECT * FROM task_table WHERE date LIKE :searchQuery AND isDone=0")
+    fun calendarSearch(searchQuery: String) : LiveData<MutableList<Task>>
+
 }
