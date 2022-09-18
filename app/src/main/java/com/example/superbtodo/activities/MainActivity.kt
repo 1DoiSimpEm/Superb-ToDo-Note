@@ -3,7 +3,6 @@ package com.example.superbtodo.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -32,19 +31,7 @@ class MainActivity : AppCompatActivity() {
         navController = binding.fragmentContainer.getFragment<NavHostFragment>().navController
         appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.doneFragment,R.id.calendarFragment))
         setupActionBarWithNavController(navController,appBarConfiguration)
-        hideBottomNavigation()
         binding.bottomNavigationView.setupWithNavController(navController)
-    }
-
-    private fun hideBottomNavigation() {
-        navController.addOnDestinationChangedListener{_,destination,_ ->
-            if(destination.id==R.id.addingFragment){
-                binding.bottomNavigationView.visibility = View.GONE
-            }
-            else{
-                binding.bottomNavigationView.visibility = View.VISIBLE
-            }
-        }
     }
     private fun hideStuff() {
         actionBar = supportActionBar!!
