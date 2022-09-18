@@ -1,4 +1,4 @@
-package com.example.superbtodo.fragments.add
+package com.example.superbtodo.fragments.dialogs
 
 import android.annotation.SuppressLint
 import android.app.Activity

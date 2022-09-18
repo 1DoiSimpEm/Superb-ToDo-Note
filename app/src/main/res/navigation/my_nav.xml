@@ -28,7 +28,7 @@
     </fragment>
     <dialog
         android:id="@+id/addingFragment"
-        android:name="com.example.superbtodo.fragments.add.AddingFragment"
+        android:name="com.example.superbtodo.fragments.dialogs.AddingFragment"
         android:label="Adding task"
         tools:layout="@layout/fragment_adding" >
         <action

@@ -9,7 +9,7 @@
     android:paddingTop="30dp"
     android:paddingRight="20dp"
     android:paddingBottom="50dp"
-    tools:context=".fragments.add.AddingFragment">
+    tools:context=".fragments.dialogs.AddingFragment">
 
 
 
