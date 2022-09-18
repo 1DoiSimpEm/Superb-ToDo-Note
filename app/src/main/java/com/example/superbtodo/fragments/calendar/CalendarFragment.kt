@@ -2,7 +2,6 @@ package com.example.superbtodo.fragments.calendar
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,10 +20,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var mTaskViewModel: TaskViewModel
     private lateinit var adapter: CalendarPickerAdapter
-    private lateinit var selectedDate : Calendar
+    private lateinit var selectedDate: Calendar
     private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCalendarBinding.bind(view)
@@ -35,19 +33,16 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
     private fun pickDate() {
         selectedDate = binding.calendarView.firstSelectedDate
-        binding.calendarView.setOnDayClickListener{ eventDay ->
-            selectedDate= eventDay.calendar
+        binding.dayTxt.text = dateFormat.format(selectedDate.timeInMillis)
+        showRecyclerView(binding.dayTxt.text.toString())
+        binding.calendarView.setOnDayClickListener { eventDay ->
+            selectedDate = eventDay.calendar
             val searchQuery = dateFormat.format(selectedDate.timeInMillis).toString()
-            Toast.makeText(context,searchQuery,Toast.LENGTH_LONG).show()
-            mTaskViewModel.calendarSearch("%$searchQuery%").observe(viewLifecycleOwner)
-            { tasks ->
-                tasks.let{
-                    adapter.setData(it)
-                }
-            }
+            showRecyclerView(searchQuery)
         }
 
     }
+
 
     private fun initAdapter() {
         adapter = CalendarPickerAdapter()
@@ -62,7 +57,22 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         }
     }
 
-
+    private fun showRecyclerView(searchQuery : String) {
+        mTaskViewModel.calendarSearch("%$searchQuery%").observe(viewLifecycleOwner)
+        { tasks ->
+            tasks.let {
+                adapter.setData(it)
+            }
+            binding.dayTxt.text = searchQuery
+            if (tasks.size == 0) {
+                binding.emptyLogo.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+            } else {
+                binding.emptyLogo.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+            }
+        }
+    }
 
     private fun getHighLightedEvents(tasks: MutableList<Task>): MutableList<EventDay> {
         val events = mutableListOf<EventDay>()

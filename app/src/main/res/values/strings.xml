@@ -55,4 +55,5 @@
     <string name="your_task_date">Your task date</string>
     <string name="update_your_task">Update your task</string>
     <string name="fill_the_details_below_to_update_a_task_into_your_todo">Fill the details below to update a task into your TODO</string>
+    <string name="emptystuff">emptyStuff</string>
 </resources>

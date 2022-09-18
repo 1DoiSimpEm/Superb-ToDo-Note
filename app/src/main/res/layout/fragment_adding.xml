@@ -132,7 +132,6 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_border"
             android:hint="@string/your_task_time"
-            android:inputType="time"
             android:padding="10dp"
             android:singleLine="true"
             android:textSize="14sp"
