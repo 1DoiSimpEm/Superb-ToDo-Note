@@ -66,9 +66,11 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             binding.dayTxt.text = searchQuery
             if (tasks.size == 0) {
                 binding.emptyLogo.visibility = View.VISIBLE
+                binding.cheerTxt.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
             } else {
                 binding.emptyLogo.visibility = View.GONE
+                binding.cheerTxt.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
             }
         }

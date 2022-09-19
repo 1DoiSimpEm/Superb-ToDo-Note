@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -26,12 +27,13 @@ import java.util.*
 
 
 class ListAdapter(
-    val callBack: (Task) -> Unit
+    val onCLick: (Task) -> Unit
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private var tasks = mutableListOf<Task>()
     private var handler: Handler? = null
     private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+    private val hourlyTime = SimpleDateFormat("HH:mm",Locale.getDefault())
     private val dateFormat = SimpleDateFormat("EE dd MMM yyyy", Locale.US)
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -86,10 +88,11 @@ class ListAdapter(
 
     private fun holderCheckHandle(holder: ListAdapter.ViewHolder, position: Int) {
         val currentItem = tasks[position]
-        holder.isDoneCheckBox.setOnClickListener {
-            currentItem.isDone = true
-            sendData(currentItem)
-//            notifyItemChanged(position)
+        holder.isDoneCheckBox.setOnClickListener { view ->
+            if ((view as CompoundButton).isChecked) {
+                currentItem.isDone = true
+                sendData(currentItem)
+            }
         }
         if (holder.isDoneCheckBox.isChecked) {
             strikeThroughText(holder)
@@ -125,7 +128,8 @@ class ListAdapter(
     private fun initHolder(holder: ListAdapter.ViewHolder, position: Int) {
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
-        holder.timeTextView.text = currentItem.date
+        holder.timeTextView.text = hourlyTime.format(hourly.parse(currentItem.date) as Date)
+        holder.timeLeftTextView.text=currentItem.timeLeft
         holder.isDoneCheckBox.isChecked = currentItem.isDone
         holder.lastUpdateTextView.text = currentItem.lastUpdate
         try {
@@ -148,7 +152,7 @@ class ListAdapter(
             try {
                 holder.timeLeftTextView.text = getTimeLeft(
                     hourly.format(System.currentTimeMillis()),
-                    hourly.parse(holder.timeTextView.text.toString()) as Date
+                    hourly.parse(tasks[position].date) as Date
                 )
                 tasks[position].timeLeft = holder.timeLeftTextView.text.toString()
                 if (tasks[position].date == hourly.format(System.currentTimeMillis()) && !tasks[position].isDone) {
@@ -200,7 +204,7 @@ class ListAdapter(
     }
 
     private fun sendData(task: Task) {
-        callBack(task)
+        onCLick(task)
     }
 
 

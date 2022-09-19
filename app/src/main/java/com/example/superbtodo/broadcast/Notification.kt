@@ -1,4 +1,4 @@
-package com.example.superbtodo.services
+package com.example.superbtodo.broadcast
 
 import android.app.NotificationManager
 import android.content.BroadcastReceiver

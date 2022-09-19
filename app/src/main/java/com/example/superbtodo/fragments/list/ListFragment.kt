@@ -26,8 +26,8 @@ import com.example.superbtodo.R
 import com.example.superbtodo.adapters.ListAdapter
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentListBinding
-import com.example.superbtodo.services.*
-import com.example.superbtodo.services.Notification
+import com.example.superbtodo.broadcast.*
+import com.example.superbtodo.broadcast.Notification
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.nordan.dialog.Animation
@@ -35,6 +35,7 @@ import com.nordan.dialog.NordanAlertDialog
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
 import java.util.*
+
 @RequiresApi(Build.VERSION_CODES.O)
 class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextListener {
 
@@ -72,7 +73,8 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { tasks ->
             adapter.setData(tasks)
             for (task in tasks) {
-                scheduleNotification(task.title, task.description, task.date)
+                if (!task.isDone)
+                    scheduleNotification(task.title, task.description, task.date)
             }
 
         }
@@ -90,7 +92,10 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     binding.moveToAddBtn.startAnimation(
-                        AnimationUtils.loadAnimation( binding.moveToAddBtn.context, com.google.android.material.R.anim.abc_fade_in)
+                        AnimationUtils.loadAnimation(
+                            binding.moveToAddBtn.context,
+                            com.google.android.material.R.anim.abc_fade_in
+                        )
                     )
                     binding.moveToAddBtn.visibility = View.VISIBLE
                 }

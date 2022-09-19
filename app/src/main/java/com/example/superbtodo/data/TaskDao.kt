@@ -17,13 +17,13 @@ interface TaskDao {
     suspend fun updateTask(task: Task)
 
 
-    @Query("SELECT * FROM task_table ORDER BY timeLeft ASC")
+    @Query("SELECT * FROM task_table ORDER BY date ASC")
     fun readAllData(): LiveData<MutableList<Task>>
 
-    @Query("SELECT * FROM task_table WHERE isDone=0" )
+    @Query("SELECT * FROM task_table  WHERE isDone=0 ORDER BY date ASC " )
     fun readNotDoneData(): LiveData<MutableList<Task>>
 
-    @Query("SELECT * FROM task_table WHERE isDone=1" )
+    @Query("SELECT * FROM task_table WHERE isDone=1 ORDER BY date ASC" )
     fun readDoneData(): LiveData<MutableList<Task>>
 
     @Query("DELETE FROM task_table WHERE isDone =0")

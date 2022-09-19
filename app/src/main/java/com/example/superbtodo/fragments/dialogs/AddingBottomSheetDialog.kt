@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddingFragment : BottomSheetDialogFragment() {
+class AddingBottomSheetDialog : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentAddingBinding
     private lateinit var mTaskViewModel: TaskViewModel
     private lateinit var timePickerDialog: TimePickerDialog
@@ -66,8 +66,6 @@ class AddingFragment : BottomSheetDialogFragment() {
                 val calendar = Calendar.getInstance()
                 hour = calendar.get(Calendar.HOUR)
                 minute = calendar.get(Calendar.MINUTE)
-
-
                 // Launch Time Picker Dialog
                 timePickerDialog = TimePickerDialog(
                     activity,
@@ -133,7 +131,7 @@ class AddingFragment : BottomSheetDialogFragment() {
                 .setAnimation(Animation.SIDE)
                 .isCancellable(false)
                 .setTitle("A task has just been added!")
-                .setMessage("You have just added aa Task!")
+                .setMessage("You have just added a Task!")
                 .setIcon(R.drawable.done_2, true)
                 .setPositiveBtnText("Great!")
                 .onPositiveClicked {

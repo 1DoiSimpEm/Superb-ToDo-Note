@@ -41,6 +41,13 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/empty_state"
         tools:ignore="ContentDescription" />
+    <TextView
+        android:id="@+id/cheerTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/it_s_kinda_sad_to_be_a_boring_day_without_task"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
