@@ -88,5 +88,7 @@ dependencies {
     implementation 'com.github.Dan629pl:nordan-material-dialog-android:1.0.7'
 
     implementation 'com.applandeo:material-calendar-view:1.7.0'
+    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
+
 
 }

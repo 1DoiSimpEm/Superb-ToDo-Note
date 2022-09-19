@@ -5,44 +5,29 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.applandeo.materialcalendarview.EventDay
 import com.example.superbtodo.R
 import com.example.superbtodo.adapters.CalendarPickerAdapter
-import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentCalendarBinding
+import com.example.superbtodo.utils.DateFormatUtil
 import com.example.superbtodo.viewmodel.TaskViewModel
-import java.text.SimpleDateFormat
+import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalendarViewListener
+import com.github.sundeepk.compactcalendarview.domain.Event
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var mTaskViewModel: TaskViewModel
     private lateinit var adapter: CalendarPickerAdapter
-    private lateinit var selectedDate: Calendar
-    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    private object DateFormatter : DateFormatUtil()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCalendarBinding.bind(view)
         initAdapter()
         setupEvents()
-        pickDate()
+        this.pickDate()
     }
-
-    private fun pickDate() {
-        selectedDate = binding.calendarView.firstSelectedDate
-        binding.dayTxt.text = dateFormat.format(selectedDate.timeInMillis)
-        showRecyclerView(binding.dayTxt.text.toString())
-        binding.calendarView.setOnDayClickListener { eventDay ->
-            selectedDate = eventDay.calendar
-            val searchQuery = dateFormat.format(selectedDate.timeInMillis).toString()
-            showRecyclerView(searchQuery)
-        }
-
-    }
-
 
     private fun initAdapter() {
         adapter = CalendarPickerAdapter()
@@ -50,14 +35,47 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    private fun pickDate() {
+        val firstDay = System.currentTimeMillis()
+        binding.tvSelectMonth.text = DateFormatter.monthFormat().format(firstDay)
+        showRecyclerView(DateFormatter.dateFormat().format(firstDay).toString())
+        binding.calendarView.setListener(object : CompactCalendarViewListener {
+            override fun onDayClick(dateClicked: Date) {
+                val searchQuery = DateFormatter.dateFormat().format(dateClicked).toString()
+                showRecyclerView(searchQuery)
+            }
+
+            override fun onMonthScroll(firstDayOfNewMonth: Date) {
+                binding.tvSelectMonth.text = DateFormatter.monthFormat().format(firstDayOfNewMonth)
+            }
+        })
+    }
+
     private fun setupEvents() {
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { tasks ->
-            binding.calendarView.setEvents(getHighLightedEvents(tasks))
+            for (task in tasks) {
+                val calendar = Calendar.getInstance()
+                val date: ArrayList<String> =
+                    DateFormatter.dateFormat().format(DateFormatter.hourly().parse(task.date) as Date).toString()
+                        .split(".") as ArrayList<String>
+                val dd: String = date[0]
+                val month: String = date[1]
+                val year: String = date[2]
+                calendar[Calendar.DAY_OF_MONTH] = dd.toInt()
+                calendar[Calendar.MONTH] = month.toInt() - 1
+                calendar[Calendar.YEAR] = year.toInt()
+                binding.calendarView.addEvent(
+                    Event(
+                        R.drawable.ic_baseline_access_alarm_24,
+                        calendar.timeInMillis
+                    )
+                )
+            }
         }
     }
 
-    private fun showRecyclerView(searchQuery : String) {
+    private fun showRecyclerView(searchQuery: String) {
         mTaskViewModel.calendarSearch("%$searchQuery%").observe(viewLifecycleOwner)
         { tasks ->
             tasks.let {
@@ -67,7 +85,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             if (tasks.size == 0) {
                 binding.emptyLogo.visibility = View.VISIBLE
                 binding.cheerTxt.visibility = View.VISIBLE
-                binding.recyclerView.visibility = View.GONE
             } else {
                 binding.emptyLogo.visibility = View.GONE
                 binding.cheerTxt.visibility = View.GONE
@@ -75,25 +92,5 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             }
         }
     }
-
-    private fun getHighLightedEvents(tasks: MutableList<Task>): MutableList<EventDay> {
-        val events = mutableListOf<EventDay>()
-        for (task in tasks) {
-            val calendar = Calendar.getInstance()
-            val date: ArrayList<String> =
-                dateFormat.format(hourly.parse(task.date) as Date).toString()
-                    .split(".") as ArrayList<String>
-            val dd: String = date[0]
-            val month: String = date[1]
-            val year: String = date[2]
-            calendar[Calendar.DAY_OF_MONTH] = dd.toInt()
-            calendar[Calendar.MONTH] = month.toInt() - 1
-            calendar[Calendar.YEAR] = year.toInt()
-            events.add(EventDay(calendar, R.drawable.ic_baseline_access_alarm_24))
-        }
-        return events
-
-    }
-
 
 }

@@ -10,15 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.fragments.calendar.CalendarFragmentDirections
+import com.example.superbtodo.utils.DateFormatUtil
 import com.example.superbtodo.utils.TaskDiffUtil
 import com.google.android.material.card.MaterialCardView
-import java.text.SimpleDateFormat
 import java.util.*
 
 class CalendarPickerAdapter : RecyclerView.Adapter<CalendarPickerAdapter.CalendarViewHolder>() {
     private var tasks = mutableListOf<Task>()
-    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    private object DateFormatter : DateFormatUtil()
 
     inner class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView = itemView.findViewById(R.id.titleTxt) as TextView
@@ -50,7 +49,7 @@ class CalendarPickerAdapter : RecyclerView.Adapter<CalendarPickerAdapter.Calenda
     private fun initGadgets(holder : CalendarViewHolder,position: Int) {
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
-        holder.timeTextView.text =  timeFormat.format(hourly.parse(currentItem.date) as Date)
+        holder.timeTextView.text =  DateFormatter.timeFormat().format(DateFormatter.hourly().parse(currentItem.date) as Date)
     }
 
     override fun getItemCount(): Int = tasks.size

@@ -16,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentUpdatetaskdialogBinding
+import com.example.superbtodo.utils.DateFormatUtil
 import com.example.superbtodo.viewmodel.TaskViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,13 +33,10 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private var day = 0
     private var hour = 0
     private var minute = 0
-    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.US)
-    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     private lateinit var date: String
     private lateinit var time: String
     private lateinit var lastUpdate: String
-
+    private object DateFormatter : DateFormatUtil()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setCanceledOnTouchOutside(true)
@@ -60,10 +58,10 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     }
 
     private fun getOldDate(): String =
-        dateFormat.format(hourly.parse(args.currentTask.date) as Date)
+        DateFormatter.dateFormat().format(DateFormatter.hourly().parse(args.currentTask.date) as Date)
 
     private fun getOldTime(): String =
-        timeFormat.format(hourly.parse(args.currentTask.date) as Date)
+        DateFormatter.timeFormat().format(DateFormatter.hourly().parse(args.currentTask.date) as Date)
 
     @SuppressLint("ClickableViewAccessibility")
     private fun getTime() {
@@ -130,7 +128,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         if (this::date.isInitialized and this::time.isInitialized) {
             val mDate = "$date $time"
             val mTimeLeft = getTimeLeft(
-                hourly.format(System.currentTimeMillis()), hourly.parse(mDate) as Date
+                DateFormatter.hourly().format(System.currentTimeMillis()), DateFormatter.hourly().parse(mDate) as Date
             )
             val isDone = mTimeLeft.contains("-")
             val task = Task(
@@ -141,7 +139,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         } else if (this::date.isInitialized and !this::time.isInitialized) {
             val newDate = date + " " + getOldTime()
             val mTimeLeft = getTimeLeft(
-                hourly.format(System.currentTimeMillis()), hourly.parse(newDate) as Date
+                DateFormatter.hourly().format(System.currentTimeMillis()), DateFormatter.hourly().parse(newDate) as Date
             )
             val isDone = mTimeLeft.contains("-")
             val task = Task(
@@ -152,7 +150,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         } else if (this::time.isInitialized and !this::date.isInitialized) {
             val newDate = getOldDate() + " " + time
             val mTimeLeft = getTimeLeft(
-                hourly.format(System.currentTimeMillis()), hourly.parse(newDate) as Date
+                DateFormatter.hourly().format(System.currentTimeMillis()), DateFormatter.hourly().parse(newDate) as Date
             )
             val isDone = mTimeLeft.contains("-")
             val task = Task(
@@ -162,8 +160,8 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
             dismiss()
         } else {
             val mTimeLeft = getTimeLeft(
-                hourly.format(System.currentTimeMillis()),
-                hourly.parse(args.currentTask.date) as Date
+                DateFormatter.hourly().format(System.currentTimeMillis()),
+                DateFormatter.hourly().parse(args.currentTask.date) as Date
             )
             val isDone = mTimeLeft.contains("-")
             val task = Task(

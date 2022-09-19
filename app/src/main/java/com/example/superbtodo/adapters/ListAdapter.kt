@@ -1,6 +1,7 @@
 package com.example.superbtodo.adapters
 
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
@@ -20,9 +21,9 @@ import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.fragments.bins.TrashBinFragmentDirections
 import com.example.superbtodo.fragments.list.ListFragmentDirections
+import com.example.superbtodo.utils.DateFormatUtil
 import com.example.superbtodo.utils.TaskDiffUtil
 import com.google.android.material.card.MaterialCardView
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -32,10 +33,10 @@ class ListAdapter(
 
     private var tasks = mutableListOf<Task>()
     private var handler: Handler? = null
-    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-    private val hourlyTime = SimpleDateFormat("HH:mm",Locale.getDefault())
-    private val dateFormat = SimpleDateFormat("EE dd MMM yyyy", Locale.US)
-
+//    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+//    private val hourlyTime = SimpleDateFormat("HH:mm",Locale.getDefault())
+//    private val dateFormat = SimpleDateFormat("EE dd MMM yyyy", Locale.US)
+    private object DateFormatter : DateFormatUtil()
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView = itemView.findViewById(R.id.titleTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
@@ -111,13 +112,10 @@ class ListAdapter(
         holder.taskLayout.clearAnimation()
     }
 
-    //    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(newTasks: MutableList<Task>) {
-        val diffUtil = TaskDiffUtil(tasks, newTasks)
-        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.tasks = newTasks
-        diffResult.dispatchUpdatesTo(this)
-//        notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
 
@@ -128,13 +126,13 @@ class ListAdapter(
     private fun initHolder(holder: ListAdapter.ViewHolder, position: Int) {
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
-        holder.timeTextView.text = hourlyTime.format(hourly.parse(currentItem.date) as Date)
+        holder.timeTextView.text = DateFormatter.dateFormat().format(DateFormatter.hourly().parse(currentItem.date) as Date)
         holder.timeLeftTextView.text=currentItem.timeLeft
         holder.isDoneCheckBox.isChecked = currentItem.isDone
         holder.lastUpdateTextView.text = currentItem.lastUpdate
         try {
-            val date = hourly.parse(currentItem.date)
-            val outputDateString = dateFormat.format(date as Date)
+            val date = DateFormatter.hourly().parse(currentItem.date)
+            val outputDateString = DateFormatter.dateFormatWithChar().format(date as Date)
             val textItems: ArrayList<String> = outputDateString.split(" ") as ArrayList<String>
             holder.day.text = textItems[0]
             holder.date.text = textItems[1]
@@ -151,11 +149,11 @@ class ListAdapter(
         periodicUpdate = Runnable {
             try {
                 holder.timeLeftTextView.text = getTimeLeft(
-                    hourly.format(System.currentTimeMillis()),
-                    hourly.parse(tasks[position].date) as Date
+                    DateFormatter.hourly().format(System.currentTimeMillis()),
+                    DateFormatter.hourly().parse(tasks[position].date) as Date
                 )
                 tasks[position].timeLeft = holder.timeLeftTextView.text.toString()
-                if (tasks[position].date == hourly.format(System.currentTimeMillis()) && !tasks[position].isDone) {
+                if (tasks[position].date == DateFormatter.hourly().format(System.currentTimeMillis()) && !tasks[position].isDone) {
                     tasks[position].isDone = true
                     sendData(tasks[position])
                 }
@@ -173,7 +171,7 @@ class ListAdapter(
 
 
     private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val dob = hourly.parse(timeNow)
+        val dob = DateFormatter.hourly().parse(timeNow)
         val days = (timeEnd.time - dob!!.time) / 86400000
         val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
         val minutes = (timeEnd.time - dob.time) % 86400000 % 3600000 / 60000

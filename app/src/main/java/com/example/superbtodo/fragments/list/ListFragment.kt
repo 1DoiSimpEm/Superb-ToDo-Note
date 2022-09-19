@@ -28,13 +28,12 @@ import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentListBinding
 import com.example.superbtodo.broadcast.*
 import com.example.superbtodo.broadcast.Notification
+import com.example.superbtodo.utils.DateFormatUtil
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.nordan.dialog.Animation
 import com.nordan.dialog.NordanAlertDialog
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
-import java.text.SimpleDateFormat
-import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextListener {
@@ -44,7 +43,8 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
-    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+    private object DateFormatter : DateFormatUtil()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
@@ -262,7 +262,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 }
                 R.id.menu_sortByDate -> {
                     mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy { hourly.parse(it.date) }
+                        task.sortBy { DateFormatter.hourly().parse(it.date) }
                         adapter.setData(task)
                     }
                     true
@@ -319,8 +319,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         val intent = Intent(context, Notification::class.java)
         intent.putExtra(titleExtra, title)
         intent.putExtra(messageExtra, "$message\n in $time")
-        val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-        val setTime = hourly.parse(time)?.time
+        val setTime = DateFormatter.hourly().parse(time)?.time
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             notificationID,

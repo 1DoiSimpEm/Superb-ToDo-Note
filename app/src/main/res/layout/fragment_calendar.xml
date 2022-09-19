@@ -5,34 +5,47 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".fragments.calendar.CalendarFragment">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="364dp">
-        <com.applandeo.materialcalendarview.CalendarView
-            android:id="@+id/calendarView"
+        <TextView
+            android:id="@+id/tvSelectMonth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:datePicker="true"
-            app:daysLabelsColor="@color/red"
-            app:eventsEnabled="true"
-            app:headerColor="@color/done_layout_bg"
-            app:highlightedDaysLabelsColor="@color/red"
-            app:todayLabelColor="@color/amber_300" />
-    </ScrollView>
+            android:text="@string/september"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/done_layout_bg"
+            android:background="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp"/>
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="16dp"
+            app:compactCalendarBackgroundColor="@color/white"
+            app:compactCalendarCurrentDayBackgroundColor="@android:color/holo_orange_light"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="#FF1744"
+            app:compactCalendarMultiEventIndicatorColor="#354ade"
+            app:compactCalendarTargetHeight="220dp"
+            app:compactCalendarTextColor="@color/black"
+            app:compactCalendarTextSize="13sp" />
 
     <TextView
         android:id="@+id/dayTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white_bg"
         android:text="@string/date"
         android:textSize="20sp"
         android:textColor="@color/red"
         android:gravity="center_horizontal"/>
     <com.airbnb.lottie.LottieAnimationView
+        android:background="@color/white_bg"
         android:id="@+id/emptyLogo"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:src="@drawable/ic_empty_task"
         android:visibility="visible"
@@ -42,6 +55,7 @@
         app:lottie_rawRes="@raw/empty_state"
         tools:ignore="ContentDescription" />
     <TextView
+        android:background="@color/white_bg"
         android:id="@+id/cheerTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,6 +66,6 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@null"/>
+        android:background="@color/white_bg" />
 
 </LinearLayout>
