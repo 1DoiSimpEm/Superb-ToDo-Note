@@ -8,8 +8,8 @@ import androidx.core.app.NotificationCompat
 import com.example.superbtodo.R
 
 
-const val notificationID = 2
-const val channelID = "Channel2"
+const val notificationID = 1
+const val channelID = "Channel"
 const val titleExtra = "titleExtra"
 const val messageExtra = "messageExtra"
 

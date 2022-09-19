@@ -1,7 +1,6 @@
 package com.example.superbtodo.fragments.list
 
 
-import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
@@ -304,7 +303,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     }
 
     private fun createNotificationChannel() {
-        val name = "Notification Channel"
+        val name = "Notification Channel for superbToDo"
         val desc = "A Description of the Channel"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(channelID, name, importance)
@@ -314,7 +313,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         notificationManager.createNotificationChannel(channel)
     }
 
-    @SuppressLint("MissingPermission")
     private fun scheduleNotification(title: String, message: String, time: String) {
         val intent = Intent(context, Notification::class.java)
         intent.putExtra(titleExtra, title)

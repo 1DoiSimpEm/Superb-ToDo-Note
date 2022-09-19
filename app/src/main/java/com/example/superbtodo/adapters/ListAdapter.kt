@@ -15,14 +15,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.fragments.bins.TrashBinFragmentDirections
 import com.example.superbtodo.fragments.list.ListFragmentDirections
 import com.example.superbtodo.utils.DateFormatUtil
-import com.example.superbtodo.utils.TaskDiffUtil
 import com.google.android.material.card.MaterialCardView
 import java.util.*
 
@@ -126,7 +124,7 @@ class ListAdapter(
     private fun initHolder(holder: ListAdapter.ViewHolder, position: Int) {
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
-        holder.timeTextView.text = DateFormatter.dateFormat().format(DateFormatter.hourly().parse(currentItem.date) as Date)
+        holder.timeTextView.text = DateFormatter.timeFormat().format(DateFormatter.hourly().parse(currentItem.date) as Date)
         holder.timeLeftTextView.text=currentItem.timeLeft
         holder.isDoneCheckBox.isChecked = currentItem.isDone
         holder.lastUpdateTextView.text = currentItem.lastUpdate
