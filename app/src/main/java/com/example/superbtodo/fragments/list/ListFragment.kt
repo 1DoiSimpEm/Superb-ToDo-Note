@@ -42,6 +42,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
+
     private object DateFormatter : DateFormatUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
             adapter.setData(tasks)
             for (task in tasks) {
                 if (!task.isDone)
-                    scheduleNotification(task.title, task.description, task.date)
+                    scheduleNotification( task.id,task.title, task.description, task.date)
             }
 
         }
@@ -113,6 +114,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     }
 
     private fun handlerTaskData(task: Task) {
+        cancelNotification(task.id,task.title, task.description, task.date)
         mTaskViewModel.updateTask(task)
     }
 
@@ -313,26 +315,36 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun scheduleNotification(title: String, message: String, time: String) {
+    private fun scheduleNotification(id: Int, title: String, message: String, time: String) {
         val intent = Intent(context, Notification::class.java)
         intent.putExtra(titleExtra, title)
+        intent.putExtra("notificationID",id)
         intent.putExtra(messageExtra, "$message\n in $time")
-        val setTime = DateFormatter.hourly().parse(time)?.time
+        val setTime = DateFormatter.hourly().parse(time)!!.time
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            notificationID,
+            id,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        setTime?.let {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                it,
-                pendingIntent
-            )
-        }
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, setTime, pendingIntent)
+    }
+
+    private fun cancelNotification(id :Int,title: String, message: String, time: String) {
+        val intent = Intent(context, Notification::class.java)
+        intent.putExtra(titleExtra, title)
+        intent.putExtra("notificationID",id)
+        intent.putExtra(messageExtra, "$message\n in $time")
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            id,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
     }
 }
 
