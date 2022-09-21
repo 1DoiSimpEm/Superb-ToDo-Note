@@ -25,9 +25,6 @@ class TaskDiffUtil(
         oldList[oldItemPosition].date != newList[newItemPosition].date -> {
             false
         }
-        oldList[oldItemPosition].timeLeft != newList[newItemPosition].timeLeft -> {
-            false
-        }
         oldList[oldItemPosition].description != newList[newItemPosition].description -> {
             false
         }

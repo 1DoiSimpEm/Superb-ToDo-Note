@@ -17,7 +17,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.databinding.FragmentAddingBinding
-import com.example.superbtodo.utils.DateFormatUtil
 import com.example.superbtodo.viewmodel.TaskViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nordan.dialog.Animation
@@ -38,8 +37,6 @@ class AddingBottomSheetDialog : BottomSheetDialogFragment() {
     private var minute = 0
     private lateinit var date: String
     private lateinit var time: String
-    private lateinit var lastUpdate: String
-    private object DateFormatter : DateFormatUtil()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,29 +102,16 @@ class AddingBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
 
-    private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val dob = DateFormatter.hourly().parse(timeNow)
-        val days = (timeEnd.time - dob!!.time) / 86400000
-        val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
-        val minutes = (timeEnd.time - dob.time) % 86400000 % 3600000 / 60000
-        return "$days days $hours hours $minutes minutes left"
-    }
-
     private fun addNewTask() {
         if (validateFields()) {
             val mTitle = binding.addTaskTitle.text.toString()
             val mDescription = binding.addTaskDescription.text.toString()
             val hourlyForLastUpdate =
                 SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
-            lastUpdate =
+            val lastUpdate =
                 "Last Update: " + hourlyForLastUpdate.format(System.currentTimeMillis())
             val mDate = "$date $time"
-            val mTimeLeft = getTimeLeft(
-                DateFormatter.hourly().format(System.currentTimeMillis()),
-                DateFormatter.hourly().parse(mDate) as Date
-            )
-            val isDone = mTimeLeft.contains("-")
-            val task = Task(0, mDate, mTitle, mDescription, mTimeLeft, lastUpdate, isDone)
+            val task = Task(0, mDate, mTitle, mDescription, lastUpdate, false)
             NordanAlertDialog.Builder(context as Activity?)
                 .setAnimation(Animation.SIDE)
                 .isCancellable(false)

@@ -1,26 +1,26 @@
 package com.example.superbtodo.adapters
 
 
-import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.superbtodo.R
 import com.example.superbtodo.data.Task
 import com.example.superbtodo.fragments.bins.TrashBinFragmentDirections
 import com.example.superbtodo.fragments.list.ListFragmentDirections
 import com.example.superbtodo.utils.DateFormatUtil
+import com.example.superbtodo.utils.TaskDiffUtil
 import com.google.android.material.card.MaterialCardView
 import java.util.*
 
@@ -55,9 +55,6 @@ class ListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.taskLayout.startAnimation(
-            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fall_down)
-        )
         initHolder(holder, position)
         timerUpdate(holder, position)
         holderNavigate(holder, position)
@@ -110,10 +107,11 @@ class ListAdapter(
         holder.taskLayout.clearAnimation()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setData(newTasks: MutableList<Task>) {
+        val diffUtil = TaskDiffUtil(tasks, newTasks)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.tasks = newTasks
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
 
@@ -125,7 +123,6 @@ class ListAdapter(
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
         holder.timeTextView.text = DateFormatter.timeFormat().format(DateFormatter.hourly().parse(currentItem.date) as Date)
-        holder.timeLeftTextView.text=currentItem.timeLeft
         holder.isDoneCheckBox.isChecked = currentItem.isDone
         holder.lastUpdateTextView.text = currentItem.lastUpdate
         try {
@@ -150,12 +147,11 @@ class ListAdapter(
                     DateFormatter.hourly().format(System.currentTimeMillis()),
                     DateFormatter.hourly().parse(tasks[position].date) as Date
                 )
-                tasks[position].timeLeft = holder.timeLeftTextView.text.toString()
                 if (tasks[position].date == DateFormatter.hourly().format(System.currentTimeMillis()) && !tasks[position].isDone) {
                     tasks[position].isDone = true
                     sendData(tasks[position])
                 }
-                if (tasks[position].timeLeft.contains("-") && !tasks[position].isDone) {
+                if (holder.timeLeftTextView.text.contains("-") && !tasks[position].isDone) {
                     tasks[position].isDone = true
                     sendData(tasks[position])
                 }

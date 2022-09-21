@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         hideStuff()
         bottomNavigationSetup()
-
         setContentView(binding.root)
 
     }

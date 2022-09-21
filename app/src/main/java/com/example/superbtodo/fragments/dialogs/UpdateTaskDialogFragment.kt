@@ -35,8 +35,9 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private var minute = 0
     private lateinit var date: String
     private lateinit var time: String
-    private lateinit var lastUpdate: String
+
     private object DateFormatter : DateFormatUtil()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setCanceledOnTouchOutside(true)
@@ -58,10 +59,12 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     }
 
     private fun getOldDate(): String =
-        DateFormatter.dateFormat().format(DateFormatter.hourly().parse(args.currentTask.date) as Date)
+        DateFormatter.dateFormat()
+            .format(DateFormatter.hourly().parse(args.currentTask.date) as Date)
 
     private fun getOldTime(): String =
-        DateFormatter.timeFormat().format(DateFormatter.hourly().parse(args.currentTask.date) as Date)
+        DateFormatter.timeFormat()
+            .format(DateFormatter.hourly().parse(args.currentTask.date) as Date)
 
     @SuppressLint("ClickableViewAccessibility")
     private fun getTime() {
@@ -111,71 +114,48 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         }
     }
 
-    private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-        val dob = sdf.parse(timeNow)
-        val days = (timeEnd.time - dob!!.time) / 86400000
-        val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
-        val minutes = (timeEnd.time - dob.time) % 86400000 % 3600000 / 60000
-        return "$days days $hours hours $minutes minutes left"
-    }
-
     private fun saveTask() {
         val mTitle = binding.addTaskTitle.text.toString()
         val mDescription = binding.addTaskDescription.text.toString()
         val hourlyForLastUpdate = SimpleDateFormat("HH:mm - dd.MM.yyyy ", Locale.getDefault())
-        lastUpdate = "Last Update: " + hourlyForLastUpdate.format(System.currentTimeMillis())
+        val lastUpdate = "Last Update: " + hourlyForLastUpdate.format(System.currentTimeMillis())
         if (this::date.isInitialized and this::time.isInitialized) {
-            val mDate = "$date $time"
-            val mTimeLeft = getTimeLeft(
-                DateFormatter.hourly().format(System.currentTimeMillis()), DateFormatter.hourly().parse(mDate) as Date
-            )
-            val isDone = mTimeLeft.contains("-")
+            val newDate = "$date $time"
             val task = Task(
-                args.currentTask.id, mDate, mTitle, mDescription, mTimeLeft, lastUpdate, isDone
+                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, getCompletion(newDate)
             )
             mTaskViewModel.updateTask(task)
             dismiss()
         } else if (this::date.isInitialized and !this::time.isInitialized) {
             val newDate = date + " " + getOldTime()
-            val mTimeLeft = getTimeLeft(
-                DateFormatter.hourly().format(System.currentTimeMillis()), DateFormatter.hourly().parse(newDate) as Date
-            )
-            val isDone = mTimeLeft.contains("-")
             val task = Task(
-                args.currentTask.id, newDate, mTitle, mDescription, mTimeLeft, lastUpdate, isDone
+                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, getCompletion(newDate)
             )
             mTaskViewModel.updateTask(task)
             dismiss()
         } else if (this::time.isInitialized and !this::date.isInitialized) {
             val newDate = getOldDate() + " " + time
-            val mTimeLeft = getTimeLeft(
-                DateFormatter.hourly().format(System.currentTimeMillis()), DateFormatter.hourly().parse(newDate) as Date
-            )
-            val isDone = mTimeLeft.contains("-")
             val task = Task(
-                args.currentTask.id, newDate, mTitle, mDescription, mTimeLeft, lastUpdate, isDone
+                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, getCompletion(newDate)
             )
             mTaskViewModel.updateTask(task)
             dismiss()
         } else {
-            val mTimeLeft = getTimeLeft(
-                DateFormatter.hourly().format(System.currentTimeMillis()),
-                DateFormatter.hourly().parse(args.currentTask.date) as Date
-            )
-            val isDone = mTimeLeft.contains("-")
             val task = Task(
                 args.currentTask.id,
                 args.currentTask.date,
                 mTitle,
                 mDescription,
-                mTimeLeft,
                 lastUpdate,
-                isDone
+                getCompletion(args.currentTask.date)
             )
             mTaskViewModel.updateTask(task)
             dismiss()
         }
+    }
+
+    private fun getCompletion(date : String): Boolean {
+            return (System.currentTimeMillis() > (DateFormatter.hourly().parse(date) as Date).time)
     }
 
 

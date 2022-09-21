@@ -70,7 +70,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
                 calendar[Calendar.YEAR] = year.toInt()
                 binding.calendarView.addEvent(
                     Event(
-                        R.color.red,
+                        R.color.bgBottomNavigation,
                         calendar.timeInMillis,
                         task.title
                     )

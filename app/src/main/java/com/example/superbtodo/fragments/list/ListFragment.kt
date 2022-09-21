@@ -261,7 +261,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 }
                 R.id.menu_sortByDate -> {
                     mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy { DateFormatter.hourly().parse(it.date) }
+                        task.sortBy { DateFormatter.hourly().parse(it.date)!!.time }
                         adapter.setData(task)
                     }
                     true
