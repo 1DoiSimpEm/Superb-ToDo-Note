@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingTop="30dp"
-    android:paddingRight="20dp"
-    android:paddingBottom="50dp">
+    app:cardCornerRadius="10dp"
+    android:layout_height="match_parent">
 
-
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="30dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="50dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,12 +51,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_border"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textSize="14sp"
             android:hint="@string/your_task_title"
             android:importantForAutofill="no"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,13 +72,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_border"
+            android:hint="@string/your_task_description"
+            android:importantForAutofill="no"
+            android:inputType="text"
             android:padding="10dp"
             android:singleLine="true"
             android:textSize="14sp"
-            android:hint="@string/your_task_description"
-            tools:ignore="MissingPrefix"
-            android:importantForAutofill="no"
-            android:inputType="text" />
+            tools:ignore="MissingPrefix" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -93,12 +95,12 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_border"
             android:hint="@string/your_task_date"
+            android:importantForAutofill="no"
             android:inputType="date"
             android:padding="10dp"
             android:singleLine="true"
             android:textSize="14sp"
-            tools:ignore="LabelFor,MissingPrefix"
-            android:importantForAutofill="no" />
+            tools:ignore="LabelFor,MissingPrefix" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -115,12 +117,12 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_border"
             android:hint="@string/your_task_time"
+            android:importantForAutofill="no"
             android:inputType="time"
             android:padding="10dp"
             android:singleLine="true"
             android:textSize="14sp"
-            tools:ignore="LabelFor,MissingPrefix"
-            android:importantForAutofill="no" />
+            tools:ignore="LabelFor,MissingPrefix" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/addBtn"
@@ -134,5 +136,8 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/save_btn" />
+    </LinearLayout>
 
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+

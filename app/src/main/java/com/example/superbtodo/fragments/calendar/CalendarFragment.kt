@@ -36,12 +36,15 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun pickDate() {
+        binding.calendarView.shouldDrawIndicatorsBelowSelectedDays(true)
         val firstDay = System.currentTimeMillis()
+        binding.dayTxt.text = DateFormatter.dateFormatWithCharForCalendar().format(firstDay)
         binding.tvSelectMonth.text = DateFormatter.monthFormat().format(firstDay)
         showRecyclerView(DateFormatter.dateFormat().format(firstDay).toString())
         binding.calendarView.setListener(object : CompactCalendarViewListener {
             override fun onDayClick(dateClicked: Date) {
                 val searchQuery = DateFormatter.dateFormat().format(dateClicked).toString()
+                binding.dayTxt.text = DateFormatter.dateFormatWithCharForCalendar().format(dateClicked)
                 showRecyclerView(searchQuery)
             }
 
@@ -67,8 +70,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
                 calendar[Calendar.YEAR] = year.toInt()
                 binding.calendarView.addEvent(
                     Event(
-                        R.drawable.ic_baseline_access_alarm_24,
-                        calendar.timeInMillis
+                        R.color.red,
+                        calendar.timeInMillis,
+                        task.title
                     )
                 )
             }
@@ -81,7 +85,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             tasks.let {
                 adapter.setData(it)
             }
-            binding.dayTxt.text = searchQuery
             if (tasks.size == 0) {
                 binding.emptyLogo.visibility = View.VISIBLE
                 binding.cheerTxt.visibility = View.VISIBLE

@@ -1,71 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white_bg"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context=".fragments.calendar.CalendarFragment">
 
-        <TextView
-            android:id="@+id/tvSelectMonth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/september"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/done_layout_bg"
-            android:background="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:paddingTop="8dp"/>
+    <TextView
+        android:id="@+id/tvSelectMonth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:paddingTop="8dp"
+        android:text="@string/september"
+        android:textColor="@color/done_layout_bg"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="5dp"
+        android:backgroundTint="@color/done_layout_bg"
+        app:cardCornerRadius="10dp"
+        app:contentPadding="10dp"
+        android:layout_marginEnd="10dp">
+
         <com.github.sundeepk.compactcalendarview.CompactCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:layout_marginTop="16dp"
             app:compactCalendarBackgroundColor="@color/white"
             app:compactCalendarCurrentDayBackgroundColor="@android:color/holo_orange_light"
-            app:compactCalendarCurrentSelectedDayBackgroundColor="#FF1744"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="#D500F9"
             app:compactCalendarMultiEventIndicatorColor="#354ade"
+            app:compactCalendarOtherMonthDaysTextColor="@color/yellow_100"
             app:compactCalendarTargetHeight="220dp"
             app:compactCalendarTextColor="@color/black"
             app:compactCalendarTextSize="13sp" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/dayTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white_bg"
+        android:gravity="center_horizontal"
         android:text="@string/date"
-        android:textSize="20sp"
         android:textColor="@color/red"
-        android:gravity="center_horizontal"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <com.airbnb.lottie.LottieAnimationView
-        android:background="@color/white_bg"
         android:id="@+id/emptyLogo"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_empty_task"
         android:visibility="visible"
-        android:layout_gravity="center_horizontal"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/empty_state"
         tools:ignore="ContentDescription" />
+
     <TextView
-        android:background="@color/white_bg"
         android:id="@+id/cheerTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/it_s_kinda_sad_to_be_a_boring_day_without_task"
+        android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal"/>
+        android:text="@string/it_s_kinda_sad_to_be_a_boring_day_without_task" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white_bg" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

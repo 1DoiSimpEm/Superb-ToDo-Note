@@ -8,6 +8,7 @@ open class DateFormatUtil {
     fun hourly() = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
     fun dateFormat() = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
     fun dateFormatWithChar() = SimpleDateFormat("EE dd MMM yyyy", Locale.US)
+    fun dateFormatWithCharForCalendar() = SimpleDateFormat("EE dd MMM", Locale.US)
     fun monthFormat() = SimpleDateFormat("MMMM-yyyy", Locale.getDefault())
     fun timeFormat() = SimpleDateFormat("HH:mm", Locale.getDefault())
 
