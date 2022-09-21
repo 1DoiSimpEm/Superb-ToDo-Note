@@ -122,21 +122,20 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
         if (this::date.isInitialized and this::time.isInitialized) {
             val newDate = "$date $time"
             val task = Task(
-                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, getCompletion(newDate)
-            )
+                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, false)
             mTaskViewModel.updateTask(task)
             dismiss()
         } else if (this::date.isInitialized and !this::time.isInitialized) {
             val newDate = date + " " + getOldTime()
             val task = Task(
-                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, getCompletion(newDate)
+                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, false
             )
             mTaskViewModel.updateTask(task)
             dismiss()
         } else if (this::time.isInitialized and !this::date.isInitialized) {
             val newDate = getOldDate() + " " + time
             val task = Task(
-                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, getCompletion(newDate)
+                args.currentTask.id, newDate, mTitle, mDescription, lastUpdate, false
             )
             mTaskViewModel.updateTask(task)
             dismiss()
@@ -147,16 +146,13 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
                 mTitle,
                 mDescription,
                 lastUpdate,
-                getCompletion(args.currentTask.date)
+                false
             )
             mTaskViewModel.updateTask(task)
             dismiss()
         }
     }
 
-    private fun getCompletion(date : String): Boolean {
-            return (System.currentTimeMillis() > (DateFormatter.hourly().parse(date) as Date).time)
-    }
 
 
 }
