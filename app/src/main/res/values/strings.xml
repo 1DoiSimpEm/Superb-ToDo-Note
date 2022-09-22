@@ -33,7 +33,7 @@
     <string name="calendar">Calendar</string>
     <string name="weekly">Weekly</string>
     <string name="back">Back</string>
-    <string name="next">Foward</string>
+    <string name="next">Forward</string>
     <string name="feb_2022">Feb 2022</string>
     <string name="sun">SUN</string>
     <string name="mon">MON</string>
@@ -58,4 +58,7 @@
     <string name="emptystuff">emptyStuff</string>
     <string name="it_s_kinda_sad_to_be_a_boring_day_without_task">It\'s kinda sad to be a boring day without task :(</string>
     <string name="september">September</string>
+    <string name="time_out">TIMED OUT! FINISH THE TASK!</string>
+    <string name="lazy">TIME OUT</string>
+    <string name="on_progress">On Progress</string>
 </resources>

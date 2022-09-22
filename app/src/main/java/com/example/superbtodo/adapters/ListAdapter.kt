@@ -2,8 +2,6 @@ package com.example.superbtodo.adapters
 
 
 import android.graphics.Paint
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +28,7 @@ class ListAdapter(
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private var tasks = mutableListOf<Task>()
-    private var handler: Handler? = null
-//    private val hourly = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-//    private val hourlyTime = SimpleDateFormat("HH:mm",Locale.getDefault())
-//    private val dateFormat = SimpleDateFormat("EE dd MMM yyyy", Locale.US)
+
     private object DateFormatter : DateFormatUtil()
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView = itemView.findViewById(R.id.titleTxt) as TextView
@@ -56,7 +51,6 @@ class ListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         initHolder(holder, position)
-        timerUpdate(holder, position)
         holderNavigate(holder, position)
         holderCheckHandle(holder, position)
 
@@ -102,10 +96,6 @@ class ListAdapter(
         return tasks.size
     }
 
-    override fun onViewDetachedFromWindow(holder: ViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        holder.taskLayout.clearAnimation()
-    }
 
     fun setData(newTasks: MutableList<Task>) {
         val diffUtil = TaskDiffUtil(tasks, newTasks)
@@ -122,9 +112,14 @@ class ListAdapter(
     private fun initHolder(holder: ListAdapter.ViewHolder, position: Int) {
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
-        holder.timeTextView.text = DateFormatter.timeFormat().format(DateFormatter.hourly().parse(currentItem.date) as Date)
+        holder.timeTextView.text = DateFormatter.timeFormat()
+            .format(DateFormatter.hourly().parse(currentItem.date) as Date)
         holder.isDoneCheckBox.isChecked = currentItem.isDone
         holder.lastUpdateTextView.text = currentItem.lastUpdate
+        holder.timeLeftTextView.text = holder.itemView.context.getString(R.string.on_progress)
+        if (System.currentTimeMillis() > DateFormatter.hourly().parse(currentItem.date)!!.time)
+            holder.timeLeftTextView.text = holder.itemView.context.getString(R.string.lazy)
+
         try {
             val date = DateFormatter.hourly().parse(currentItem.date)
             val outputDateString = DateFormatter.dateFormatWithChar().format(date as Date)
@@ -138,39 +133,6 @@ class ListAdapter(
         }
     }
 
-    private fun timerUpdate(holder: ViewHolder, position: Int) {
-        handler = Handler(Looper.getMainLooper())
-        var periodicUpdate: Runnable? = null
-        periodicUpdate = Runnable {
-            try {
-                holder.timeLeftTextView.text = getTimeLeft(
-                    DateFormatter.hourly().format(System.currentTimeMillis()),
-                    DateFormatter.hourly().parse(tasks[position].date) as Date
-                )
-                if (tasks[position].date == DateFormatter.hourly().format(System.currentTimeMillis()) && !tasks[position].isDone) {
-                    tasks[position].isDone = true
-                    sendData(tasks[position])
-                }
-                if (holder.timeLeftTextView.text.contains("-") && !tasks[position].isDone) {
-                    tasks[position].isDone = true
-                    sendData(tasks[position])
-                }
-                periodicUpdate?.let { handler?.postDelayed(it, 1000) }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        handler?.post(periodicUpdate)
-    }
-
-
-    private fun getTimeLeft(timeNow: String, timeEnd: Date): String {
-        val dob = DateFormatter.hourly().parse(timeNow)
-        val days = (timeEnd.time - dob!!.time) / 86400000
-        val hours = (timeEnd.time - dob.time) % 86400000 / 3600000
-        val minutes = (timeEnd.time - dob.time) % 86400000 % 3600000 / 60000
-        return "$days days $hours hours $minutes minutes left"
-    }
 
     private fun normalizeText(holder: ViewHolder) {
         holder.timeLeftTextView.visibility = View.VISIBLE

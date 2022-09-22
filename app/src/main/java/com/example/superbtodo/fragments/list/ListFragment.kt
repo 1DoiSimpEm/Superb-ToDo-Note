@@ -73,8 +73,8 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { tasks ->
             adapter.setData(tasks)
             for (task in tasks) {
-                if (!task.isDone)
-                    scheduleNotification( task.id,task.title, task.description, task.date)
+                if (!task.isDone && DateFormatter.hourly().parse(task.date)!!.time >System.currentTimeMillis())
+                    scheduleNotification(task.id, task.title, task.description, task.date)
             }
 
         }
@@ -114,7 +114,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     }
 
     private fun handlerTaskData(task: Task) {
-        cancelNotification(task.id,task.title, task.description, task.date)
+        cancelNotification(task.id, task.title, task.description, task.date)
         mTaskViewModel.updateTask(task)
     }
 
@@ -307,7 +307,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private fun createNotificationChannel() {
         val name = "Notification Channel for superbToDo"
         val desc = "A Description of the Channel"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(channelID, name, importance)
         channel.description = desc
         val notificationManager =
@@ -318,7 +318,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private fun scheduleNotification(id: Int, title: String, message: String, time: String) {
         val intent = Intent(context, Notification::class.java)
         intent.putExtra(titleExtra, title)
-        intent.putExtra("notificationID",id)
+        intent.putExtra("notificationID", id)
         intent.putExtra(messageExtra, "$message\n in $time")
         val setTime = DateFormatter.hourly().parse(time)!!.time
         val pendingIntent = PendingIntent.getBroadcast(
@@ -332,10 +332,10 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, setTime, pendingIntent)
     }
 
-    private fun cancelNotification(id :Int,title: String, message: String, time: String) {
+    private fun cancelNotification(id: Int, title: String, message: String, time: String) {
         val intent = Intent(context, Notification::class.java)
         intent.putExtra(titleExtra, title)
-        intent.putExtra("notificationID",id)
+        intent.putExtra("notificationID", id)
         intent.putExtra(messageExtra, "$message\n in $time")
         val pendingIntent = PendingIntent.getBroadcast(
             context,
