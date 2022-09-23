@@ -1,6 +1,7 @@
 package com.example.superbtodo.fragments.calendar
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var mTaskViewModel: TaskViewModel
     private lateinit var adapter: CalendarPickerAdapter
+
     private object DateFormatter : DateFormatUtil()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,13 +40,17 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private fun pickDate() {
         binding.calendarView.shouldDrawIndicatorsBelowSelectedDays(true)
         val firstDay = System.currentTimeMillis()
-        binding.dayTxt.text = DateFormatter.dateFormatWithCharForCalendar().format(firstDay)
+        binding.dayTxt.text = getString(R.string.today)
         binding.tvSelectMonth.text = DateFormatter.monthFormat().format(firstDay)
         showRecyclerView(DateFormatter.dateFormat().format(firstDay).toString())
         binding.calendarView.setListener(object : CompactCalendarViewListener {
             override fun onDayClick(dateClicked: Date) {
                 val searchQuery = DateFormatter.dateFormat().format(dateClicked).toString()
-                binding.dayTxt.text = DateFormatter.dateFormatWithCharForCalendar().format(dateClicked)
+                binding.dayTxt.text = DateUtils.getRelativeTimeSpanString(
+                    dateClicked.time, firstDay, DateUtils.DAY_IN_MILLIS,
+                    DateUtils.FORMAT_SHOW_DATE
+                ).toString()
+//                binding.dayTxt.text = DateUtils.getRelativeDateTimeString(dateClicked.time).toString()
                 showRecyclerView(searchQuery)
             }
 
@@ -60,7 +66,8 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             for (task in tasks) {
                 val calendar = Calendar.getInstance()
                 val date: ArrayList<String> =
-                    DateFormatter.dateFormat().format(DateFormatter.hourly().parse(task.date) as Date).toString()
+                    DateFormatter.dateFormat()
+                        .format(DateFormatter.hourly().parse(task.date) as Date).toString()
                         .split(".") as ArrayList<String>
                 val dd: String = date[0]
                 val month: String = date[1]

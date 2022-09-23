@@ -47,16 +47,24 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/dayTxt"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white_bg"
-        android:gravity="center_horizontal"
-        android:text="@string/date"
-        android:textColor="@color/red"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:backgroundTint="@color/done_layout_bg"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
+        app:layout_goneMarginBaseline="@dimen/cardview_default_elevation"
+        app:barrierMargin="@dimen/cardview_compat_inset_shadow">
+        <TextView
+            android:id="@+id/dayTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/date"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </com.google.android.material.card.MaterialCardView>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/emptyLogo"

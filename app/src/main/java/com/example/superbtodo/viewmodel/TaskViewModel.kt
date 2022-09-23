@@ -62,4 +62,5 @@ class TaskViewModel(
     fun searchIsDoneDbByTitle(searchQuery: String) : LiveData<MutableList<Task>> = repository.searchIsDoneDbByTitle(searchQuery)
 
     fun calendarSearch(searchQuery: String) : LiveData<MutableList<Task>> = repository.calendarSearch(searchQuery)
+
 }

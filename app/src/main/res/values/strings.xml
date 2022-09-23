@@ -61,4 +61,7 @@
     <string name="time_out">TIMED OUT! FINISH THE TASK!</string>
     <string name="lazy">TIME OUT</string>
     <string name="on_progress">On Progress</string>
+    <string name="you_have_so_many_tasks_left_try_to_finish_it_all">Uh oh!? The number of finished tasks is… zero?!</string>
+    <string name="congrats_you_finish_all_of_them">Congrats! You are free, for now!</string>
+    <string name="today">Today</string>
 </resources>

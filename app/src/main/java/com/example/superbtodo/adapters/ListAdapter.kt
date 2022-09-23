@@ -5,7 +5,6 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +19,7 @@ import com.example.superbtodo.fragments.list.ListFragmentDirections
 import com.example.superbtodo.utils.DateFormatUtil
 import com.example.superbtodo.utils.TaskDiffUtil
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.checkbox.MaterialCheckBox
 import java.util.*
 
 
@@ -34,7 +34,7 @@ class ListAdapter(
         val titleTextView = itemView.findViewById(R.id.titleTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
         val timeLeftTextView = itemView.findViewById(R.id.timeLeftTxt) as TextView
-        val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as CheckBox
+        val isDoneCheckBox = itemView.findViewById(R.id.checkBtn) as MaterialCheckBox
         val taskLayout = itemView.findViewById(R.id.taskLayout) as MaterialCardView
         val lastUpdateTextView = itemView.findViewById(R.id.lastUpdate) as TextView
         val alarmImageView = itemView.findViewById(R.id.imgAlarm) as ImageView

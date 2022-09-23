@@ -72,6 +72,15 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { tasks ->
             adapter.setData(tasks)
+            if (tasks.size == 0) {
+                binding.emptyDesTxt.visibility = View.VISIBLE
+                binding.emptyAnim.visibility = View.VISIBLE
+                binding.emptyLogo.visibility = View.GONE
+            } else {
+                binding.emptyLogo.visibility = View.VISIBLE
+                binding.emptyDesTxt.visibility = View.GONE
+                binding.emptyAnim.visibility = View.GONE
+            }
             for (task in tasks) {
                 if (!task.isDone && DateFormatter.hourly().parse(task.date)!!.time >System.currentTimeMillis())
                     scheduleNotification(task.id, task.title, task.description, task.date)
@@ -205,6 +214,8 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                     actionState,
                     isCurrentlyActive
                 )
+                    .addCornerRadius(1, 10)
+                    .addPadding(1,10f,20f,10f)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(context!!, R.color.red))
                     .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
                     .addSwipeRightBackgroundColor(

@@ -1,9 +1,11 @@
 package com.example.superbtodo.activities
 
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         hideStuff()
         bottomNavigationSetup()
         setContentView(binding.root)
+        val window: Window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = this.resources.getColor(R.color.white_bg)
 
     }
     private fun bottomNavigationSetup() {

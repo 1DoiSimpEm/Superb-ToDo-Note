@@ -30,7 +30,9 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
+
     private object DateFormatter : DateFormatUtil()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTrashBinBinding.bind(view)
@@ -47,8 +49,10 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
             adapter.setData(task)
             if (task.size == 0) {
                 binding.emptyLogo.visibility = View.VISIBLE
+                binding.emptyDesTxt.visibility = View.VISIBLE
             } else {
                 binding.emptyLogo.visibility = View.GONE
+                binding.emptyDesTxt.visibility = View.GONE
             }
         }
     }
@@ -128,8 +132,6 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
                     .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
                     .create()
                     .decorate()
-
-
                 super.onChildDraw(
                     c,
                     recyclerView,
@@ -162,9 +164,13 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
                         .setPositiveBtnText("Sure!")
                         .setHeaderColor(R.color.red)
                         .setNegativeBtnText("Nah!")
-                        .onPositiveClicked{
+                        .onPositiveClicked {
                             mTaskViewModel.deleteAllDoneTask()
-                            Toast.makeText(context,"Deleted all task successfully!",Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                context,
+                                "Deleted all task successfully!",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                         .build().show()
                     true

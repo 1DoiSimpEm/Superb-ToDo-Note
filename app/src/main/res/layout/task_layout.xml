@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardUseCompatPadding="true"
     app:cardElevation="5dp"
+    app:cardUseCompatPadding="true"
+    app:layout_goneMarginBaseline="@dimen/cardview_default_elevation"
+    app:barrierMargin="@dimen/cardview_compat_inset_shadow"
     android:backgroundTint="@color/done_layout_bg"
     app:cardCornerRadius="10dp"
     app:contentPadding="10dp"
@@ -59,7 +61,7 @@
         </LinearLayout>
 
         <View
-            android:layout_width="0.5dp"
+            android:layout_width="0.75dp"
             android:layout_height="match_parent"
             android:alpha="0.5"
             android:background="@android:color/black" />
@@ -88,7 +90,7 @@
                     android:id="@+id/titleTxt"
                     android:textColor="@color/white"/>
 
-                <CheckBox
+                <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/checkBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
