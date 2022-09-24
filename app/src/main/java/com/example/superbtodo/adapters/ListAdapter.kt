@@ -5,7 +5,6 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -25,6 +24,7 @@ import java.util.*
 
 class ListAdapter(
     val onCLick: (Task) -> Unit
+
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private var tasks = mutableListOf<Task>()
@@ -78,9 +78,13 @@ class ListAdapter(
 
     private fun holderCheckHandle(holder: ListAdapter.ViewHolder, position: Int) {
         val currentItem = tasks[position]
-        holder.isDoneCheckBox.setOnClickListener { view ->
-            if ((view as CompoundButton).isChecked) {
+        holder.isDoneCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
                 currentItem.isDone = true
+                sendData(currentItem)
+            }
+            else{
+                currentItem.isDone = false
                 sendData(currentItem)
             }
         }
@@ -118,7 +122,16 @@ class ListAdapter(
         holder.lastUpdateTextView.text = currentItem.lastUpdate
         holder.timeLeftTextView.text = holder.itemView.context.getString(R.string.on_progress)
         if (System.currentTimeMillis() > DateFormatter.hourly().parse(currentItem.date)!!.time)
+        {
             holder.timeLeftTextView.text = holder.itemView.context.getString(R.string.lazy)
+            holder.titleTextView.alpha=0.5f
+            holder.timeTextView.alpha=0.5f
+            holder.isDoneCheckBox.isClickable = !tasks[position].isDone
+        }
+        else{
+            holder.timeTextView.alpha=1.0f
+            holder.timeLeftTextView.alpha=1.0f
+        }
 
         try {
             val date = DateFormatter.hourly().parse(currentItem.date)

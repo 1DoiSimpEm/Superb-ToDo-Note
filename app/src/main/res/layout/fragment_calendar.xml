@@ -12,9 +12,8 @@
         android:id="@+id/tvSelectMonth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
         android:paddingTop="8dp"
+        android:layout_marginStart="20dp"
         android:text="@string/september"
         android:textColor="@color/done_layout_bg"
         android:textSize="22sp"
@@ -35,14 +34,14 @@
         <com.github.sundeepk.compactcalendarview.CompactCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            app:compactCalendarBackgroundColor="@color/white"
+            android:layout_height="190dp"
+            app:compactCalendarBackgroundColor="@color/done_layout_bg"
             app:compactCalendarCurrentDayBackgroundColor="@android:color/holo_orange_light"
-            app:compactCalendarCurrentSelectedDayBackgroundColor="#D500F9"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="#00E676"
             app:compactCalendarMultiEventIndicatorColor="#354ade"
             app:compactCalendarOtherMonthDaysTextColor="@color/yellow_100"
             app:compactCalendarTargetHeight="220dp"
-            app:compactCalendarTextColor="@color/black"
+            app:compactCalendarTextColor="@color/white"
             app:compactCalendarTextSize="13sp" />
 
     </com.google.android.material.card.MaterialCardView>
@@ -52,6 +51,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/done_layout_bg"
         app:cardElevation="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         app:cardUseCompatPadding="true"
         app:layout_goneMarginBaseline="@dimen/cardview_default_elevation"
         app:barrierMargin="@dimen/cardview_compat_inset_shadow">

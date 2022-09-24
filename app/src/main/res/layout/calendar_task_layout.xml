@@ -14,40 +14,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="0.2"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/timeTxt"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:textAlignment="viewEnd"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="00:00" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
 
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            android:layout_marginStart="10dp"
-            android:background="@android:color/black"/>
+            <TextView
+                android:id="@+id/timeTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textAlignment="viewEnd"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="00:00" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:alpha="0.5"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/titleTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="10dp"
+                android:singleLine="true"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Full house" />
+        </LinearLayout>
         <TextView
-            android:id="@+id/titleTxt"
+            android:id="@+id/descTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
+            android:paddingStart="57dp"
             android:singleLine="true"
             android:textSize="15sp"
             android:textStyle="bold"
             tools:text="Full house" />
-
-
     </LinearLayout>
+
 
 </com.google.android.material.card.MaterialCardView>

@@ -82,7 +82,9 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 binding.emptyAnim.visibility = View.GONE
             }
             for (task in tasks) {
-                if (!task.isDone && DateFormatter.hourly().parse(task.date)!!.time >System.currentTimeMillis())
+                if (!task.isDone && DateFormatter.hourly()
+                        .parse(task.date)!!.time > System.currentTimeMillis()
+                )
                     scheduleNotification(task.id, task.title, task.description, task.date)
             }
 
@@ -93,6 +95,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         adapter = ListAdapter { task ->
             handlerTaskData(task)
         }
+
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -122,9 +125,12 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
 
     }
 
+
+
     private fun handlerTaskData(task: Task) {
-        cancelNotification(task.id, task.title, task.description, task.date)
         mTaskViewModel.updateTask(task)
+
+        cancelNotification(task.id, task.title, task.description, task.date)
     }
 
 
@@ -215,7 +221,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                     isCurrentlyActive
                 )
                     .addCornerRadius(1, 10)
-                    .addPadding(1,10f,20f,10f)
+                    .addPadding(1, 10f, 20f, 10f)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(context!!, R.color.red))
                     .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
                     .addSwipeRightBackgroundColor(
@@ -358,7 +364,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         alarmManager.cancel(pendingIntent)
     }
 }
-
 
 
 

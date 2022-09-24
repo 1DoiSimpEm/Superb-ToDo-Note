@@ -22,6 +22,7 @@ class CalendarPickerAdapter : RecyclerView.Adapter<CalendarPickerAdapter.Calenda
     inner class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView = itemView.findViewById(R.id.titleTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
+        val descTextView = itemView.findViewById(R.id.descTxt) as TextView
         val taskLayout = itemView.findViewById(R.id.taskLayout) as MaterialCardView
     }
 
@@ -49,6 +50,7 @@ class CalendarPickerAdapter : RecyclerView.Adapter<CalendarPickerAdapter.Calenda
     private fun initGadgets(holder : CalendarViewHolder,position: Int) {
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
+        holder.descTextView.text=currentItem.description
         holder.timeTextView.text =  DateFormatter.timeFormat().format(DateFormatter.hourly().parse(currentItem.date) as Date)
     }
 

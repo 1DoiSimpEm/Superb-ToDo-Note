@@ -56,6 +56,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
             override fun onMonthScroll(firstDayOfNewMonth: Date) {
                 binding.tvSelectMonth.text = DateFormatter.monthFormat().format(firstDayOfNewMonth)
+                binding.dayTxt.text= DateFormatter.dateFormatWithChar().format(firstDayOfNewMonth)
             }
         })
     }

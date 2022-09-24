@@ -58,9 +58,9 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
     }
 
     private fun initAdapter() {
-        adapter = ListAdapter { task ->
+        adapter = ListAdapter( { task ->
             handlerTaskData(task)
-        }
+        })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 

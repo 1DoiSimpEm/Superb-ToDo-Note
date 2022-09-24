@@ -6,6 +6,7 @@
         android:id="@+id/menu_search"
         android:title="@string/search"
         android:icon="@drawable/ic_search"
+        android:tooltipText="Search your task"
         android:iconTint="@color/black"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
