@@ -5,7 +5,8 @@ My very first time of developing an android app using Kotlin with Android Archit
 Using Live Data in combination with Couroutine scope to make sure that room database run smoothly in background.
 ```
 ## The features of Superb ToDo
-Like any others note apps, Superb ToDo has basic features for instance: adding notes, deleting notes, updating notes, sorting notes , searching notes ,... Which is very simple to implement.
+```Like any others note apps, Superb ToDo has basic features for instance: adding notes, deleting notes, updating notes, sorting notes , searching notes ,... Which is very simple to implement.
+```
 - Whenevery your note list is empty, you get this message with fascinating animation which may makes you feel motivated
 ![image](https://user-images.githubusercontent.com/90551685/192421285-f1eac95c-e107-487f-8f8e-72e16b6b0dac.png)
 
@@ -38,7 +39,8 @@ Like any others note apps, Superb ToDo has basic features for instance: adding n
 ![image](https://user-images.githubusercontent.com/90551685/192459042-6cad1e3e-f731-4e19-8128-aafe58fab5bb.png)
 
 ## Technologies used
-Very first time develop an app using Kotlin makes me feel really confused cuz there is too many things to learn. But I am still able to implement stuffs though I am not thoroughtly get it how it works.
+```Very first time develop an app using Kotlin makes me feel really confused cuz there is too many things to learn. But I am still able to implement stuffs though I am not thoroughtly get it how it works.
+```
 
 
 
