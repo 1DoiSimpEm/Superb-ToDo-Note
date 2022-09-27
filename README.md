@@ -46,6 +46,13 @@ Which is very simple to implement.
 >You can also sort, search and delete all the tasks in the top bar menu
 ![image](https://user-images.githubusercontent.com/90551685/192459042-6cad1e3e-f731-4e19-8128-aafe58fab5bb.png)
 
+### Further features
+- Animation.
+- Group tasks by date.
+- Multilanguage.
+- Dark Mode/ Night mode toggle.
+- Store data in cloud.
+- ...
 ## Technologies used
 ```
 Very first time develop an app using Kotlin makes me feel really confused cuz there is too many things to learn. 
@@ -57,7 +64,7 @@ But I am still able to implement stuffs though I am not thoroughtly get it how i
 
 _more detailed: [room database](https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html#recommended)_ 
 
-### 3rd party library used
+### 3rd party libraries used
 
 - [RecyclerViewSwipeDecorator](https://github.com/xabaras/RecyclerViewSwipeDecorator) : To implement swipe layout.
 - [Lottie](https://github.com/airbnb/lottie-android): To implement animation view.
