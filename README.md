@@ -1,4 +1,4 @@
-# Superb ToDo - A simple note with gorgeous design
+# Superb ToDo 
 ## A Project from ProPTIT as a result from Android Project Course
 ```
 My very first time of developing an android app using Kotlin with Android Architecture Components. 
