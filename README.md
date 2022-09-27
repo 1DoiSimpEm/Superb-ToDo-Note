@@ -17,4 +17,20 @@ Like any others note apps, Superb ToDo has basic features for instance: adding n
 
  ![datepicker](https://user-images.githubusercontent.com/90551685/192437768-b78eefb2-a8df-48f7-aa96-307629ddaa8b.PNG)
 ![timepicker](https://user-images.githubusercontent.com/90551685/192437777-abfc0358-2134-4a66-bb02-b3abfecad14e.PNG)
+- Eye-catching added tasks! Finished tasks will be moved to th Done fragment.
+
+![image](https://user-images.githubusercontent.com/90551685/192457014-972b4a90-6d4b-44fe-a9e8-3f64d4c82bb4.png)
+![image](https://user-images.githubusercontent.com/90551685/192457460-b4c7888e-c3be-4a71-b38c-9f2fa103131d.png)
+
+- There's also a calendar which helps you see the schedule tasks easier!
+
+![image](https://user-images.githubusercontent.com/90551685/192458302-4c376785-476a-4c71-9611-f37ef61a2fe4.png)
+![image](https://user-images.githubusercontent.com/90551685/192458353-f4837dfe-1696-4800-a93d-e06d671d0e76.png)
+
+- You will be announce by the deadline! 
+![image](https://user-images.githubusercontent.com/90551685/192458516-ca903172-20a8-467b-8d08-737b69715ccf.png)
+
+
+
+
 
