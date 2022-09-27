@@ -29,6 +29,12 @@ Which is very simple to implement.
 
 ![image](https://user-images.githubusercontent.com/90551685/192459867-b357d024-06dc-43bf-9276-697c2f28bc23.png)
 
+-Wanna get your task done or deleted. Just swipe!( Although it is still a bug in view)
+
+![image](https://user-images.githubusercontent.com/90551685/192466013-4502a7ae-7d88-4c42-9128-cf0902f1935c.png)
+![image](https://user-images.githubusercontent.com/90551685/192466040-421f8ab3-49b4-4cec-b281-4e0f20b62f8e.png)
+
+
 - There's also a calendar which helps you see the schedule tasks easier!
 
 ![image](https://user-images.githubusercontent.com/90551685/192458302-4c376785-476a-4c71-9611-f37ef61a2fe4.png)
@@ -51,7 +57,13 @@ But I am still able to implement stuffs though I am not thoroughtly get it how i
 
 _more detailed: [room database](https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html#recommended)_ 
 
+### 3rd party library used
 
+- [RecyclerViewSwipeDecorator](https://github.com/xabaras/RecyclerViewSwipeDecorator) : To implement swipe layout.
+- [Lottie](https://github.com/airbnb/lottie-android): To implement animation view.
+- [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView): Android calendar is too complicated, rather using this.
+
+_If you have any ideas to help me make Superb ToDo better, just tell me!_
 
 
 
