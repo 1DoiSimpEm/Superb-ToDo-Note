@@ -22,6 +22,10 @@ Like any others note apps, Superb ToDo has basic features for instance: adding n
 ![image](https://user-images.githubusercontent.com/90551685/192457014-972b4a90-6d4b-44fe-a9e8-3f64d4c82bb4.png)
 ![image](https://user-images.githubusercontent.com/90551685/192457460-b4c7888e-c3be-4a71-b38c-9f2fa103131d.png)
 
+- Updating task if you have any mistakes while adding task or you just wannna change it because you like
+
+![image](https://user-images.githubusercontent.com/90551685/192459867-b357d024-06dc-43bf-9276-697c2f28bc23.png)
+
 - There's also a calendar which helps you see the schedule tasks easier!
 
 ![image](https://user-images.githubusercontent.com/90551685/192458302-4c376785-476a-4c71-9611-f37ef61a2fe4.png)
@@ -29,6 +33,12 @@ Like any others note apps, Superb ToDo has basic features for instance: adding n
 
 - You will be announce by the deadline! 
 ![image](https://user-images.githubusercontent.com/90551685/192458516-ca903172-20a8-467b-8d08-737b69715ccf.png)
+
+>You can also sort, search and delete all the tasks in the top bar menu
+![image](https://user-images.githubusercontent.com/90551685/192459042-6cad1e3e-f731-4e19-8128-aafe58fab5bb.png)
+
+## Technologies used
+Very first time develop an app using Kotlin makes me feel really confused cuz there is too many things to learn. But I am still able to implement stuffs though I am not thoroughtly get it how it works.
 
 
 
