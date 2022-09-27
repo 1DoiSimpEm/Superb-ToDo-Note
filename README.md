@@ -14,3 +14,6 @@ Like any others note apps, Superb ToDo has basic features for instance: adding n
 
 - This is this adding layout after you thoroughly enter the information
  > this contains a very interesting date and time picker dialog
+ >```![image](https://user-images.githubusercontent.com/90551685/192422392-fb1d3d98-f13d-470c-81e6-af819404ab39.png)
+>```![image](https://user-images.githubusercontent.com/90551685/192422412-34b6906b-fe25-4fdb-b9e0-e68431ef7a0c.png)
+
