@@ -43,6 +43,12 @@ Like any others note apps, Superb ToDo has basic features for instance: adding n
 ```
 Very first time develop an app using Kotlin makes me feel really confused cuz there is too many things to learn. But I am still able to implement stuffs though I am not thoroughtly get it how it works.
 ```
+- Room, LiveData and ViewModel: Android Architecture Components 
+
+![image](https://user-images.githubusercontent.com/90551685/192464211-2d1faa21-9188-4321-966d-15450dbc5236.png)
+
+_more detailed: [room database](https://google-developer-training.github.io/android-developer-fundamentals-course-concepts-v2/unit-4-saving-user-data/lesson-10-storing-data-with-room/10-1-c-room-livedata-viewmodel/10-1-c-room-livedata-viewmodel.html#recommended)_ 
+
 
 
 
