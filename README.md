@@ -40,7 +40,7 @@ Which is very simple to implement.
 ![image](https://user-images.githubusercontent.com/90551685/192458302-4c376785-476a-4c71-9611-f37ef61a2fe4.png)
 ![image](https://user-images.githubusercontent.com/90551685/192458353-f4837dfe-1696-4800-a93d-e06d671d0e76.png)
 
-- You will be announce by the deadline! 
+- You will be notified by the deadline! 
 ![image](https://user-images.githubusercontent.com/90551685/192458516-ca903172-20a8-467b-8d08-737b69715ccf.png)
 
 >You can also sort, search and delete all the tasks in the top bar menu
