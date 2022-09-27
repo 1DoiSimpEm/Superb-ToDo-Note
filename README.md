@@ -12,6 +12,7 @@ Like any others note apps, Superb ToDo has basic features for instance: adding n
 Which is very simple to implement.
 ```
 - Whenever your note list is empty, you get this message with fascinating animation which may makes you feel motivated
+- 
 ![image](https://user-images.githubusercontent.com/90551685/192421285-f1eac95c-e107-487f-8f8e-72e16b6b0dac.png)
 
 - Adding note is very simple, just touch the shiny shiny button of the right below corner. Then you get this 
