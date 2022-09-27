@@ -72,7 +72,7 @@ _more detailed: [room database](https://google-developer-training.github.io/andr
 - [Lottie](https://github.com/airbnb/lottie-android): To implement animation view.
 - [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView): Android calendar is too complicated, rather using this.
 
-_Superb ToDo is incompleted because of the performance I made with rubbish code architecture, the main purpose is to make me feel motivated as I have my own product. So in further future the performance of will be improved as long as I keep gaining knowledge_
+_Superb ToDo is incompleted because of the performance I made with rubbish code architecture, the main purpose is to make me feel motivated as I have my own product. So in further future the performance of will be improved as long as I keep gaining knowledge._
 
 
 
