@@ -4,6 +4,8 @@
 My very first time of developing an android app using Kotlin with Android Architecture Components. 
 Using Live Data in combination with Couroutine scope to make sure that room database run smoothly in background.
 ```
+Download the app: [SuperbToDo.zip](https://github.com/1DoiSimpEm/Superb-ToDo-Note/files/9654321/SuperbToDo.zip)
+
 ## The features of Superb ToDo
 ```
 Like any others note apps, Superb ToDo has basic features for instance: adding notes, deleting notes, updating notes, sorting notes , searching notes ,... 
