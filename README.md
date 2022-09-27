@@ -9,7 +9,7 @@ Using Live Data in combination with Couroutine scope to make sure that room data
 Like any others note apps, Superb ToDo has basic features for instance: adding notes, deleting notes, updating notes, sorting notes , searching notes ,... 
 Which is very simple to implement.
 ```
-- Whenevery your note list is empty, you get this message with fascinating animation which may makes you feel motivated
+- Whenever your note list is empty, you get this message with fascinating animation which may makes you feel motivated
 ![image](https://user-images.githubusercontent.com/90551685/192421285-f1eac95c-e107-487f-8f8e-72e16b6b0dac.png)
 
 - Adding note is very simple, just touch the shiny shiny button of the right below corner. Then you get this 
