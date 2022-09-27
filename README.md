@@ -25,7 +25,7 @@ Which is very simple to implement.
 ![image](https://user-images.githubusercontent.com/90551685/192457014-972b4a90-6d4b-44fe-a9e8-3f64d4c82bb4.png)
 ![image](https://user-images.githubusercontent.com/90551685/192457460-b4c7888e-c3be-4a71-b38c-9f2fa103131d.png)
 
-- Updating task if you have any mistakes while adding task or you just wannna change it because you like
+- Updating task if you have any mistakes while adding task or you just wannna change it because you'd love to
 
 ![image](https://user-images.githubusercontent.com/90551685/192459867-b357d024-06dc-43bf-9276-697c2f28bc23.png)
 
