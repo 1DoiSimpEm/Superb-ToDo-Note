@@ -44,7 +44,9 @@ Which is very simple to implement.
 ![image](https://user-images.githubusercontent.com/90551685/192458516-ca903172-20a8-467b-8d08-737b69715ccf.png)
 
 >You can also sort, search and delete all the tasks in the top bar menu
-![image](https://user-images.githubusercontent.com/90551685/192459042-6cad1e3e-f731-4e19-8128-aafe58fab5bb.png)
+
+https://user-images.githubusercontent.com/90551685/192473150-d107e230-0633-4ca8-b5c3-6cf43bb99586.mp4
+
 
 ### Further features
 - Animation.
@@ -71,6 +73,9 @@ _more detailed: [room database](https://google-developer-training.github.io/andr
 - [CompactCalendarView](https://github.com/SundeepK/CompactCalendarView): Android calendar is too complicated, rather using this.
 
 _If you have any ideas to help me make Superb ToDo better, just tell me!_
+
+
+
 
 
 
