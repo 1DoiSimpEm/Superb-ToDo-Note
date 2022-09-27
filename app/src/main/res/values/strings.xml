@@ -46,7 +46,7 @@
     <string name="_18">18</string>
     <string name="add_task">Add task</string>
     <string name="task_time">Task time</string>
-    <string name="fill_the_details_below_to_add_a_task_into_your_todo">Fill the details below to add a task into your TODO</string>
+    <string name="fill_the_details_below_to_add_a_task_into_your_todo">Fill the details below to add a task</string>
     <string name="task_title">Task title</string>
     <string name="task_description">Task description</string>
     <string name="task_date">Task date</string>

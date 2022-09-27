@@ -90,9 +90,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private fun showRecyclerView(searchQuery: String) {
         mTaskViewModel.calendarSearch("%$searchQuery%").observe(viewLifecycleOwner)
         { tasks ->
-            tasks.let {
-                adapter.setData(it)
-            }
             if (tasks.size == 0) {
                 binding.emptyLogo.visibility = View.VISIBLE
                 binding.cheerTxt.visibility = View.VISIBLE
@@ -101,6 +98,10 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
                 binding.cheerTxt.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
             }
+            tasks.let {
+                adapter.setData(it)
+            }
+
         }
     }
 

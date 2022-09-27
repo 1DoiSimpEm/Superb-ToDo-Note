@@ -221,7 +221,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                     isCurrentlyActive
                 )
                     .addCornerRadius(1, 10)
-                    .addPadding(1, 10f, 20f, 10f)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(context!!, R.color.red))
                     .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
                     .addSwipeRightBackgroundColor(

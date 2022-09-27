@@ -11,20 +11,18 @@
     app:cardCornerRadius="10dp"
     app:contentPadding="10dp"
     android:id="@+id/taskLayout"
-    android:layout_height="150dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -38,14 +36,14 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/date"
-                android:text="@string/_18"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
                 android:layout_gravity="center"
+                android:text="@string/_18"
+                android:textColor="@color/lime_A200"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/lime_A200" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,7 +66,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
@@ -86,6 +84,7 @@
                     android:singleLine="true"
                     android:textSize="20sp"
                     android:layout_weight="1"
+                    android:paddingHorizontal="10dp"
                     android:textStyle="bold"
                     android:id="@+id/titleTxt"
                     android:textColor="@color/white"/>
@@ -106,23 +105,33 @@
                     tools:ignore="ContentDescription" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/timeLeftTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/time_left"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/timeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:singleLine="true"
+                    android:text="@string/time_here"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="@color/colorAccent"
+                    app:chipIconSize="16dp"
+                    app:chipStrokeColor="@color/yellow_100"
+                    app:chipStrokeWidth="1dp"
+                    app:iconStartPadding="10dp" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="@string/time_here"
-                android:id="@+id/timeTxt"
-                android:textSize="14sp"
-                android:textColor="@color/white"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="@string/time_left"
-                android:id="@+id/timeLeftTxt"
-                android:textSize="14sp"
-                android:textColor="@color/white"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -130,7 +139,9 @@
                 android:text="@string/time_left"
                 android:id="@+id/lastUpdate"
                 android:textSize="14sp"
+                android:paddingHorizontal="10dp"
                 android:textColor="@color/white"/>
+
 
 
         </LinearLayout>
