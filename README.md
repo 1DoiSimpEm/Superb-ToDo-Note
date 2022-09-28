@@ -21,8 +21,9 @@ Which is very simple to implement.
 - This is this adding layout after you thoroughly enter the information
  > this contains a very interesting date and time picker dialog
 
- ![datepicker](https://user-images.githubusercontent.com/90551685/192437768-b78eefb2-a8df-48f7-aa96-307629ddaa8b.PNG)
-![timepicker](https://user-images.githubusercontent.com/90551685/192437777-abfc0358-2134-4a66-bb02-b3abfecad14e.PNG)
+ ![datepicker](https://user-images.githubusercontent.com/90551685/192842040-d10a7bb8-d5b9-4655-9354-ce9b21da299f.png)
+![timepicker](https://user-images.githubusercontent.com/90551685/192842117-a707226a-e3f8-4495-af90-ebacb26b8094.png)
+
 - Eye-catching added tasks! Finished tasks will be moved to th Done fragment.
 
 ![image](https://user-images.githubusercontent.com/90551685/192457014-972b4a90-6d4b-44fe-a9e8-3f64d4c82bb4.png)
