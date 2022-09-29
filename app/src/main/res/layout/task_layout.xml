@@ -126,6 +126,7 @@
                     android:text="@string/time_here"
                     android:textColor="@color/white"
                     app:chipBackgroundColor="@color/colorAccent"
+                    android:clickable="false"
                     app:chipIconSize="16dp"
                     app:chipStrokeColor="@color/yellow_100"
                     app:chipStrokeWidth="1dp"

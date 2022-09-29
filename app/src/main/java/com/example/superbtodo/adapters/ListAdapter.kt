@@ -29,7 +29,6 @@ class ListAdapter(
 
     private var tasks = mutableListOf<Task>()
 
-    private object DateFormatter : DateFormatUtil()
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView = itemView.findViewById(R.id.titleTxt) as TextView
         val timeTextView = itemView.findViewById(R.id.timeTxt) as TextView
@@ -88,6 +87,9 @@ class ListAdapter(
                 sendData(currentItem)
             }
         }
+
+
+
         if (holder.isDoneCheckBox.isChecked) {
             strikeThroughText(holder)
         } else {
@@ -116,12 +118,12 @@ class ListAdapter(
     private fun initHolder(holder: ListAdapter.ViewHolder, position: Int) {
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
-        holder.timeTextView.text = DateFormatter.timeFormat()
-            .format(DateFormatter.hourly().parse(currentItem.date) as Date)
+        holder.timeTextView.text = DateFormatUtil.timeFormat()
+            .format(DateFormatUtil.hourly().parse(currentItem.date) as Date)
         holder.isDoneCheckBox.isChecked = currentItem.isDone
         holder.lastUpdateTextView.text = currentItem.lastUpdate
         holder.timeLeftTextView.text = holder.itemView.context.getString(R.string.on_progress)
-        if (System.currentTimeMillis() > DateFormatter.hourly().parse(currentItem.date)!!.time)
+        if (System.currentTimeMillis() > DateFormatUtil.hourly().parse(currentItem.date)!!.time)
         {
             holder.timeLeftTextView.text = holder.itemView.context.getString(R.string.lazy)
             holder.titleTextView.alpha=0.5f
@@ -134,8 +136,8 @@ class ListAdapter(
         }
 
         try {
-            val date = DateFormatter.hourly().parse(currentItem.date)
-            val outputDateString = DateFormatter.dateFormatWithChar().format(date as Date)
+            val date = DateFormatUtil.hourly().parse(currentItem.date)
+            val outputDateString = DateFormatUtil.dateFormatWithChar().format(date as Date)
             val textItems: ArrayList<String> = outputDateString.split(" ") as ArrayList<String>
             holder.day.text = textItems[0]
             holder.date.text = textItems[1]

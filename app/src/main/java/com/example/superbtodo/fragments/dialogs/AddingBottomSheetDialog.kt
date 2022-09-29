@@ -66,7 +66,7 @@ class AddingBottomSheetDialog : BottomSheetDialogFragment() {
                 minute = calendar.get(Calendar.MINUTE)
                 // Launch Time Picker Dialog
                 timePickerDialog = TimePickerDialog(
-                    activity,
+                    activity,R.style.TimePickerTheme,
                     { _: TimePicker?, hourOfDay: Int, minute: Int ->
                         time = String.format("%02d:%02d", hourOfDay, minute)
                         binding.taskTime.setText(time)
@@ -88,7 +88,7 @@ class AddingBottomSheetDialog : BottomSheetDialogFragment() {
                 month = calendar.get(Calendar.MONTH)
                 day = calendar.get(Calendar.DAY_OF_MONTH)
                 datePickerDialog = DatePickerDialog(
-                    requireActivity(),
+                    requireActivity(),R.style.TimePickerTheme,
                     { _: DatePicker?, year1: Int, monthOfYear: Int, dayOfMonth: Int ->
                         date = String.format("%02d.%02d.%04d", dayOfMonth, monthOfYear + 1, year1)
                         binding.taskDate.setText(date)

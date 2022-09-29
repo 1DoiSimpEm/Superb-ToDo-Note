@@ -30,9 +30,6 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
     private lateinit var adapter: ListAdapter
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
-
-    private object DateFormatter : DateFormatUtil()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTrashBinBinding.bind(view)
@@ -58,9 +55,9 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
     }
 
     private fun initAdapter() {
-        adapter = ListAdapter( { task ->
+        adapter = ListAdapter { task ->
             handlerTaskData(task)
-        })
+        }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -177,7 +174,7 @@ class TrashBinFragment : Fragment(R.layout.fragment_trash_bin), SearchView.OnQue
                 }
                 R.id.menu_sortByDate -> {
                     mTaskViewModel.readDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy { DateFormatter.hourly().parse(it.date) }
+                        task.sortBy { DateFormatUtil.hourly().parse(it.date) }
                         adapter.setData(task)
                     }
                     true

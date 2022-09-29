@@ -36,7 +36,6 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     private lateinit var date: String
     private lateinit var time: String
 
-    private object DateFormatter : DateFormatUtil()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,12 +58,12 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
     }
 
     private fun getOldDate(): String =
-        DateFormatter.dateFormat()
-            .format(DateFormatter.hourly().parse(args.currentTask.date) as Date)
+        DateFormatUtil.dateFormat()
+            .format(DateFormatUtil.hourly().parse(args.currentTask.date) as Date)
 
     private fun getOldTime(): String =
-        DateFormatter.timeFormat()
-            .format(DateFormatter.hourly().parse(args.currentTask.date) as Date)
+        DateFormatUtil.timeFormat()
+            .format(DateFormatUtil.hourly().parse(args.currentTask.date) as Date)
 
     @SuppressLint("ClickableViewAccessibility")
     private fun getTime() {
@@ -76,7 +75,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
 
                 // Launch Time Picker Dialog
                 timePickerDialog = TimePickerDialog(
-                    activity, { _: TimePicker?, hourOfDay: Int, minute: Int ->
+                    activity,R.style.TimePickerTheme, { _: TimePicker?, hourOfDay: Int, minute: Int ->
                         time = String.format("%02d:%02d", hourOfDay, minute)
                         binding.taskTime.setText(time)
                         timePickerDialog.dismiss()
@@ -97,7 +96,7 @@ class UpdateTaskDialogFragment : DialogFragment(R.layout.fragment_updatetaskdial
                 month = calendar.get(Calendar.MONTH)
                 day = calendar.get(Calendar.DAY_OF_MONTH)
                 datePickerDialog = DatePickerDialog(
-                    requireActivity(),
+                    requireActivity(),R.style.TimePickerTheme,
                     { _: DatePicker?, year1: Int, monthOfYear: Int, dayOfMonth: Int ->
                         date = String.format("%02d.%02d.%04d", dayOfMonth, monthOfYear + 1, year1)
                         binding.taskDate.setText(date)

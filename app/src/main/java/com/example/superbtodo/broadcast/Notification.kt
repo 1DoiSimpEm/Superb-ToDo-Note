@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat
 import com.example.superbtodo.R
 
 
+
 const val channelID = "Channel"
 const val titleExtra = "titleExtra"
 const val messageExtra = "messageExtra"
@@ -18,10 +19,10 @@ class Notification : BroadcastReceiver() {
             .setSmallIcon(R.drawable.ic_baseline_access_alarm_24)
             .setContentTitle(intent.getStringExtra(titleExtra))
             .setContentText(intent.getStringExtra(messageExtra))
+            .setAutoCancel(true)
             .build()
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = intent.getIntExtra("notificationID",1)
         manager.notify(notificationID, notification)
-
     }
 }

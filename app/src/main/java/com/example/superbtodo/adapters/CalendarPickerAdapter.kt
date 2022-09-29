@@ -51,7 +51,7 @@ class CalendarPickerAdapter : RecyclerView.Adapter<CalendarPickerAdapter.Calenda
         val currentItem = tasks[position]
         holder.titleTextView.text = currentItem.title
         holder.descTextView.text=currentItem.description
-        holder.timeTextView.text =  DateFormatter.timeFormat().format(DateFormatter.hourly().parse(currentItem.date) as Date)
+        holder.timeTextView.text =  DateFormatUtil.timeFormat().format(DateFormatUtil.hourly().parse(currentItem.date) as Date)
     }
 
     override fun getItemCount(): Int = tasks.size

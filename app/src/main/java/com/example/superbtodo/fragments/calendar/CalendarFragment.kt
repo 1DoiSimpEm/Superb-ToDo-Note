@@ -21,8 +21,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private lateinit var mTaskViewModel: TaskViewModel
     private lateinit var adapter: CalendarPickerAdapter
 
-    private object DateFormatter : DateFormatUtil()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCalendarBinding.bind(view)
@@ -41,11 +39,11 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         binding.calendarView.shouldDrawIndicatorsBelowSelectedDays(true)
         val firstDay = System.currentTimeMillis()
         binding.dayTxt.text = getString(R.string.today)
-        binding.tvSelectMonth.text = DateFormatter.monthFormat().format(firstDay)
-        showRecyclerView(DateFormatter.dateFormat().format(firstDay).toString())
+        binding.tvSelectMonth.text = DateFormatUtil.monthFormat().format(firstDay)
+        showRecyclerView(DateFormatUtil.dateFormat().format(firstDay).toString())
         binding.calendarView.setListener(object : CompactCalendarViewListener {
             override fun onDayClick(dateClicked: Date) {
-                val searchQuery = DateFormatter.dateFormat().format(dateClicked).toString()
+                val searchQuery = DateFormatUtil.dateFormat().format(dateClicked).toString()
                 binding.dayTxt.text = DateUtils.getRelativeTimeSpanString(
                     dateClicked.time, firstDay, DateUtils.DAY_IN_MILLIS,
                     DateUtils.FORMAT_SHOW_DATE
@@ -55,8 +53,8 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             }
 
             override fun onMonthScroll(firstDayOfNewMonth: Date) {
-                binding.tvSelectMonth.text = DateFormatter.monthFormat().format(firstDayOfNewMonth)
-                binding.dayTxt.text= DateFormatter.dateFormatWithChar().format(firstDayOfNewMonth)
+                binding.tvSelectMonth.text = DateFormatUtil.monthFormat().format(firstDayOfNewMonth)
+                binding.dayTxt.text = DateFormatUtil.dateFormatWithChar().format(firstDayOfNewMonth)
             }
         })
     }
@@ -67,8 +65,8 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             for (task in tasks) {
                 val calendar = Calendar.getInstance()
                 val date: ArrayList<String> =
-                    DateFormatter.dateFormat()
-                        .format(DateFormatter.hourly().parse(task.date) as Date).toString()
+                    DateFormatUtil.dateFormat()
+                        .format(DateFormatUtil.hourly().parse(task.date) as Date).toString()
                         .split(".") as ArrayList<String>
                 val dd: String = date[0]
                 val month: String = date[1]
@@ -90,6 +88,11 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private fun showRecyclerView(searchQuery: String) {
         mTaskViewModel.calendarSearch("%$searchQuery%").observe(viewLifecycleOwner)
         { tasks ->
+            binding.eventNumberTxt.text = when (tasks.size) {
+                0 -> "No event"
+                1 -> "Only one event"
+                else -> "${tasks.size} events"
+            }
             if (tasks.size == 0) {
                 binding.emptyLogo.visibility = View.VISIBLE
                 binding.cheerTxt.visibility = View.VISIBLE

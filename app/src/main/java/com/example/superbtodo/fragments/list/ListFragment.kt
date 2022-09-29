@@ -43,8 +43,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
     private lateinit var deletedTask: Task
     private lateinit var selectedTask: Task
 
-    private object DateFormatter : DateFormatUtil()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
@@ -72,6 +70,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         mTaskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { tasks ->
             adapter.setData(tasks)
+
             if (tasks.size == 0) {
                 binding.emptyDesTxt.visibility = View.VISIBLE
                 binding.emptyAnim.visibility = View.VISIBLE
@@ -82,10 +81,10 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 binding.emptyAnim.visibility = View.GONE
             }
             for (task in tasks) {
-                if (!task.isDone && DateFormatter.hourly()
+                if (!task.isDone && DateFormatUtil.hourly()
                         .parse(task.date)!!.time > System.currentTimeMillis()
                 )
-                    scheduleNotification(task.id, task.title, task.description, task.date)
+                    scheduleNotification(task)
             }
 
         }
@@ -129,8 +128,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
 
     private fun handlerTaskData(task: Task) {
         mTaskViewModel.updateTask(task)
-
-        cancelNotification(task.id, task.title, task.description, task.date)
+        cancelNotification(task)
     }
 
 
@@ -143,21 +141,6 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
-            }
-
-            override fun onMoved(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                fromPos: Int,
-                target: RecyclerView.ViewHolder,
-                toPos: Int,
-                x: Int,
-                y: Int
-            ) {
-                super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
-                val fromPosition = viewHolder.layoutPosition
-                val toPosition = target.layoutPosition
-                adapter.notifyItemMoved(fromPosition, toPosition)
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -279,7 +262,7 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
                 }
                 R.id.menu_sortByDate -> {
                     mTaskViewModel.readNotDoneData().observe(viewLifecycleOwner) { task ->
-                        task.sortBy { DateFormatter.hourly().parse(it.date)!!.time }
+                        task.sortBy { DateFormatUtil.hourly().parse(it.date)!!.time }
                         adapter.setData(task)
                     }
                     true
@@ -331,28 +314,27 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun scheduleNotification(id: Int, title: String, message: String, time: String) {
+    private fun scheduleNotification(task : Task) {
         val intent = Intent(context, Notification::class.java)
-        intent.putExtra(titleExtra, title)
+        intent.putExtra(titleExtra, task.title)
         intent.putExtra("notificationID", id)
-        intent.putExtra(messageExtra, "$message\n in $time")
-        val setTime = DateFormatter.hourly().parse(time)!!.time
+        intent.putExtra(messageExtra, "${task.description}\n in ${task.date}")
+        val setTime = DateFormatUtil.hourly().parse(task.date)!!.time
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             id,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
-
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, setTime, pendingIntent)
     }
 
-    private fun cancelNotification(id: Int, title: String, message: String, time: String) {
+    private fun cancelNotification(task : Task) {
         val intent = Intent(context, Notification::class.java)
-        intent.putExtra(titleExtra, title)
+        intent.putExtra(titleExtra, task.title)
         intent.putExtra("notificationID", id)
-        intent.putExtra(messageExtra, "$message\n in $time")
+        intent.putExtra(messageExtra, "${task.description}\n in ${task.date}")
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             id,
@@ -362,6 +344,9 @@ class ListFragment : Fragment(R.layout.fragment_list), SearchView.OnQueryTextLis
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
     }
+
+
+
 }
 
 

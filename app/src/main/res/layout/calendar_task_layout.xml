@@ -50,6 +50,7 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="Full house" />
+
         </LinearLayout>
         <TextView
             android:id="@+id/descTxt"
@@ -61,6 +62,7 @@
             android:textSize="15sp"
             android:textStyle="bold"
             tools:text="Full house" />
+
     </LinearLayout>
 
 
