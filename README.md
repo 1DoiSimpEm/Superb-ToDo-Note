@@ -24,7 +24,7 @@ Which is very simple to implement.
  ![datepicker](https://user-images.githubusercontent.com/90551685/192842040-d10a7bb8-d5b9-4655-9354-ce9b21da299f.png)
 ![timepicker](https://user-images.githubusercontent.com/90551685/192842117-a707226a-e3f8-4495-af90-ebacb26b8094.png)
 
-- Eye-catching added tasks! Finished tasks will be moved to th Done fragment.
+- Eye-catching added tasks! Finished tasks will be moved to the Done fragment.
 
 ![image](https://user-images.githubusercontent.com/90551685/192457014-972b4a90-6d4b-44fe-a9e8-3f64d4c82bb4.png)
 ![image](https://user-images.githubusercontent.com/90551685/192457460-b4c7888e-c3be-4a71-b38c-9f2fa103131d.png)
@@ -39,7 +39,7 @@ Which is very simple to implement.
 ![image](https://user-images.githubusercontent.com/90551685/192466040-421f8ab3-49b4-4cec-b281-4e0f20b62f8e.png)
 
 
-- There's also a calendar which helps you see the schedule tasks easier!
+- There's also a calendar which helps you see the scheduled tasks easier!
 
 ![image](https://user-images.githubusercontent.com/90551685/192458302-4c376785-476a-4c71-9611-f37ef61a2fe4.png)
 ![image](https://user-images.githubusercontent.com/90551685/192458353-f4837dfe-1696-4800-a93d-e06d671d0e76.png)
